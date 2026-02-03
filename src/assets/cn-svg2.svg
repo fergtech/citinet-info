@@ -1,0 +1,33 @@
+<svg viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="hubGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff3b8d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7bdcff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Network Icon -->
+  <g>
+    <!-- Connection lines -->
+    <line x1="20" y1="20" x2="35" y2="35" stroke="#7bdcff" stroke-width="1.5" opacity="0.6" />
+    <line x1="20" y1="60" x2="35" y2="45" stroke="#ff3b8d" stroke-width="1.5" opacity="0.6" />
+    <line x1="60" y1="15" x2="55" y2="30" stroke="#7bdcff" stroke-width="1.5" opacity="0.5" />
+    <line x1="60" y1="65" x2="55" y2="50" stroke="#ff3b8d" stroke-width="1.5" opacity="0.5" />
+    
+    <!-- Central hub -->
+    <circle cx="40" cy="40" r="6" fill="url(#hubGradient)" />
+    
+    <!-- Outer nodes -->
+    <circle cx="20" cy="20" r="3" fill="#7bdcff" opacity="0.8" />
+    <circle cx="60" cy="15" r="3" fill="#ff3b8d" opacity="0.8" />
+    <circle cx="65" cy="40" r="3" fill="#7bdcff" opacity="0.8" />
+    <circle cx="60" cy="65" r="3" fill="#ff3b8d" opacity="0.8" />
+    <circle cx="20" cy="60" r="3" fill="#7bdcff" opacity="0.8" />
+    <circle cx="15" cy="40" r="3" fill="#ff3b8d" opacity="0.8" />
+  </g>
+  
+  <!-- Text: Citinet -->
+  <text x="85" y="52" font-family="Inter, sans-serif" font-size="32" font-weight="700" fill="#1a1a1a" letter-spacing="-0.5">
+    Citinet
+  </text>
+</svg>

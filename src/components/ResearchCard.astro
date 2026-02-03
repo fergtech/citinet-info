@@ -1,0 +1,114 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  research: CollectionEntry<'research'>;
+}
+
+const { research: researchItem } = Astro.props;
+const { title, description, author, category, externalLink } = researchItem.data;
+---
+
+<a href={externalLink || `/research/${researchItem.slug}`} class="research-card" target={externalLink ? "_blank" : "_self"}>
+  <div class="research-inner">
+    <div class="category-badge">{category.replace('-', ' ')}</div>
+    <h3 class="u-heading research-title" data-sy-reveal="words">{title}</h3>
+    <p class="u-text research-description" data-sy-reveal="lines">{description}</p>
+    <div class="meta">
+      <span class="author">{author}</span>
+      <span class="link-indicator">{externalLink ? "External resource →" : "Read article →"}</span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .research-card {
+    display: block;
+    text-decoration: none;
+    border-radius: 1rem;
+    background: var(--color-white);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    transition: all 0.3s var(--ease-out-cubic);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(var(--rgb-text), 0.08);
+
+    &:hover,
+    &:focus {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      border-color: var(--color-brand-1);
+    }
+
+    &:hover .link-indicator {
+      transform: translateX(4px);
+    }
+  }
+
+  .research-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+  }
+
+  .category-badge {
+    display: inline-block;
+    width: fit-content;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(
+      135deg,
+      rgba(var(--rgb-brand-1), 0.1) 0%,
+      rgba(var(--rgb-brand-3), 0.1) 100%
+    );
+    color: var(--color-brand-1);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .research-title {
+    --fs: var(--font-size-lg);
+    --fw: 600;
+    --ls: -0.02em;
+    margin: 0;
+  }
+
+  .research-description {
+    --fs: var(--font-size-sm);
+    color: var(--color-text-alt);
+    flex: 1;
+    margin: 0;
+  }
+
+  .meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(var(--rgb-text), 0.1);
+    font-size: 0.875rem;
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--color-text-alt);
+    }
+
+    .author {
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .link-indicator {
+      color: var(--color-brand-1);
+      font-weight: 500;
+      transition: transform 0.3s var(--ease-out-cubic);
+      display: inline-block;
+    }
+  }
+</style>

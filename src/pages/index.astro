@@ -1,0 +1,400 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HeroHome from "../components/HeroHome.astro";
+import TextMarquee from "../components/TextMarquee.astro";
+import GalleryText from "../components/GalleryText.astro";
+import ImageMarquee from "../components/ImageMarquee.astro";
+import Faqs from "../components/Faqs.astro";
+import StepsTimeline from "../components/StepsTimeline.astro";
+import Statements from "../components/Statements.astro";
+import Introducing from "../components/Introducing.astro";
+import Button from "../components/Button.astro";
+import GL from "../components/GL.astro";
+import GLPlaces from "../components/GlPlaces.astro";
+import CaseCard from "../components/CaseCard.astro";
+import ResearchCard from "../components/ResearchCard.astro";
+import { getCollection } from 'astro:content';
+
+import logo1 from "../assets/logoipsum-344.svg";
+import logo2 from "../assets/logoipsum-350.svg";
+import logo3 from "../assets/logoipsum-345.svg";
+import logo4 from "../assets/logoipsum-385.svg";
+import logo5 from "../assets/logoipsum-375.svg";
+import logo6 from "../assets/logoipsum-378.svg";
+import logo7 from "../assets/logoipsum-346.svg";
+import logo8 from "../assets/logoipsum-331.svg";
+
+// Get featured case studies and research
+const allCases = await getCollection('cases');
+const featuredCases = allCases
+  .filter(c => c.data.featured)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 2);
+
+const allResearch = await getCollection('research');
+const featuredResearch = allResearch
+  .filter(r => r.data.featured)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 2);
+---
+
+<Layout title="Home">
+  <section id="overview">
+    <HeroHome
+      title="A new Internet, owned by citizens."
+      subtitle="Private, local-first digital spaces powered by the people who use them."
+      cta={{
+        title: "Join the Early Community",
+        url: "#early",
+      }}
+      ctaSecondary={{
+        title: "Read the Vision",
+        url: "#vision",
+      }}
+    />
+  </section>
+
+  <section id="vision">
+    <Introducing
+      title="Digital spaces powered by the people who use them."
+      text="Citinet is a people-powered digital ecosystem where communities host their own spaces, communicate privately, and stay connected without big platforms or surveillance."
+      cta={{
+        title: "Explore the Vision",
+        url: "#vision",
+      }}
+    />
+
+    <StepsTimeline
+      title="How Citinet Feels"
+      items={[
+        {
+          title: "Local-first by design",
+          text: "Your community’s digital space lives close to home — not in a corporate cloud.",
+        },
+        {
+          title: "Private by default",
+          text: "No tracking, no profiling, no data harvesting.",
+        },
+        {
+          title: "Community-powered",
+          text: "Digital spaces run on small, citizen-operated nodes.",
+        },
+      ]}
+    />
+  </section>
+
+  <section id="ecosystem">
+    <GalleryText
+      title="Privacy. Independence. Community."
+      text="Instead of relying on corporations or centralized clouds, Citinet lets everyday people operate small, simple nodes that contribute to a larger, citizen-owned network."
+      cta={{
+        title: "See the Story",
+        url: "#vision",
+      }}
+      images={[
+        {
+          alt: "Local-first spaces",
+          src: "/image-1.jpg",
+          width: 6000,
+          height: 4000,
+        },
+        {
+          alt: "Private communication",
+          src: "/image-2.jpg",
+          width: 2689,
+          height: 4032,
+        },
+        {
+          alt: "Community connection",
+          src: "/image-3.jpg",
+          width: 3734,
+          height: 5359,
+        },
+      ]}
+      marqueeTexts={[
+        "A new Internet, owned by citizens",
+        "Local-first by design",
+        "A network of networks",
+        "Human-centered digital life",
+      ]}
+    />
+
+  <section id="principles">
+    <Statements
+      items={[
+        {
+          title: "Independence",
+          text: "Citizens own their digital world.",
+        },
+        {
+          title: "Privacy",
+          text: "What you do stays yours.",
+        },
+        {
+          title: "Transparency",
+          text: "No hidden algorithms or extraction.",
+        },
+      ]}
+    />
+  </section>
+
+  <TextMarquee
+    class="marquee"
+    texts={[
+      "A new Internet, owned by citizens",
+      "Local-first by design",
+      "Privacy. Independence. Community.",
+      "A network of networks",
+    ]}
+  />
+
+  {featuredResearch.length > 0 && (
+    <section id="research" class="research-preview">
+      <div class="u-container">
+        <div class="research-header">
+          <h2 class="u-heading research-title" data-sy-reveal="words">
+            Why we need this
+          </h2>
+          <p class="u-text research-subtitle" data-sy-reveal="lines">
+            The problems are documented: surveillance, environmental damage, algorithmic manipulation, and the erosion of digital freedom.
+          </p>
+        </div>
+        <div class="research-grid">
+          {featuredResearch.map((researchItem) => (
+            <ResearchCard research={researchItem} />
+          ))}
+        </div>
+        <div class="research-cta">
+          <Button title="Read More Research →" url="/research" color="secondary" />
+        </div>
+      </div>
+    </section>
+  )}
+
+  {featuredCases.length > 0 && (
+    <section id="cases" class="cases-preview">
+      <div class="u-container">
+        <div class="cases-header">
+          <h2 class="u-heading cases-title" data-sy-reveal="words">
+            Communities building the citizen-owned Internet
+          </h2>
+          <p class="u-text cases-subtitle" data-sy-reveal="lines">
+            Real people creating local-first digital infrastructure in their neighborhoods and towns.
+          </p>
+        </div>
+        <div class="cases-grid">
+          {featuredCases.map((caseStudy) => (
+            <CaseCard case={caseStudy} />
+          ))}
+        </div>
+        <div class="cases-cta">
+          <Button title="View All Case Studies →" url="/cases" color="secondary" />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section id="faq">
+    <Faqs
+      title="A network of networks."
+      mobileTitle="FAQs"
+      subtitle="Citinet is not a replacement for the Internet. It’s a new layer on top of it — built by citizens, for citizens."
+      items={[
+        {
+          question: "What is Citinet?",
+          answer:
+            "Citinet is a people-powered digital ecosystem where communities host their own spaces, communicate privately, and stay connected without big platforms or surveillance.",
+        },
+        {
+          question: "What makes it different?",
+          answer:
+            "It feels familiar — messaging, sharing, connecting — but everything is local-first, private-by-default, and controlled by the communities who use it.",
+        },
+        {
+          question: "Is this a new Internet?",
+          answer:
+            "Citinet is not a replacement for the Internet. It’s a new layer on top of it — a network built by citizens, for citizens.",
+        },
+        {
+          question: "Who is it for?",
+          answer:
+            "People who want independence from corporate or government-dominated digital spaces and a return to human-centered digital life.",
+        },
+        {
+          question: "How can I be part of it?",
+          answer:
+            "Join early to stay informed, participate in pilots, and help shape a citizen-owned future.",
+        },
+      ]}
+    />
+  </section>
+
+  <section id="early" class="u-container">
+    <div class="cta-block">
+      <h2 class="u-heading" data-sy-reveal="words">
+        Help build the world’s first citizen‑owned Internet.
+      </h2>
+      <p class="u-text" data-sy-reveal="lines">
+        Join early to stay informed, participate in pilots, or explore future
+        investment opportunities.
+      </p>
+      <Button
+        title="Join the Early Access List"
+        url="#"
+        arrow
+      />
+    </div>
+  </section>
+
+  <section class="u-container">
+    <h2 class="u-heading" data-sy-reveal="words">Supported by early communities.</h2>
+    <ImageMarquee
+      images={[
+        {
+          src: logo1.src,
+          alt: "Community Partner 1",
+        },
+        {
+          src: logo3.src,
+          alt: "Community Partner 3",
+        },
+        {
+          src: logo4.src,
+          alt: "Community Partner 4",
+        },
+        {
+          src: logo8.src,
+          alt: "Community Partner 8",
+        },
+        {
+          src: logo5.src,
+          alt: "Community Partner 5",
+        },
+        {
+          src: logo6.src,
+          alt: "Community Partner 6",
+        },
+        {
+          src: logo2.src,
+          alt: "Community Partner 2",
+        },
+        {
+          src: logo7.src,
+          alt: "Community Partner 7",
+        },
+      ]}
+    />
+  </section>
+
+  <GL />
+  <GLPlaces />
+</Layout>
+
+<style>
+  .marquee {
+    padding: 2rem 0;
+    z-index: 9;
+  }
+
+  .cta-block {
+    margin: 6rem 0 4rem;
+    max-width: 42rem;
+  }
+
+  .research-preview {
+    padding: 6rem 0;
+    position: relative;
+    z-index: 9;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--rgb-bg), 1) 0%,
+      rgba(var(--rgb-brand-3), 0.05) 100%
+    );
+  }
+
+  .research-header {
+    max-width: 48rem;
+    margin: 0 auto 4rem;
+    text-align: center;
+  }
+
+  .research-title {
+    --fs: 2.5rem;
+    --lh: 1.2;
+    margin-bottom: 1rem;
+
+    @media (--mq-phone) {
+      --fs: 2rem;
+    }
+  }
+
+  .research-subtitle {
+    --fs: var(--font-size-lg);
+    color: var(--color-text-alt);
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+
+    @media (--mq-tablet) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .research-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .cases-preview {
+    padding: 6rem 0;
+    position: relative;
+    z-index: 9;
+  }
+
+  .cases-header {
+    max-width: 48rem;
+    margin: 0 auto 4rem;
+    text-align: center;
+  }
+
+  .cases-title {
+    --fs: 2.5rem;
+    --lh: 1.2;
+    margin-bottom: 1rem;
+
+    @media (--mq-phone) {
+      --fs: 2rem;
+    }
+  }
+
+  .cases-subtitle {
+    --fs: var(--font-size-lg);
+    color: var(--color-text-alt);
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+
+    @media (--mq-tablet) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cases-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+</style>

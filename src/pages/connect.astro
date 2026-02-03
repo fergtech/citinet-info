@@ -1,0 +1,317 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+import Introducing from '../components/Introducing.astro';
+---
+
+<Layout title="Connect">
+  <div class="connect-page">
+    <section class="hero">
+      <div class="u-container">
+        <div class="hero-content">
+          <h1 class="u-heading hero-title" data-sy-reveal="words">
+            Connect with the citizen-owned Internet
+          </h1>
+          <p class="u-text hero-subtitle" data-sy-reveal="lines">
+            Whether you're a community leader, developer, or just curious—here's how to get involved.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="paths">
+      <div class="u-container">
+        <h2 class="u-heading section-title" data-sy-reveal="words">Find Your Path</h2>
+        <div class="paths-grid">
+          <div class="path-card">
+            <h3 class="u-heading path-title" data-sy-reveal="words">Join Early Community</h3>
+            <p class="u-text path-text" data-sy-reveal="lines">
+              Connect with others building citizen-owned infrastructure. Share ideas, get updates, and be first to access new tools.
+            </p>
+            <Button title="Join Community" url="/#early" arrow />
+          </div>
+
+          <div class="path-card">
+            <h3 class="u-heading path-title" data-sy-reveal="words">Build with Citinet</h3>
+            <p class="u-text path-text" data-sy-reveal="lines">
+              Developers: Access documentation, APIs, and open-source code. Build local-first applications on top of Citinet infrastructure.
+            </p>
+            <Button title="Explore Docs" url="#" arrow />
+          </div>
+
+          <div class="path-card">
+            <h3 class="u-heading path-title" data-sy-reveal="words">Start Local</h3>
+            <p class="u-text path-text" data-sy-reveal="lines">
+              Community leaders: Set up a network in your neighborhood, co-op, or organization. We provide guides and support.
+            </p>
+            <Button title="Start Guide" url="#" arrow />
+          </div>
+
+          <div class="path-card">
+            <h3 class="u-heading path-title" data-sy-reveal="words">Share Your Story</h3>
+            <p class="u-text path-text" data-sy-reveal="lines">
+              Got a citizen-owned network story? We'd love to feature it. Send us your case study and inspire others.
+            </p>
+            <Button title="Submit Case Study" url="#" arrow />
+          </div>
+
+          <div class="path-card">
+            <h3 class="u-heading path-title" data-sy-reveal="words">Join Conversations</h3>
+            <p class="u-text path-text" data-sy-reveal="lines">
+              Connect on Discord, forums, and community calls. Ask questions, meet builders, and shape the vision together.
+            </p>
+            <Button title="Join Discord" url="#" arrow />
+          </div>
+
+          <div class="path-card">
+            <h3 class="u-heading path-title" data-sy-reveal="words">Work With Us</h3>
+            <p class="u-text path-text" data-sy-reveal="lines">
+              Interested in helping build? We're hiring designers, engineers, community organizers, and more.
+            </p>
+            <Button title="View Opportunities" url="#" arrow />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter">
+      <div class="u-container">
+        <div class="newsletter-content">
+          <h2 class="u-heading newsletter-title" data-sy-reveal="words">
+            Stay updated
+          </h2>
+          <p class="u-text newsletter-text" data-sy-reveal="lines">
+            Get news, updates, and opportunities delivered to your inbox.
+          </p>
+          <form class="newsletter-form">
+            <input 
+              type="email" 
+              placeholder="your@email.com" 
+              required 
+              class="newsletter-input"
+            />
+            <Button title="Subscribe" url="#" arrow />
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq">
+      <div class="u-container">
+        <h2 class="u-heading section-title" data-sy-reveal="words">Common Questions</h2>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h3 class="u-heading faq-title" data-sy-reveal="words">Do I need to be technical?</h3>
+            <p class="u-text faq-text" data-sy-reveal="lines">
+              Not at all. While developers love our tech, Citinet is designed for everyone. Community builders, organizers, and users are equally valuable.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="u-heading faq-title" data-sy-reveal="words">Is this actually available?</h3>
+            <p class="u-text faq-text" data-sy-reveal="lines">
+              We're in early access. Early community members can start building and experimenting. We'll expand availability as we grow.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="u-heading faq-title" data-sy-reveal="words">How much does it cost?</h3>
+            <p class="u-text faq-text" data-sy-reveal="lines">
+              Citinet is open-source and free to run. No subscriptions, no per-user fees, no data monetization. Ever.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3 class="u-heading faq-title" data-sy-reveal="words">Can I run this alone?</h3>
+            <p class="u-text faq-text" data-sy-reveal="lines">
+              Citinet works best in communities, but you can run a private node. Most value comes from connecting with others.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .connect-page {
+    padding-top: 4rem;
+  }
+
+  .hero {
+    padding: 6rem 0 4rem;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--rgb-brand-3), 0.05) 0%,
+      rgba(var(--rgb-bg), 1) 100%
+    );
+  }
+
+  .hero-content {
+    max-width: 48rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-title {
+    --fs: 3.5rem;
+    --lh: 1.1;
+    margin-bottom: 1.5rem;
+
+    @media (--mq-phone) {
+      --fs: 2.5rem;
+    }
+  }
+
+  .hero-subtitle {
+    --fs: var(--font-size-lg);
+    color: var(--color-text-alt);
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .paths {
+    padding: 6rem 0;
+  }
+
+  .section-title {
+    --fs: 2.5rem;
+    text-align: center;
+    margin-bottom: 4rem;
+
+    @media (--mq-phone) {
+      --fs: 2rem;
+    }
+  }
+
+  .paths-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+
+    @media (--mq-tablet) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .path-card {
+    background: var(--color-white);
+    border: 1px solid rgba(var(--rgb-text), 0.08);
+    border-radius: 1rem;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.3s var(--ease-out-cubic);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      border-color: var(--color-brand-1);
+    }
+  }
+
+  .path-title {
+    --fs: var(--font-size-lg);
+    --fw: 600;
+  }
+
+  .path-text {
+    --fs: var(--font-size-sm);
+    color: var(--color-text-alt);
+    flex: 1;
+    margin: 0;
+  }
+
+  .newsletter {
+    padding: 6rem 0;
+    background: linear-gradient(
+      135deg,
+      rgba(var(--rgb-brand-1), 0.08) 0%,
+      rgba(var(--rgb-brand-3), 0.08) 100%
+    );
+  }
+
+  .newsletter-content {
+    max-width: 42rem;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .newsletter-title {
+    --fs: 2.5rem;
+
+    @media (--mq-phone) {
+      --fs: 2rem;
+    }
+  }
+
+  .newsletter-text {
+    --fs: var(--font-size-lg);
+    color: var(--color-text-alt);
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+
+    @media (--mq-phone) {
+      flex-direction: column;
+    }
+  }
+
+  .newsletter-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(var(--rgb-text), 0.2);
+    border-radius: 0.5rem;
+    font: inherit;
+    background: var(--color-white);
+
+    &::placeholder {
+      color: var(--color-text-alt);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-brand-1);
+      box-shadow: 0 0 0 2px rgba(var(--rgb-brand-1), 0.1);
+    }
+  }
+
+  .faq {
+    padding: 6rem 0;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+  }
+
+  .faq-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .faq-title {
+    --fs: var(--font-size-lg);
+    --fw: 600;
+  }
+
+  .faq-text {
+    --fs: var(--font-size-sm);
+    color: var(--color-text-alt);
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>

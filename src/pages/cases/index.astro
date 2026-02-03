@@ -1,0 +1,174 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import CaseCard from '../../components/CaseCard.astro';
+import Button from '../../components/Button.astro';
+
+const allCases = await getCollection('cases');
+const featuredCases = allCases.filter(c => c.data.featured);
+const otherCases = allCases.filter(c => !c.data.featured);
+
+// Sort by date, newest first
+const sortedFeatured = featuredCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const sortedOther = otherCases.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Layout title="Case Studies">
+  <div class="cases-page">
+    <section class="hero">
+      <div class="u-container">
+        <div class="hero-content">
+          <h1 class="u-heading hero-title" data-sy-reveal="words">
+            Real communities building a new Internet
+          </h1>
+          <p class="u-text hero-subtitle" data-sy-reveal="lines">
+            These are the people making citizen-owned infrastructure a reality—one network, one neighborhood, one community at a time.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="featured-cases">
+      <div class="u-container">
+        <h2 class="u-heading section-title" data-sy-reveal="words">Featured Case Studies</h2>
+        <div class="cases-grid featured">
+          {sortedFeatured.map((caseStudy) => (
+            <CaseCard case={caseStudy} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {sortedOther.length > 0 && (
+      <section class="all-cases">
+        <div class="u-container">
+          <h2 class="u-heading section-title" data-sy-reveal="words">More Case Studies</h2>
+          <div class="cases-grid">
+            {sortedOther.map((caseStudy) => (
+              <CaseCard case={caseStudy} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <section class="cta-section">
+      <div class="u-container">
+        <div class="cta-content">
+          <h2 class="u-heading cta-title" data-sy-reveal="words">
+            Ready to start your own?
+          </h2>
+          <p class="u-text cta-text" data-sy-reveal="lines">
+            Join the early community and be part of building the citizen-owned Internet.
+          </p>
+          <Button title="Join the Early Community" url="/#early" arrow class="cta-button" />
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .cases-page {
+    padding-top: 4rem;
+  }
+
+  .hero {
+    padding: 4rem 0 6rem;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--rgb-brand-3), 0.05) 0%,
+      rgba(var(--rgb-bg), 1) 100%
+    );
+  }
+
+  .hero-content {
+    max-width: 48rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-title {
+    --fs: 3.5rem;
+    --lh: 1.1;
+    margin-bottom: 1.5rem;
+
+    @media (--mq-phone) {
+      --fs: 2.5rem;
+    }
+  }
+
+  .hero-subtitle {
+    --fs: var(--font-size-lg);
+    color: var(--color-text-alt);
+    max-width: 42rem;
+    margin: 0 auto;
+  }
+
+  .featured-cases,
+  .all-cases {
+    padding: 4rem 0;
+  }
+
+  .section-title {
+    --fs: 2rem;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+
+    @media (--mq-tablet) {
+      grid-template-columns: 1fr;
+    }
+
+    &.featured {
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+
+      @media (--mq-tablet) {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  .cta-section {
+    padding: 6rem 0;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--rgb-bg), 1) 0%,
+      rgba(var(--rgb-brand-3), 0.05) 50%,
+      rgba(var(--rgb-bg), 1) 100%
+    );
+  }
+
+  .cta-content {
+    max-width: 42rem;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .cta-title {
+    --fs: 2.5rem;
+    --lh: 1.2;
+
+    @media (--mq-phone) {
+      --fs: 2rem;
+    }
+  }
+
+  .cta-text {
+    --fs: var(--font-size-lg);
+    color: var(--color-text-alt);
+  }
+
+  .cta-button {
+    margin-top: 1rem;
+  }
+</style>

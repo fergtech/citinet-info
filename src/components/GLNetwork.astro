@@ -1,0 +1,320 @@
+---
+
+---
+
+<sy-gl></sy-gl>
+
+<script>
+  import * as THREE from "three";
+  import gsap from "gsap";
+  import { addResizeObserver } from "../utils/observers";
+  import ScrollTrigger from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const container = document.querySelector("sy-gl") as HTMLElement;
+
+  const scene = new THREE.Scene();
+  const frustumSize = 5;
+  let aspect = window.innerWidth / window.innerHeight;
+  const camera = new THREE.OrthographicCamera(
+    (-frustumSize * aspect) / 2,
+    (frustumSize * aspect) / 2,
+    frustumSize / 2,
+    -frustumSize / 2,
+    0,
+    10.6,
+  );
+
+  camera.position.set(0, 0, 10);
+  camera.lookAt(0, 0, 0);
+  camera.updateProjectionMatrix();
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  const canvas = renderer.domElement;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  container.appendChild(canvas);
+
+  renderer.setClearColor("#fff", 0);
+
+  const ballGroup = new THREE.Group();
+  scene.add(ballGroup);
+
+  const radius = 1.4;
+  const nodeCount = 180;
+  const maxConnections = 3;
+  const connectionDistance = 0.55 * radius;
+
+  const positions: THREE.Vector3[] = [];
+  const golden = Math.PI * (3 - Math.sqrt(5));
+
+  for (let i = 0; i < nodeCount; i++) {
+    const t = i / (nodeCount - 1);
+    const y = 1 - 2 * t;
+    const r = Math.sqrt(1 - y * y);
+    const phi = i * golden;
+    const x = Math.cos(phi) * r;
+    const z = Math.sin(phi) * r;
+    positions.push(new THREE.Vector3(x, y, z).multiplyScalar(radius));
+  }
+
+  const pointsGeom = new THREE.BufferGeometry().setFromPoints(positions);
+  const pointsMat = new THREE.PointsMaterial({
+    color: "#ff3b8d",
+    size: 0.06,
+    sizeAttenuation: false,
+    transparent: true,
+    opacity: 0.95,
+  });
+  const points = new THREE.Points(pointsGeom, pointsMat);
+
+  const nodeGeom = new THREE.SphereGeometry(0.035, 10, 10);
+  const nodeMat = new THREE.MeshBasicMaterial({
+    color: "#ff3b8d",
+    transparent: true,
+    opacity: 0.9,
+  });
+  const nodeMesh = new THREE.InstancedMesh(nodeGeom, nodeMat, positions.length);
+  const nodeMatrix = new THREE.Matrix4();
+  positions.forEach((pos, i) => {
+    nodeMatrix.setPosition(pos);
+    nodeMesh.setMatrixAt(i, nodeMatrix);
+  });
+
+  const linePositions: number[] = [];
+  for (let i = 0; i < positions.length; i++) {
+    const a = positions[i];
+    const neighbors: { idx: number; dist: number }[] = [];
+
+    for (let j = i + 1; j < positions.length; j++) {
+      const b = positions[j];
+      const dist = a.distanceTo(b);
+      if (dist <= connectionDistance) {
+        neighbors.push({ idx: j, dist });
+      }
+    }
+
+    neighbors.sort((n1, n2) => n1.dist - n2.dist);
+    neighbors.slice(0, maxConnections).forEach((n) => {
+      const b = positions[n.idx];
+      linePositions.push(a.x, a.y, a.z, b.x, b.y, b.z);
+    });
+  }
+
+  const linesGeom = new THREE.BufferGeometry();
+  linesGeom.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(linePositions, 3),
+  );
+
+  const linesMat = new THREE.LineBasicMaterial({
+    color: "#ff89c2",
+    transparent: true,
+    opacity: 0.65,
+  });
+
+  const lines = new THREE.LineSegments(linesGeom, linesMat);
+
+  ballGroup.add(lines);
+  ballGroup.add(points);
+  ballGroup.add(nodeMesh);
+
+  window.scrollVelocity = 0;
+  window.scrollDirection = 1;
+  window.scrollCurrent = 0;
+  window.scrollStickyOffsets = window.scrollStickyOffsets || [];
+
+  let pixelToUnit = -frustumSize / window.innerHeight;
+  let isPlaced = true;
+
+  const basePointSize = pointsMat.size;
+
+  function animate(t: number) {
+    const vel = isPlaced ? 0 : window.scrollVelocity;
+    const abs = Math.abs(vel);
+    const dir = window.scrollDirection;
+
+    const time = t * 0.001;
+    ballGroup.rotation.y += 0.002 + abs * 0.0008 * dir;
+    ballGroup.rotation.x += 0.001 + abs * 0.0006 * -dir;
+    ballGroup.rotation.z = Math.sin(time * 0.6) * 0.05;
+    pointsMat.size = basePointSize + Math.sin(time * 2.0) * 0.01;
+    camera.position.y = window.scrollCurrent * pixelToUnit;
+
+    renderer.render(scene, camera);
+  }
+
+  gsap.ticker.fps(60);
+  gsap.ticker.add(animate);
+
+  class SyGL extends HTMLElement {
+    height = 0;
+    width = 0;
+    tl: ReturnType<typeof gsap.timeline> | null = null;
+
+    connectedCallback() {
+      const placeholders = Array.from(
+        document.querySelectorAll<HTMLElement>("[data-gl-place]"),
+      );
+
+      const getPosData = (el: HTMLElement) => {
+        if (!positionsMap.has(el)) {
+          const { top: _top, left, width, height } = el.getBoundingClientRect();
+          const top = _top + window.scrollY;
+
+          const centerX = left + width / 2;
+          const centerY = top + height / 2;
+
+          const pixelToUnitX = (frustumSize * aspect) / this.width;
+          const pixelToUnitY = frustumSize / this.height;
+
+          const factor = parseFloat(
+            el.getAttribute("data-gl-place-factor") || "1",
+          );
+
+          const sticky = el.hasAttribute("data-gl-place-sticky");
+
+          positionsMap.set(el, {
+            x: (centerX - this.width / 2) * pixelToUnitX,
+            y: -(centerY - this.height / 2) * pixelToUnitY,
+            scale: width * pixelToUnitX * 0.5,
+            factor,
+            sticky,
+          });
+        }
+
+        return positionsMap.get(el);
+      };
+
+      let positionsMap = new WeakMap();
+
+      const tl = gsap.timeline({
+        defaults: {
+          ease: "none",
+        },
+        scrollTrigger: {
+          trigger: this,
+          scrub: true,
+          invalidateOnRefresh: true,
+          fastScrollEnd: true,
+          onRefresh: () => {
+            positionsMap = new WeakMap();
+            setFirst();
+          },
+          start: () => `${Math.round(window.innerHeight / 2)}px center`,
+          end: () => {
+            const last =
+              placeholders[placeholders.length - 1].getBoundingClientRect();
+            return `+=${Math.round(last.top + window.scrollY)}px bottom`;
+          },
+        },
+      });
+
+      const setFirst = () => {
+        const first = placeholders[0];
+        const data = getPosData(first);
+        ballGroup.position.x = data.x;
+        ballGroup.position.y = data.y;
+        ballGroup.scale.setScalar(data.scale);
+      };
+
+      tl.add(() => {
+        setFirst();
+      });
+
+      placeholders.forEach((hldr, i) => {
+        const prev = placeholders[i - 1];
+
+        if (!prev) {
+          return;
+        }
+
+        const duration = () => {
+          const p = getPosData(prev);
+          const h = getPosData(hldr);
+
+          const b = p.y - h.y;
+          const c = Math.round(Math.sqrt(b * b) * 10);
+
+          return c * p.factor;
+        };
+
+        tl.to(ballGroup.position, {
+          duration,
+          x: () => getPosData(hldr).x,
+          y: () => getPosData(hldr).y,
+        });
+
+        tl.to(
+          ballGroup.scale,
+          {
+            duration,
+            x: () => getPosData(hldr).scale,
+            y: () => getPosData(hldr).scale,
+            z: () => getPosData(hldr).scale,
+            onUpdate() {
+              const prg = this.progress();
+
+              if (prg === 0 || prg === 1) {
+                isPlaced = true;
+              } else if (isPlaced) {
+                isPlaced = false;
+              }
+            },
+          },
+          "<",
+        );
+      });
+
+      this.tl = tl;
+
+      const resizeObserver = new ResizeObserver(() => {
+        tl.scrollTrigger?.refresh();
+      });
+      resizeObserver.observe(document.body);
+    }
+
+    constructor() {
+      super();
+
+      addResizeObserver(this);
+
+      this.onResize();
+    }
+
+    onResize = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
+      this.width = width;
+      this.height = height;
+
+      pixelToUnit = -frustumSize / height;
+
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(width, height);
+
+      aspect = width / height;
+      camera.left = (-frustumSize * aspect) / 2;
+      camera.right = (frustumSize * aspect) / 2;
+      camera.top = frustumSize / 2;
+      camera.bottom = -frustumSize / 2;
+      camera.updateProjectionMatrix();
+
+      this.tl?.scrollTrigger?.refresh();
+    };
+  }
+
+  customElements.define("sy-gl", SyGL);
+</script>
+
+<style>
+  sy-gl {
+    position: fixed;
+    z-index: 8;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+  }
+</style>
