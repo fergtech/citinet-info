@@ -52,10 +52,7 @@ const { texts, direction, class: className = "" } = Astro.props;
     white-space: nowrap;
     display: flex;
     align-items: center;
-    -webkit-text-stroke-color: currentColor;
-    -webkit-text-stroke-width: 2px;
-    -webkit-text-fill-color: transparent;
-    color: var(--c, var(--color-brand-1));
+    color: var(--c, var(--color-text-alt));
 
     &:before {
       display: block;
@@ -70,7 +67,7 @@ const { texts, direction, class: className = "" } = Astro.props;
     }
 
     &:nth-child(odd) {
-      -webkit-text-fill-color: unset;
+      color: var(--color-text);
     }
   }
 </style>

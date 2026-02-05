@@ -1,6 +1,5 @@
 ---
 import Button from "./Button.astro";
-import Logo from "../assets/cn-svg2.svg";
 import type { Link } from "../types";
 
 interface Props {
@@ -19,7 +18,7 @@ const { logoUrl, logoAlt, link1, link2, links } = Astro.props;
     <div class="inner u-container">
       <div class="wrapper">
         <a class="logo" href={logoUrl}>
-          <Logo />
+          <span class="logo-text">[citinet]</span>
           <span class="u-sr-only">{logoAlt}</span>
         </a>
 
@@ -129,15 +128,15 @@ const { logoUrl, logoAlt, link1, link2, links } = Astro.props;
   .logo {
     position: relative;
     z-index: 3;
+    text-decoration: none;
+  }
 
-    svg {
-      width: 9rem;
-      height: auto;
-
-      :global(path) {
-        fill: currentcolor;
-      }
-    }
+  .logo-text {
+    font-family: var(--font-inter);
+    font-weight: 500;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    color: var(--color-text);
   }
 
   .menu {
@@ -191,7 +190,7 @@ const { logoUrl, logoAlt, link1, link2, links } = Astro.props;
       gap: 1.3125em;
 
       @media (--mq-tablet) {
-        color: var(--color-brand-1);
+        color: var(--color-text);
       }
 
       @media (--mq-tablet) {
@@ -315,16 +314,16 @@ const { logoUrl, logoAlt, link1, link2, links } = Astro.props;
     align-items: center;
     display: none;
     z-index: 2;
-    color: var(--color-brand-1);
+    color: var(--color-text);
     transition: color 0.3s var(--ease-out-expo);
 
     :global(.has-no-bg &) {
-      color: var(--color-brand-3);
+      color: var(--color-text);
     }
 
     :global(body.is-nav-opened &),
     :global(body.is-nav-small) & {
-      color: var(--color-brand-1);
+      color: var(--color-text);
     }
 
     @media (--mq-tablet) {
@@ -354,7 +353,7 @@ const { logoUrl, logoAlt, link1, link2, links } = Astro.props;
     }
 
     :global(body.is-nav-opened) & {
-      color: var(--color-brand-1);
+      color: var(--color-text);
 
       > span {
         span {

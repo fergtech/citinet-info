@@ -140,11 +140,7 @@ import Introducing from '../components/Introducing.astro';
 
   .hero {
     padding: 6rem 0 4rem;
-    background: linear-gradient(
-      180deg,
-      rgba(var(--rgb-brand-3), 0.05) 0%,
-      rgba(var(--rgb-bg), 1) 100%
-    );
+    background: var(--color-bg);
   }
 
   .hero-content {
@@ -195,7 +191,7 @@ import Introducing from '../components/Introducing.astro';
   }
 
   .path-card {
-    background: var(--color-white);
+    background: var(--color-brand-3);
     border: 1px solid rgba(var(--rgb-text), 0.08);
     border-radius: 1rem;
     padding: 2.5rem 2rem;
@@ -205,8 +201,6 @@ import Introducing from '../components/Introducing.astro';
     transition: all 0.3s var(--ease-out-cubic);
 
     &:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
       border-color: var(--color-brand-1);
     }
   }
@@ -225,11 +219,7 @@ import Introducing from '../components/Introducing.astro';
 
   .newsletter {
     padding: 6rem 0;
-    background: linear-gradient(
-      135deg,
-      rgba(var(--rgb-brand-1), 0.08) 0%,
-      rgba(var(--rgb-brand-3), 0.08) 100%
-    );
+    background: var(--color-brand-3);
   }
 
   .newsletter-content {
@@ -271,10 +261,11 @@ import Introducing from '../components/Introducing.astro';
     flex: 1;
     min-width: 200px;
     padding: 0.75rem 1rem;
-    border: 1px solid rgba(var(--rgb-text), 0.2);
+    border: 1px solid rgba(var(--rgb-text), 0.15);
     border-radius: 0.5rem;
     font: inherit;
-    background: var(--color-white);
+    background: var(--color-brand-3);
+    color: var(--color-text);
 
     &::placeholder {
       color: var(--color-text-alt);
@@ -283,7 +274,7 @@ import Introducing from '../components/Introducing.astro';
     &:focus {
       outline: none;
       border-color: var(--color-brand-1);
-      box-shadow: 0 0 0 2px rgba(var(--rgb-brand-1), 0.1);
+      box-shadow: 0 0 0 2px rgba(var(--rgb-brand-1), 0.2);
     }
   }
 

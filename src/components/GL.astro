@@ -234,6 +234,8 @@ void main() {
   scene.add(ballGroup);
   ballGroup.add(panelsGroup);
 
+  if (!posAttr) throw new Error('Position attribute not found');
+
   const nodeMesh = new THREE.InstancedMesh(nodeGeom, nodeMat, posAttr.count);
   const nodeMatrix = new THREE.Matrix4();
   for (let i = 0; i < posAttr.count; i++) {
@@ -594,6 +596,7 @@ void main() {
 
   function togglePanel(idx: number) {
     const data = faceData[idx];
+    if (!data) return;
     const mesh = data.mesh;
 
     const isTogg = toggled.has(idx);
@@ -769,7 +772,8 @@ void main() {
           start: () => `${Math.round(window.innerHeight / 2)}px center`,
           end: () => {
             const last =
-              placeholders[placeholders.length - 1].getBoundingClientRect();
+              placeholders[placeholders.length - 1]?.getBoundingClientRect();
+            if (!last) return `+=${window.innerHeight}px bottom`;
             return `+=${Math.round(last.top + window.scrollY)}px bottom`;
           },
         },
@@ -777,6 +781,7 @@ void main() {
 
       const setFirst = () => {
         const first = placeholders[0];
+        if (!first) return;
         const data = getPosData(first);
         ballGroup.position.x = data.x;
         ballGroup.position.y = data.y;

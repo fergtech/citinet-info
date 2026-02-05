@@ -12,17 +12,17 @@
   --font-size-sm: 0.9rem;
   --font-size-xs: 0.8rem;
 
-  /* colors */
+  /* colors - hyper-minimal black/white + accent */
   --rgb-white: 255, 255, 255;
   --rgb-black: 0, 0, 0;
 
-  --rgb-text: 11, 31, 91; /* #0b1f5b */
-  --rgb-text-alt: 132, 142, 172; /* #848eac */
-  --rgb-brand-1: 141, 115, 245; /* #8d73f5 */
-  --rgb-brand-2: 221, 232, 184; /* #dde8b8 */
-  --rgb-brand-3: 236, 231, 253; /* #ece7fd */
-  --rgb-brand-4: 232, 242, 207; /* #e8f2cf */
-  --rgb-brand-5: 140, 175, 49; /* #8caf31 */
+  --rgb-text: 241, 240, 232;           /* Soft Linen #F1F0E8 */
+  --rgb-text-alt: 160, 158, 150;       /* Muted linen (60% opacity feel) */
+  --rgb-brand-1: 8, 166, 95;           /* Jungle Green #08A65F */
+  --rgb-brand-2: 8, 166, 95;           /* Same accent */
+  --rgb-brand-3: 18, 22, 12;           /* Slightly lighter than bg */
+  --rgb-brand-4: 28, 32, 20;           /* Card surfaces */
+  --rgb-brand-5: 8, 166, 95;           /* Accent */
 
   --color-text: rgb(var(--rgb-text));
   --color-text-alt: rgb(var(--rgb-text-alt));
@@ -33,7 +33,7 @@
   --color-brand-3: rgb(var(--rgb-brand-3));
   --color-brand-4: rgb(var(--rgb-brand-4));
   --color-brand-5: rgb(var(--rgb-brand-5));
-  --color-bg: #f7f8f2;
+  --color-bg: #090C02;                 /* Pitch Black */
 
   /* easings */
   --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
