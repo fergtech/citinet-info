@@ -6,12 +6,19 @@ interface Props {
 }
 
 const { case: caseStudy } = Astro.props;
-const { title, description, community, location, category } = caseStudy.data;
+const { title, description, community, location, category, status } = caseStudy.data;
 ---
 
 <a href={`/cases/${caseStudy.slug}`} class="case-card">
   <div class="case-inner">
-    <div class="category-badge">{category.replace('-', ' ')}</div>
+    <div class="badges">
+      <div class="category-badge">{category.replace('-', ' ')}</div>
+      {status && status !== 'complete' && (
+        <div class={`status-badge status-${status}`}>
+          {status === 'ongoing' ? 'Ongoing' : status === 'pilot' ? 'Pilot' : status}
+        </div>
+      )}
+    </div>
     <h3 class="u-heading case-title" data-sy-reveal="words">{title}</h3>
     <p class="u-text case-description" data-sy-reveal="lines">{description}</p>
     <div class="meta">
@@ -51,6 +58,12 @@ const { title, description, community, location, category } = caseStudy.data;
     height: 100%;
   }
 
+  .badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
   .category-badge {
     display: inline-block;
     width: fit-content;
@@ -62,6 +75,26 @@ const { title, description, community, location, category } = caseStudy.data;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+  }
+
+  .status-badge {
+    display: inline-block;
+    width: fit-content;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+
+    &.status-ongoing {
+      background: rgba(var(--rgb-brand-1), 0.15);
+      color: var(--color-brand-1);
+    }
+
+    &.status-pilot {
+      background: rgba(255, 193, 7, 0.15);
+      color: #ffc107;
+    }
   }
 
   .case-title {

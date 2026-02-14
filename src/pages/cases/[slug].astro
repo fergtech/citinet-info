@@ -14,7 +14,7 @@ export const getStaticPaths = (async () => {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
-const { title, description, community, location, category, date } = entry.data;
+const { title, description, community, location, category, date, status } = entry.data;
 
 const formattedDate = date.toLocaleDateString('en-US', {
   year: 'numeric',
@@ -28,7 +28,14 @@ const formattedDate = date.toLocaleDateString('en-US', {
     <header class="case-header">
       <div class="u-container">
         <div class="header-content">
-          <div class="category-badge">{category.replace('-', ' ')}</div>
+          <div class="badges">
+            <div class="category-badge">{category.replace('-', ' ')}</div>
+            {status && status !== 'complete' && (
+              <div class={`status-badge status-${status}`}>
+                {status === 'ongoing' ? 'Ongoing Project' : status === 'pilot' ? 'Pilot Program' : status}
+              </div>
+            )}
+          </div>
           <h1 class="u-heading case-title" data-sy-reveal="words">{title}</h1>
           <p class="u-text case-description" data-sy-reveal="lines">{description}</p>
           <div class="meta">
@@ -43,9 +50,17 @@ const formattedDate = date.toLocaleDateString('en-US', {
               </div>
             )}
             <div class="meta-item">
-              <span class="meta-label">Published</span>
+              <span class="meta-label">{status === 'ongoing' ? 'Started' : 'Published'}</span>
               <span class="meta-value">{formattedDate}</span>
             </div>
+            {status && (
+              <div class="meta-item">
+                <span class="meta-label">Status</span>
+                <span class="meta-value" style={status === 'ongoing' ? 'color: var(--color-brand-1); font-weight: 600;' : ''}>
+                  {status === 'ongoing' ? 'Active & Growing' : status === 'pilot' ? 'Pilot Phase' : 'Completed'}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -97,6 +112,13 @@ const formattedDate = date.toLocaleDateString('en-US', {
     margin: 0 auto;
   }
 
+  .badges {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
   .category-badge {
     display: inline-block;
     padding: 0.5rem 1rem;
@@ -111,7 +133,39 @@ const formattedDate = date.toLocaleDateString('en-US', {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-bottom: 1.5rem;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+
+    &.status-ongoing {
+      background: linear-gradient(
+        135deg,
+        rgba(var(--rgb-brand-1), 0.2) 0%,
+        rgba(var(--rgb-brand-1), 0.1) 100%
+      );
+      color: var(--color-brand-1);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    &.status-pilot {
+      background: rgba(255, 193, 7, 0.2);
+      color: #ffc107;
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
   }
 
   .case-title {
@@ -236,6 +290,20 @@ const formattedDate = date.toLocaleDateString('en-US', {
       border-radius: 0.25rem;
       font-family: 'Courier New', monospace;
       font-size: 0.9em;
+    }
+
+    :global(img) {
+      width: 100%;
+      height: auto;
+      border-radius: 0.75rem;
+      margin: 2.5rem 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    :global(hr) {
+      border: none;
+      border-top: 2px solid rgba(var(--rgb-text), 0.1);
+      margin: 3rem 0;
     }
   }
 

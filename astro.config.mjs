@@ -8,6 +8,9 @@ import {
 // https://astro.build/config
 export default defineConfig({
   scopedStyleStrategy: 'where',
+  server: {
+    host: true
+  },
   experimental: {
     fonts: [
       {

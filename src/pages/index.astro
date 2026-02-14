@@ -6,7 +6,6 @@ import GalleryText from "../components/GalleryText.astro";
 import Faqs from "../components/Faqs.astro";
 import StepsTimeline from "../components/StepsTimeline.astro";
 import Statements from "../components/Statements.astro";
-import Introducing from "../components/Introducing.astro";
 import Button from "../components/Button.astro";
 import GL from "../components/GLNetwork.astro";
 import GLPlaces from "../components/GlPlaces.astro";
@@ -29,33 +28,22 @@ const featuredResearch = allResearch
 ---
 
 <Layout title="Home">
-  <section id="overview">
-    <HeroHome
-      title="A new Internet, owned by citizens."
-      subtitle="Reclaim your online experience: search engines, social networks, marketplaces, browsers—locally-operated, globally connected."
-      cta={{
-        title: "Join the Early Community",
-        url: "#early",
-      }}
-      ctaSecondary={{
-        title: "Read the Vision",
-        url: "#vision",
-      }}
-    />
-  </section>
+  <HeroHome
+    title="A new Internet, owned by citizens."
+    subtitle="Reclaim your online experience: search engines, social networks, marketplaces, browsers—locally-operated, globally connected."
+    cta={{
+      title: "Join the Early Community",
+      url: "#early",
+    }}
+    ctaSecondary={{
+      title: "How It Works",
+      url: "#vision",
+    }}
+  />
 
   <section id="vision">
-    <Introducing
-      title="Reclaim your online experience from centralized platforms."
-      text="Citinet provides everything you use online—browsers, search engines, social networks, marketplaces, messaging, email—but operated by citizens, not corporations."
-      cta={{
-        title: "Explore the Vision",
-        url: "#vision",
-      }}
-    />
-
     <StepsTimeline
-      title="What it's all about"
+      title="How it works"
       items={[
         {
           title: "Local-first by design",
@@ -78,25 +66,25 @@ const featuredResearch = allResearch
       title="Privacy. Independence. Community."
       text="Instead of relying on corporate search engines, social networks, and marketplaces, Citinet lets everyday people operate small, simple nodes—providing browsers, search, social, commerce—that contribute to a larger, citizen-owned network."
       cta={{
-        title: "See the Story",
-        url: "#vision",
+        title: "See the Principles",
+        url: "#principles",
       }}
       images={[
         {
           alt: "Local-first spaces",
-          src: "/image-1.jpg",
+          src: "/home-setup.jpg",
           width: 6000,
           height: 4000,
         },
         {
           alt: "Private communication",
-          src: "/image-2.jpg",
+          src: "/network-setup.jpg",
           width: 2689,
           height: 4032,
         },
         {
           alt: "Community connection",
-          src: "/image-3.jpg",
+          src: "/networking-globe.jpg",
           width: 3734,
           height: 5359,
         },
@@ -198,7 +186,7 @@ const featuredResearch = allResearch
         {
           question: "What services does Citinet include?",
           answer:
-            "Everything you use online: citizen-operated browsers, search engines, social networks, marketplaces, messaging, email, identity systems, and cloud storage. It's the complete online experience, reimagined for citizens.",
+            "Everything you use online: citizen-operated browsers, search engines, social networks, marketplaces, messaging, email, identity systems, and cloud storage. It's the complete online experience, reimagined for real people not corporations or governments.",
         },
         {
           question: "What makes it different?",
@@ -208,7 +196,7 @@ const featuredResearch = allResearch
         {
           question: "Is this a new Internet?",
           answer:
-            "Citinet uses the physical Internet infrastructure, but replaces the centralized platforms dominating it. Instead of corporate search engines, social networks, and marketplaces controlling your experience, citizens operate the infrastructure you use.",
+            "Citinet uses the physical Internet infrastructure, but replaces the centralized platforms dominating it. Instead of corporate search engines, social networks, and marketplaces controlling your experience, your own neighbors and local communities operate the infrastructure you use.",
         },
         {
           question: "Who is it for?",

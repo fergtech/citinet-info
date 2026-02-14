@@ -5,7 +5,7 @@ community: "Pioneer Housing Cooperative"
 location: "Berkeley, California"
 category: "cooperative"
 date: 2025-10-22T00:00:00.000Z
-featured: true
+featured: false
 ---
 
 ## The Context

@@ -10,9 +10,9 @@ const { title } = Astro.props;
 const t = useTranslations();
 
 const links = [
-  { title: "Overview", url: "#overview" },
-  { title: "Vision", url: "#vision" },
-  { title: "Principles", url: "#principles" },
+  { title: "How It Works", url: "/#vision" },
+  { title: "Ecosystem", url: "/#ecosystem" },
+  { title: "Principles", url: "/#principles" },
   { title: "Research", url: "/research" },
   { title: "Cases", url: "/cases" },
   { title: "FAQ", url: "/#faq" },
@@ -25,21 +25,21 @@ const links = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <Font cssVariable="--font-roboto-slab" preload />
     <Font cssVariable="--font-inter" preload />
-    <title>{title} | Citinet - Citizens Internet Project</title>
+    <title>{title} | citinet - Citizens' Internet Project</title>
   </head>
   <body>
     <a href="#main" class="skip-link">{t("accessibility.skip-to-content")}</a>
     <Header
       logoUrl="/"
-      logoAlt="Citinet"
+      logoAlt="citinet"
       links={links}
-      link1={{ title: "Connect", url: "/connect" }}
+      link1={{ title: "Get Involved", url: "/connect" }}
       link2={{ title: "Get started", url: "#" }}
     />
     <main id="main">
       <slot />
     </main>
-    <Footer logoUrl="/" logoAlt="Citinet" links={links} />
+    <Footer logoUrl="/" logoAlt="citinet" links={links} />
     <SmoothScroll />
   </body>
 </html>

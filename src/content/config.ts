@@ -11,6 +11,7 @@ const casesCollection = defineCollection({
     date: z.date(),
     image: z.string().optional(),
     featured: z.boolean().default(false),
+    status: z.enum(['ongoing', 'complete', 'pilot']).default('complete'),
   }),
 });
 

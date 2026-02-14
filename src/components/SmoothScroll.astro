@@ -30,6 +30,50 @@
     window.scrollDirection = lenis.direction;
     window.scrollCurrent = lenis.animatedScroll;
   });
+
+  // Handle hash navigation on page load
+  window.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash;
+    if (hash) {
+      // Wait a bit for everything to load and initialize
+      setTimeout(() => {
+        const target = document.querySelector(hash);
+        if (target) {
+          lenis.scrollTo(target as HTMLElement, {
+            offset: 0,
+            duration: 1.2,
+          });
+        }
+      }, 100);
+    }
+  });
+
+  // Handle hash navigation when clicking links
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    const link = target.closest('a');
+    
+    if (link && link.hash) {
+      const url = new URL(link.href);
+      const currentPath = window.location.pathname;
+      
+      // Only handle if we're staying on the same page or going to index
+      if (url.pathname === currentPath || (url.pathname === '/' && url.hash)) {
+        const targetEl = document.querySelector(link.hash);
+        if (targetEl) {
+          e.preventDefault();
+          lenis.scrollTo(targetEl as HTMLElement, {
+            offset: 0,
+            duration: 1.2,
+          });
+          // Update URL without triggering navigation
+          if (url.pathname === currentPath) {
+            window.history.pushState(null, '', link.hash);
+          }
+        }
+      }
+    }
+  });
 </script>
 
 <style>
