@@ -15,7 +15,7 @@ const links = [
   { title: "Principles", url: "#principles" },
   { title: "Research", url: "/research" },
   { title: "Cases", url: "/cases" },
-  { title: "FAQ", url: "#faq" },
+  { title: "FAQ", url: "/#faq" },
 ];
 ---
 
@@ -25,21 +25,21 @@ const links = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <Font cssVariable="--font-roboto-slab" preload />
     <Font cssVariable="--font-inter" preload />
-    <title>{title} | CITINET - Citizens Inter-networking Platform</title>
+    <title>{title} | Citinet - Citizens Internet Project</title>
   </head>
   <body>
     <a href="#main" class="skip-link">{t("accessibility.skip-to-content")}</a>
     <Header
       logoUrl="/"
-      logoAlt="CITINET"
+      logoAlt="Citinet"
       links={links}
       link1={{ title: "Connect", url: "/connect" }}
-      link2={{ title: "Join Network", url: "#" }}
+      link2={{ title: "Get started", url: "#" }}
     />
     <main id="main">
       <slot />
     </main>
-    <Footer logoUrl="/" logoAlt="CITINET" links={links} />
+    <Footer logoUrl="/" logoAlt="Citinet" links={links} />
     <SmoothScroll />
   </body>
 </html>

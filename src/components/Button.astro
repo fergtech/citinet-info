@@ -138,6 +138,17 @@ const attrs =
       --border-color: var(--btn-border-color, var(--color-text-alt));
     }
 
+    &:global(.btn-secondary) {
+      --text-color: var(--color-brand-1);
+      --border-color: var(--color-brand-1);
+      --hover-text-color: var(--color-bg);
+      --hover-bg-color: var(--color-brand-1);
+
+      > span > span {
+        background: var(--color-bg);
+      }
+    }
+
     &:hover,
     &:focus {
       > span {
