@@ -126,7 +126,7 @@ const { title, subtitle, items } = Astro.props;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     position: relative;
     padding: 2px;
-    background: var(--color-white);
+    background: var(--color-surface);
     overflow: hidden;
 
     &:last-child {
@@ -134,8 +134,9 @@ const { title, subtitle, items } = Astro.props;
       &:after {
         background: linear-gradient(
           135deg,
-          var(--color-brand-3) 0%,
-          var(--color-brand-1) 100%
+          var(--color-brand-2) 0%,   /* Purple */
+          var(--color-brand-1) 50%,  /* Pink */
+          var(--color-brand-3) 100%  /* Blue */
         );
         border-radius: 1rem;
         content: "";
@@ -151,7 +152,7 @@ const { title, subtitle, items } = Astro.props;
   }
 
   .plan-inner {
-    background: var(--color-white);
+    background: var(--color-surface);
     border-radius: 0.9rem;
     padding: 2rem;
   }
@@ -208,7 +209,7 @@ const { title, subtitle, items } = Astro.props;
       }
 
       &.available {
-        color: var(--color-brand-5);
+        color: var(--color-brand-1); /* Pink */
       }
     }
   }

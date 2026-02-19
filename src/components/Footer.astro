@@ -1,6 +1,6 @@
 ---
 import type { Link } from "../types";
-import logoImage from "../assets/logo-new3.png";
+//import logoImage from "../assets/logo-new3.png";
 
 interface Props {
   logoUrl: string;
@@ -16,8 +16,8 @@ const { logoUrl, logoAlt, links } = Astro.props;
     <div class="inner u-container">
       <div class="wrapper">
         <a class="logo" href={logoUrl}>
-          <img src={logoImage.src} alt="" class="logo-image" />
-          <span class="logo-text">citinet</span>
+          <!--  <img src={logoImage.src} alt="" class="logo-image" /> -->
+          <span class="logo-text">[citinet]</span>
           <span class="u-sr-only">{logoAlt}</span>
         </a>
 
@@ -52,7 +52,7 @@ const { logoUrl, logoAlt, links } = Astro.props;
   }
 
   footer {
-    background: var(--color-brand-3);
+    background: var(--color-surface);
     color: var(--color-text);
     position: fixed;
     bottom: 0;

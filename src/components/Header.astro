@@ -1,7 +1,7 @@
 ---
 import Button from "./Button.astro";
 import type { Link } from "../types";
-import logoImage from "../assets/logo-new3.png";
+//import logoImage from "../assets/logo3-white.png";
 
 interface Props {
   logoUrl: string;
@@ -19,8 +19,8 @@ const { logoUrl, logoAlt, link1, link2, links } = Astro.props;
     <div class="inner u-container">
       <div class="wrapper">
         <a class="logo" href={logoUrl}>
-          <img src={logoImage.src} alt="" class="logo-image" />
-          <span class="logo-text">citinet</span>
+          <!--  <img src={logoImage.src} alt="" class="logo-image" /> -->
+          <span class="logo-text">[citinet]</span>
           <span class="u-sr-only">{logoAlt}</span>
         </a>
 
