@@ -148,8 +148,37 @@ const { logoUrl, logoAlt, link1, link2, links } = Astro.props;
     font-weight: 500;
     font-size: 1.1rem;
     letter-spacing: 0.02em;
-    color: var(--color-text);
+      color: var(--color-text);
+        background: repeating-linear-gradient(70deg,
+          var(--color-text) 0%,
+          var(--color-text) 5%,
+          rgb(255, 200, 255) 20%,   /* Purple */
+          var(--color-text) 30%,
+          rgb(255, 237, 250) 40%,   /* Blue */
+          var(--color-text) 50%,
+          rgb(255, 211, 244) 60%,   /* Pink */
+          var(--color-text) 70%,
+          var(--color-text) 100%
+        );
+      background-size: 300% 100%;
+      background-position: 0% 0%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: logo-wave 4s linear infinite;
+}
+
+@keyframes logo-wave {
+  0% {
+    background-position: 0% 0%;
   }
+    80% {
+      background-position: 100% 0%;
+    }
+    100% {
+      background-position: 100% 0%;
+    }
+}
 
   .menu {
     display: flex;
