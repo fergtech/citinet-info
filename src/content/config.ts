@@ -26,6 +26,7 @@ const researchCollection = defineCollection({
     category: z.enum(['surveillance', 'environment', 'economics', 'privacy', 'governance', 'health']),
     date: z.date(),
     featured: z.boolean().default(false),
+    externalLink: z.string().url().optional(),
   }),
 });
 

@@ -96,6 +96,8 @@ const { images, class: className } = Astro.props;
 
 <script>
   import { gsap } from "gsap";
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore: GSAP types casing mismatch on case-insensitive filesystems
   import { Draggable } from "gsap/Draggable";
   import { InertiaPlugin } from "gsap/InertiaPlugin";
   import { addResizeObserver } from "../utils/observers";
@@ -207,7 +209,7 @@ const { images, class: className } = Astro.props;
         },
         onDrag: this.onUpdate,
         onThrowUpdate: this.onUpdate,
-      })[0];
+      })[0]!;
     }
 
     onUpdate = () => {
@@ -223,8 +225,8 @@ const { images, class: className } = Astro.props;
         item.style.setProperty("--ix", `${progress * (-1 / 1.5) * 100}%`);
       });
 
-      buttons[currentIndex].classList.remove("is-active");
-      buttons[index].classList.add("is-active");
+      buttons[currentIndex]?.classList.remove("is-active");
+      buttons[index]?.classList.add("is-active");
 
       this.currentIndex = index;
     };

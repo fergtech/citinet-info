@@ -62,8 +62,8 @@ const { title, items } = Astro.props;
         onUpdate: (st) => {
           const index = Math.round(st.progress * (items.length - 1));
           if (index !== current) {
-            items[current].classList.remove("is-active");
-            items[index].classList.add("is-active");
+            items[current]?.classList.remove("is-active");
+            items[index]?.classList.add("is-active");
             current = index;
           }
         },
