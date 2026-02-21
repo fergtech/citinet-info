@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navigation } from '../app/components/Navigation';
+import { HeroSection } from '../app/components/HeroSection';
+import { MovementStatement } from '../app/components/MovementStatement';
+import { NetworkExplainer } from '../app/components/NetworkExplainer';
+import { SpacesShowcase } from '../app/components/SpacesShowcase';
+import { FeaturesGrid } from '../app/components/FeaturesGrid';
+import { HowItWorks } from '../app/components/HowItWorks';
+import { Roadmap } from '../app/components/Roadmap';
+import { FinalCTA } from '../app/components/FinalCTA';
+---
+
+<Layout title="Citinet — Community Internet">
+  <div class="min-h-screen bg-slate-950 text-white overflow-x-hidden">
+    <Navigation client:load />
+    <HeroSection client:only="react" />
+    <MovementStatement client:only="react" />
+    <NetworkExplainer client:only="react" />
+    <SpacesShowcase client:only="react" />
+    <FeaturesGrid client:only="react" />
+    <HowItWorks client:only="react" />
+    <Roadmap client:only="react" />
+    <FinalCTA client:only="react" />
+  </div>
+</Layout>
