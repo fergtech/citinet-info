@@ -1,9 +1,25 @@
 import { motion } from 'motion/react';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ArrowRight, Sparkles, BookOpen } from 'lucide-react';
+import { ManifestoModal } from './ManifestoModal';
 
 export function HeroSection() {
+  const [manifestoOpen, setManifestoOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = manifestoOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [manifestoOpen]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setManifestoOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-950 via-slate-900 to-emerald-950">
+    <>
+      {manifestoOpen && <ManifestoModal onClose={() => setManifestoOpen(false)} />}
+      <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-950 via-slate-900 to-emerald-950">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img 
@@ -69,12 +85,18 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <button className="group px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 flex items-center gap-2">
+          <a href="https://citinet.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer" className="group px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 flex items-center gap-2">
             Start a Hub
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </button>
-          <button className="px-8 py-4 bg-white/5 backdrop-blur-sm text-white border border-white/20 rounded-xl font-semibold hover:bg-white/10 transition-all duration-300">
-            Learn the Movement
+          </a>
+          <button
+            onClick={() => setManifestoOpen(true)}
+            className="group px-8 py-4 bg-white/5 backdrop-blur-sm text-white border border-white/20 rounded-xl font-semibold hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
+          >
+            <BookOpen className="w-5 h-5" />
+            Read the Manifesto
           </button>
         </motion.div>
 
@@ -95,5 +117,6 @@ export function HeroSection() {
         </motion.div>
       </div>
     </section>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useInView } from 'motion/react';
 import { useRef } from 'react';
-import { Rocket, Network, Globe, Sparkles } from 'lucide-react';
+import { Rocket, Network, Globe, Sparkles, Github } from 'lucide-react';
 
 export function Roadmap() {
   const ref = useRef(null);
@@ -184,12 +184,23 @@ export function Roadmap() {
           transition={{ duration: 0.8, delay: 1.5 }}
           className="mt-20 text-center"
         >
-          <p className="text-lg text-slate-300 mb-4">
+          <p className="text-lg text-slate-300 mb-6">
             Want to influence the roadmap?
           </p>
-          <button className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 hover:scale-105">
-            Join the Community
-          </button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <button className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 hover:scale-105">
+              Join the Community
+            </button>
+            <a
+              href="https://github.com/fergtech/citinet-client"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2.5 px-8 py-4 bg-white/5 border border-white/15 text-slate-300 hover:text-white hover:border-white/30 hover:bg-white/10 rounded-xl font-semibold transition-all duration-300"
+            >
+              <Github className="w-5 h-5" />
+              View on GitHub
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>
