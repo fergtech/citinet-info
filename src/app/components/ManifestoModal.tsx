@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { BookOpen, X, Download } from 'lucide-react';
-import manifestoText from '../../../manifesto.md?raw';
+import manifestoText from '../../manifesto.md?raw';
 
 function inlineParse(str: string): React.ReactNode {
   const parts = str.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g);
