@@ -14,13 +14,13 @@ import { FinalCTA } from '../app/components/FinalCTA';
 <Layout title="Citinet — Citizens' Internet Project">
   <div class="min-h-screen bg-slate-950 text-white overflow-x-hidden">
     <Navigation client:load />
-    <HeroSection client:only="react" />
-    <MovementStatement client:only="react" />
-    <NetworkExplainer client:only="react" />
-    <SpacesShowcase client:only="react" />
-    <FeaturesGrid client:only="react" />
-    <HowItWorks client:only="react" />
-    <Roadmap client:only="react" />
-    <FinalCTA client:only="react" />
+    <div id="hero"><HeroSection client:only="react" /></div>
+    <div id="movement"><MovementStatement client:only="react" /></div>
+    <div id="network"><NetworkExplainer client:only="react" /></div>
+    <div id="spaces"><SpacesShowcase client:only="react" /></div>
+    <div id="features"><FeaturesGrid client:only="react" /></div>
+    <div id="how-it-works"><HowItWorks client:only="react" /></div>
+    <div id="roadmap"><Roadmap client:only="react" /></div>
+    <div id="cta"><FinalCTA client:only="react" /></div>
   </div>
 </Layout>
