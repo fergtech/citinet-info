@@ -58,14 +58,13 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight"
+          className="text-3xl xs:text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight break-words"
         >
           Citizens' Internet.
           <br />
-          <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">
-            The Community‑Owned
-            <br />
-            Cloud Network
+          <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent block">
+            <span className="block xs:inline">The Community‑Owned</span>
+            <span className="block xs:inline"> Cloud Network</span>
           </span>
         </motion.h1>
 
