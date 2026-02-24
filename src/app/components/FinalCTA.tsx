@@ -11,6 +11,7 @@ export function FinalCTA() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [manifestoOpen, setManifestoOpen] = useState(false);
+  const [comingSoonOpen, setComingSoonOpen] = useState(false);
 
   // Lock body scroll while modal is open
   useEffect(() => {
@@ -28,6 +29,25 @@ export function FinalCTA() {
   return (
     <>
       {manifestoOpen && <ManifestoModal onClose={() => setManifestoOpen(false)} />}
+      {comingSoonOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="bg-slate-900 rounded-2xl shadow-2xl p-8 max-w-xs w-full text-center border border-slate-700">
+            <div className="mb-4 flex justify-center">
+              <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-emerald-500">
+                <Heart className="w-7 h-7 text-white fill-white" />
+              </span>
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">Coming Soon</h3>
+            <p className="text-slate-300 mb-6 text-sm">Spaces &amp; community nodes are launching soon.<br />Stay tuned to join the movement!</p>
+            <button
+              onClick={() => setComingSoonOpen(false)}
+              className="mt-2 px-6 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-bold shadow hover:scale-105 transition-transform"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
 
       <section id="cta" ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-emerald-950">
         {/* Background Image with Overlay */}
@@ -115,7 +135,11 @@ export function FinalCTA() {
               Start a Hub
               <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </a>
-            <button className="px-10 py-5 bg-gradient-to-r from-emerald-500 to-green-500 text-white text-lg rounded-xl font-bold shadow-2xl shadow-emerald-500/40 hover:shadow-emerald-500/60 transition-all duration-300 hover:scale-105 flex items-center gap-3">
+            <button
+              className="px-10 py-5 bg-gradient-to-r from-emerald-500 to-green-500 text-white text-lg rounded-xl font-bold shadow-2xl shadow-emerald-500/40 hover:shadow-emerald-500/60 transition-all duration-300 hover:scale-105 flex items-center gap-3"
+              onClick={() => setComingSoonOpen(true)}
+              aria-label="Join the Community (Coming Soon)"
+            >
               Join the Community
               <Heart className="w-6 h-6" />
             </button>
