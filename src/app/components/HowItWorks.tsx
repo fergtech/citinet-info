@@ -8,16 +8,12 @@ export function HowItWorks() {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   const steps = [
-    { title: "Pick a Hub Name", description: "Choose a unique identifier for your community (or yourself)" },
-    { title: "Select Hosting", description: "Cloud-hosted or self-hosted — your choice" },
-    { title: "Configure Network", description: "Set up your local network parameters (storage allocation, compute power etc)" },
-    { title: "Create Admin Account", description: "Secure your hub with sovereign credentials" },
-    { title: "Define Initial Spaces", description: "Create your first community spaces (if you want)" },
-    { title: "Set Permissions", description: "Configure roles and access control" },
-    { title: "Cloudflare Integration", description: "Auto-configure global access at {node}.citinet.io (until secure tunnels are capable in-house)" },
-    { title: "Invite Members", description: "Send invites to your node (or keep it to yourself)" },
-    { title: "Customize Branding", description: "Make it yours with logos and colors" },
-    { title: "Launch Your Hub", description: "Go live and take control!" }
+    { title: "Name Your Hub", description: "Choose a unique identity for your community — your hub's address on the network" },
+    { title: "Pick Your Hardware", description: "Any machine works: a spare PC, Raspberry Pi, home server, NAS, or cloud VM" },
+    { title: "Run the Hub Stack", description: "Docker Compose brings up all hub services in minutes — storage, users, API, discussions" },
+    { title: "Choose Your Gateway", description: "Make your hub reachable your way: Tailscale, Cloudflare, a reverse proxy, or local-only — your call" },
+    { title: "Create Admin Account", description: "Secure your hub with sovereign credentials and configure roles and access" },
+    { title: "Invite Your Community", description: "Share your hub URL and let your neighbors join. Go live and take control." }
   ];
 
   return (
@@ -30,14 +26,14 @@ export function HowItWorks() {
           className="text-center mb-20"
         >
           <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            Start a Hub in
+            How Citinet
             <br />
             <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-              10 Simple Steps
+              Works
             </span>
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            Our guided wizard takes you from zero to sovereign in minutes.
+            Choose your hardware. Pick your connectivity. Own your community.
           </p>
         </motion.div>
 
@@ -68,7 +64,7 @@ export function HowItWorks() {
                   <div className="bg-slate-800/30 border border-white/10 rounded-xl p-6 group-hover:border-cyan-500/50 group-hover:bg-slate-800/50 transition-all duration-300">
                     <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
                       {step.title}
-                      {index === 9 && <CheckCircle2 className="w-5 h-5 text-emerald-400" />}
+                      {index === 5 && <CheckCircle2 className="w-5 h-5 text-emerald-400" />}
                     </h3>
                     <p className="text-slate-400">{step.description}</p>
                   </div>
@@ -78,13 +74,14 @@ export function HowItWorks() {
           </div>
         </div>
 
-        {/* Cloudflare Callout */}
+        {/* Callout boxes */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="mt-20 max-w-3xl mx-auto"
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-20 max-w-3xl mx-auto space-y-6"
         >
+          {/* Infrastructure agnostic callout */}
           <div className="relative bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl p-8 overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl" />
             <div className="relative z-10 flex items-start gap-4">
@@ -96,8 +93,26 @@ export function HowItWorks() {
                   Globally Accessible, Locally Owned
                 </h3>
                 <p className="text-slate-300 leading-relaxed">
-                  Your hub becomes reachable globally at <code className="px-2 py-1 bg-slate-800/50 rounded text-cyan-400 font-mono">{"{node}"}.citinet.io</code> — automatically configured through Cloudflare Tunnel. 
-                  No complicated networking required. This essentially replaces most data-centers that currently dominates the internet! ;)
+                  Your hub gets a stable identity at{' '}
+                  <code className="px-2 py-1 bg-slate-800/50 rounded text-cyan-400 font-mono">{"{name}"}.citinet.cloud</code>{' '}
+                  — reachable worldwide via whatever gateway your community chooses. Tailscale, Cloudflare, a reverse proxy, or anything else. No single provider required. No lock-in. Ever.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Coming soon: launcher teaser */}
+          <div className="relative bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 border border-emerald-500/30 rounded-2xl p-6 overflow-hidden">
+            <div className="relative z-10 flex items-center gap-4">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+              </div>
+              <div>
+                <p className="text-white font-semibold text-sm mb-0.5">
+                  Not a sysadmin? No problem. <span className="text-emerald-400">Coming soon:</span> a one-click hub launcher.
+                </p>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  A simple desktop tool that installs Docker, pulls the Citinet hub stack, and configures your network automatically — no terminal required.
                 </p>
               </div>
             </div>

@@ -11,16 +11,16 @@ export function NetworkExplainer() {
     {
       icon: Server,
       title: "Hub Node",
-      subtitle: "Community Micro‑Data‑Center",
-      description: "Hosted by libraries, schools, or neighborhood groups. The heart of your community's digital sovereignty.",
+      subtitle: "Community‑Run Server",
+      description: "A spare PC, Raspberry Pi, home server, or VPS — any machine can be a hub. The heart of your community's digital sovereignty.",
       color: "from-cyan-500 to-blue-500",
       glowColor: "cyan"
     },
     {
       icon: Smartphone,
-      title: "Client Node",
-      subtitle: "Participant Device",
-      description: "Your phone, laptop, or tablet connecting to the hub. Access community spaces securely from anywhere.",
+      title: "Web Client",
+      subtitle: "Browser‑Based Participant",
+      description: "Access your community hub from any device, any browser. No installation required — just open citinet.cloud and connect.",
       color: "from-blue-500 to-purple-500",
       glowColor: "blue"
     },
@@ -28,7 +28,7 @@ export function NetworkExplainer() {
       icon: User,
       title: "Personal Node",
       subtitle: "Sovereign Personal Copy",
-      description: "Your own data, synced and owned by you. Take it with you, back it up, keep it private.",
+      description: "Your own data, portable and owned entirely by you. Sync across devices, back it up, keep it independent of any single hub.",
       color: "from-purple-500 to-emerald-500",
       glowColor: "emerald"
     }
