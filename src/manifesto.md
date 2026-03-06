@@ -2,7 +2,7 @@
 
 ## A Declaration for Sovereign Digital Infrastructures
 
-**2026 Draft — editable**
+**2026 Draft**
 
 ---
 
