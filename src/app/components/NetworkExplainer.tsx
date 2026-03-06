@@ -82,21 +82,21 @@ export function NetworkExplainer() {
                   className="relative group"
                 >
                   {/* Card */}
-                  <div className="relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm border border-white/10 rounded-3xl p-8 h-full hover:border-white/30 transition-all duration-500">
+                  <div className="relative isolate bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm border border-white/10 rounded-3xl p-8 h-full hover:border-white/30 transition-all duration-500">
                     {/* Glow effect */}
-                    <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl blur-xl bg-gradient-to-br ${node.color}`} 
-                         style={{ zIndex: -1 }} 
+                    <div
+                      className={`pointer-events-none absolute -inset-2 -z-10 opacity-0 group-hover:opacity-30 transition-opacity duration-500 rounded-[2rem] blur-2xl bg-gradient-to-br ${node.color}`}
                     />
                     
                     {/* Icon */}
-                    <div className={`relative w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${node.color} p-[2px] group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`relative z-10 w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${node.color} p-[2px] group-hover:scale-110 transition-transform duration-300`}>
                       <div className="w-full h-full bg-slate-900 rounded-2xl flex items-center justify-center">
                         <Icon className="w-10 h-10 text-white" />
                       </div>
                     </div>
 
                     {/* Content */}
-                    <div className="text-center">
+                    <div className="relative z-10 text-center">
                       <h3 className="text-2xl font-bold text-white mb-2">{node.title}</h3>
                       <p className="text-sm font-semibold text-transparent bg-gradient-to-r bg-clip-text mb-4" 
                          style={{ 

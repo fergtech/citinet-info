@@ -84,7 +84,7 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <a href="https://citinet.vercel.app"
+          <a href="https://citinet-portal.vercel.app"
             target="_blank"
             rel="noopener noreferrer" className="group px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 flex items-center gap-2">
             Start a Hub

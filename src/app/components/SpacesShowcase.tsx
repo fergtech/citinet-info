@@ -11,7 +11,7 @@ export function SpacesShowcase() {
     {
       icon: BookOpen,
       name: "Library",
-      url: "hub-name.citinet.io/library",
+      url: "hub-name.citinet.cloud/library",
       description: "Shared resources, digital archives, and community knowledge",
       image: "https://images.unsplash.com/photo-1768467040905-aa7081a2a8a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaWJyYXJ5JTIwYm9va3MlMjBjb21tdW5pdHklMjBzcGFjZXxlbnwxfHx8fDE3NzE2MTk1NjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
       color: "from-blue-500 to-cyan-500"
@@ -19,7 +19,7 @@ export function SpacesShowcase() {
     {
       icon: Home,
       name: "Commons",
-      url: "hub-name.citinet.io/commons",
+      url: "hub-name.citinet.cloud/commons",
       description: "Town square for announcements, discussions, and community decisions",
       image: "https://images.unsplash.com/photo-1730342582682-1447653f62b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBnYXRoZXJpbmclMjBuZWlnaGJvcmhvb2QlMjBwZW9wbGUlMjBjb2xsYWJvcmF0aW5nfGVufDF8fHx8MTc3MTYxOTU2NXww&ixlib=rb-4.1.0&q=80&w=1080",
       color: "from-emerald-500 to-green-500"
@@ -27,7 +27,7 @@ export function SpacesShowcase() {
     {
       icon: Flower2,
       name: "Garden Club",
-      url: "hub-name.citinet.io/garden",
+      url: "hub-name.citinet.cloud/garden",
       description: "Coordinate plantings, share seeds, and organize work parties",
       image: "https://images.unsplash.com/photo-1763633923615-a2cdebba3bfd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBnYXJkZW4lMjB1cmJhbiUyMGZhcm1pbmd8ZW58MXx8fHwxNzcxNTczNjc0fDA&ixlib=rb-4.1.0&q=80&w=1080",
       color: "from-green-500 to-lime-500"
@@ -35,7 +35,7 @@ export function SpacesShowcase() {
     {
       icon: GraduationCap,
       name: "School District",
-      url: "citinet.io/schools",
+      url: "hub-name.citinet.cloud/schools",
       description: "Classrooms, assignments, parent communication, and student resources",
       image: "https://images.unsplash.com/photo-1574740637579-9ca0a610e491?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwZW9wbGUlMjBoYW5kcyUyMHRvZ2V0aGVyJTIwY29sbGFib3JhdGlvbnxlbnwxfHx8fDE3NzE2MTk1Njd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       color: "from-purple-500 to-pink-500"
@@ -43,7 +43,7 @@ export function SpacesShowcase() {
     {
       icon: Building2,
       name: "Neighborhood Assoc.",
-      url: "your-neighborhood.citinet.io",
+      url: "your-neighborhood.citinet.cloud",
       description: "HOA documents, event planning, and neighbor networking",
       image: "https://images.unsplash.com/photo-1770938474403-a16353e18bf3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZWlnaGJvcmhvb2QlMjBzdHJlZXQlMjBhZXJpYWwlMjB2aWV3fGVufDF8fHx8MTc3MTYxOTU2Nnww&ixlib=rb-4.1.0&q=80&w=1080",
       color: "from-orange-500 to-red-500"
@@ -51,7 +51,7 @@ export function SpacesShowcase() {
     {
       icon: Users,
       name: "Your Space",
-      url: "your-community.citinet.io",
+      url: "your-community.citinet.cloud",
       description: "Create any space your community needs — it's yours to define",
       image: "https://images.unsplash.com/photo-1644088379091-d574269d422f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaWdpdGFsJTIwbmV0d29yayUyMGNvbm5lY3Rpb24lMjBhYnN0cmFjdHxlbnwxfHx8fDE3NzE2MTk1Njd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       color: "from-cyan-500 to-blue-500"
@@ -92,7 +92,7 @@ export function SpacesShowcase() {
               <div className="w-3 h-3 rounded-full bg-green-500/70" />
             </div>
             <span className="text-slate-400 font-mono text-sm">
-              <span className="text-emerald-400">your-hub-name</span>.citinet.io/<span className="text-cyan-400">library</span>
+              <span className="text-emerald-400">your-hub-name</span>.citinet.cloud/<span className="text-cyan-400">library</span>
             </span>
           </motion.div>
         </motion.div>
