@@ -14,11 +14,11 @@ export function Roadmap() {
       title: "Local Hub MVP",
       status: "Current",
       features: [
-        "10-step wizard for hub setup",
-        "Core Spaces (Commons, Library)",
-        "File storage & discussions",
-        "Basic user management",
-        "Cloudflare integration"
+        "Hub creation wizard + setup script",
+        "Discussions, feed & messaging",
+        "File storage & exchange",
+        "Community atlas & member directory",
+        "Tailscale Funnel for public access"
       ],
       color: "from-cyan-500 to-blue-500",
       statusColor: "bg-cyan-500"
@@ -29,11 +29,11 @@ export function Roadmap() {
       title: "Rich Features",
       status: "Next",
       features: [
+        "Real-time messaging (Web Push)",
         "Events & calendars",
-        "Marketplace & resources",
-        "Advanced permissions",
-        "Mobile apps (iOS/Android)",
-        "Rich media support"
+        "Advanced member permissions",
+        "Mobile PWA (offline support)",
+        "Hub registry & discovery"
       ],
       color: "from-blue-500 to-purple-500",
       statusColor: "bg-blue-500"
@@ -192,7 +192,7 @@ export function Roadmap() {
               Join the Community
             </button>
             <a
-              href="https://github.com/fergtech/citinet-client"
+              href="https://github.com/fergtech/citinet-web"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2.5 px-8 py-4 bg-white/5 border border-white/15 text-slate-300 hover:text-white hover:border-white/30 hover:bg-white/10 rounded-xl font-semibold transition-all duration-300"

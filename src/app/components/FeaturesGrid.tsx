@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useInView } from 'motion/react';
 import { useRef } from 'react';
-import { HardDrive, MessageCircle, Radio, Calendar, ShoppingBag, Shield, Network, Zap } from 'lucide-react';
+import { HardDrive, MessageCircle, Radio, Map, ShoppingBag, Shield, Server, Lock } from 'lucide-react';
 
 export function FeaturesGrid() {
   const ref = useRef(null);
@@ -11,49 +11,49 @@ export function FeaturesGrid() {
     {
       icon: HardDrive,
       title: "Local File Storage",
-      description: "Upload, organize, and share files within your community; or just for yourself. Your data stays on your hub.",
+      description: "Upload, organize, and share files within your community. Stored in MinIO on your machine — 100 MB per file, no cloud middleman.",
       gradient: "from-blue-500 to-cyan-500"
     },
     {
       icon: MessageCircle,
       title: "Discussions & Messaging",
-      description: "Threaded conversations, direct messages, and group chats — all private and community-owned.",
+      description: "Threaded community posts, direct messages, and group chats — all private, all community-owned, all on your hardware.",
       gradient: "from-purple-500 to-pink-500"
     },
     {
       icon: Radio,
-      title: "Social Microfeeds",
-      description: "Community timelines and activity feeds — no algorithms, no ads, just your neighbors.",
+      title: "Community Feed",
+      description: "Posts in four categories: announcements, discussions, projects, and requests. No algorithm, no ads — just your neighbors.",
       gradient: "from-emerald-500 to-green-500"
     },
     {
-      icon: Calendar,
-      title: "Events & Calendars",
-      description: "Schedule community events, send reminders, and track RSVPs — all in one place.",
+      icon: Map,
+      title: "Community Atlas",
+      description: "A shared map built on OpenStreetMap. Pin meetups, safety alerts, and points of interest — contributed by everyone, controlled by no one.",
       gradient: "from-orange-500 to-red-500"
     },
     {
       icon: ShoppingBag,
-      title: "Marketplace & Resources",
-      description: "Share tools, exchange services, and support local commerce within your community.",
+      title: "Local Exchange",
+      description: "A neighborhood marketplace for goods and services. List, browse, and trade — no platform fees, no algorithmic promotion.",
       gradient: "from-yellow-500 to-orange-500"
     },
     {
       icon: Shield,
-      title: "Spaces & Roles",
-      description: "Granular permissions and access control. Create public spaces, private groups, and everything between.",
+      title: "Admin Controls",
+      description: "The hub creator is the admin. Manage members, moderate tool submissions, and control your hub's visibility and access.",
       gradient: "from-indigo-500 to-purple-500"
     },
     {
-      icon: Network,
-      title: "Federated Networking",
-      description: "Connect with other Citinet hubs. Share resources across communities while maintaining sovereignty.",
+      icon: Server,
+      title: "Runs on Any Hardware",
+      description: "A spare PC, a laptop, a mini PC, a Raspberry Pi. If it can run Docker, it can run a hub. Your hardware, your rules.",
       gradient: "from-cyan-500 to-blue-500"
     },
     {
-      icon: Zap,
-      title: "Real-time Sync",
-      description: "Lightning-fast synchronization across all your devices. Online or offline, your data is always there.",
+      icon: Lock,
+      title: "Privacy by Default",
+      description: "No telemetry. No user profiling. No tracking. Your data is stored locally in PostgreSQL and MinIO — it never leaves your machine.",
       gradient: "from-pink-500 to-rose-500"
     }
   ];
@@ -75,7 +75,7 @@ export function FeaturesGrid() {
             </span>
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            Everything your community needs to thrive digitally — 
+            Everything your community needs to thrive digitally —
             without surrendering to Big Tech.
           </p>
         </motion.div>
@@ -95,7 +95,7 @@ export function FeaturesGrid() {
                 <div className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 h-full hover:border-white/30 transition-all duration-300 overflow-hidden">
                   {/* Animated gradient background on hover */}
                   <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-br ${feature.gradient}`} />
-                  
+
                   <div className="relative z-10">
                     {/* Icon */}
                     <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} p-[2px] mb-4 group-hover:scale-110 transition-transform duration-300`}>
@@ -106,15 +106,15 @@ export function FeaturesGrid() {
 
                     {/* Content */}
                     <h3 className="text-lg font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text transition-all duration-300"
-                        style={{
-                          backgroundImage: `linear-gradient(to right, ${feature.gradient.includes('blue-500') ? '#3b82f6, #06b6d4' : 
-                                                                      feature.gradient.includes('purple-500') ? '#a855f7, #ec4899' :
-                                                                      feature.gradient.includes('emerald-500') ? '#10b981, #22c55e' :
-                                                                      feature.gradient.includes('orange-500') ? '#f97316, #ef4444' :
-                                                                      feature.gradient.includes('yellow-500') ? '#eab308, #f97316' :
-                                                                      feature.gradient.includes('indigo-500') ? '#6366f1, #a855f7' :
-                                                                      feature.gradient.includes('cyan-500') ? '#06b6d4, #3b82f6' : '#ec4899, #f43f5e'})`
-                        }}>
+                      style={{
+                        backgroundImage: `linear-gradient(to right, ${feature.gradient.includes('blue-500') ? '#3b82f6, #06b6d4' :
+                          feature.gradient.includes('purple-500') ? '#a855f7, #ec4899' :
+                          feature.gradient.includes('emerald-500') ? '#10b981, #22c55e' :
+                          feature.gradient.includes('orange-500') ? '#f97316, #ef4444' :
+                          feature.gradient.includes('yellow-500') ? '#eab308, #f97316' :
+                          feature.gradient.includes('indigo-500') ? '#6366f1, #a855f7' :
+                          feature.gradient.includes('cyan-500') ? '#06b6d4, #3b82f6' : '#ec4899, #f43f5e'})`
+                      }}>
                       {feature.title}
                     </h3>
                     <p className="text-sm text-slate-400 leading-relaxed">
