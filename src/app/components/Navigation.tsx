@@ -48,15 +48,12 @@ export function Navigation() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = 80; // Account for fixed nav height
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
       setIsOpen(false);
+      // scrollIntoView is more reliable on mobile than window.scrollTo,
+      // especially when an ancestor has overflow-x: hidden.
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 10);
     }
   };
 
@@ -142,6 +139,7 @@ export function Navigation() {
             opacity: isOpen ? 1 : 0
           }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
+          style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
           className="lg:hidden overflow-hidden"
         >
           <div className="py-4 space-y-1">

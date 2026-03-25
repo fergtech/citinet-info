@@ -70,7 +70,7 @@ export function HeroSection() {
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-cyan-400 leading-none mb-6">
               the people who use it.
             </h1>
-            {/* The opposition — visually distinct, smaller, feels like a counterpoint */}
+            {/* The opposition */}
             <p className="text-xl md:text-2xl font-medium text-slate-300 tracking-tight">
               Not big tech. Not greedy corporations. Not the government.
             </p>
@@ -103,7 +103,7 @@ export function HeroSection() {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
             <a
-              href="https://citinet.vercel.app"
+              href="https://citinet-portal.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
               className="group px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105 flex items-center gap-2"

@@ -76,13 +76,14 @@ export function HowItWorks() {
           </div>
         </div>
 
-        {/* Tailscale Callout */}
+        {/* Callout boxes */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="mt-20 max-w-3xl mx-auto"
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-20 max-w-3xl mx-auto space-y-6"
         >
+          {/* Gateway callout */}
           <div className="relative bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl p-8 overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl" />
             <div className="relative z-10 flex items-start gap-4">
@@ -94,9 +95,24 @@ export function HowItWorks() {
                   Globally Accessible, Locally Owned
                 </h3>
                 <p className="text-slate-300 leading-relaxed">
-                  Tailscale Funnel gives your hub a permanent public HTTPS URL —{' '}
-                  <code className="px-2 py-1 bg-slate-800/50 rounded text-cyan-400 font-mono">your-machine.tail{'<id>'}.ts.net</code>{' '}
-                  — with no port forwarding, no firewall rules, and no cloud middleman. Your data never leaves your machine.
+                  Tailscale Funnel gives your hub a permanent public HTTPS URL — no port forwarding, no firewall rules, no cloud middleman. Prefer Cloudflare or a reverse proxy? Those work too. No single provider required. No lock-in. Ever.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Coming soon: launcher teaser */}
+          <div className="relative bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 border border-emerald-500/30 rounded-2xl p-6 overflow-hidden">
+            <div className="relative z-10 flex items-center gap-4">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+              </div>
+              <div>
+                <p className="text-white font-semibold text-sm mb-0.5">
+                  Not a sysadmin? No problem. <span className="text-emerald-400">Coming soon:</span> a one-click hub launcher.
+                </p>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  A simple desktop tool that installs Docker, pulls the Citinet hub stack, and configures your network automatically — no terminal required.
                 </p>
               </div>
             </div>

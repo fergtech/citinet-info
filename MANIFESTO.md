@@ -2,7 +2,7 @@
 
 ## A Declaration for Sovereign Digital Infrastructures
 
-**2026 Draft — editable**
+**2026 Draft**
 
 ---
 
@@ -118,7 +118,7 @@ Citinet provides the tools to build sovereign clouds:
 - Local file storage and discussion boards
 - Events, microfeeds, internet browsing, search engines, and shared resources
 - Personal Nodes that sync your own copy of your data
-- Optional Cloudflare-backed access at `citinet.vercel.app/node`, and eventually at `{node}.citinet.io`
+- A stable, globally accessible URL at `{name}.citinet.cloud` via whichever gateway your community chooses
 
 Each hub is independent.
 Each one is governed by the people it serves.

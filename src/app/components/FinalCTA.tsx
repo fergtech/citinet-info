@@ -127,7 +127,7 @@ export function FinalCTA() {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
           >
             <a
-              href="https://citinet.vercel.app"
+              href="https://citinet-portal.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
               className="group px-10 py-5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-lg rounded-xl font-bold shadow-2xl shadow-cyan-500/40 hover:shadow-cyan-500/60 transition-all duration-300 hover:scale-105 flex items-center gap-3"
