@@ -10,60 +10,60 @@ export function Roadmap() {
   const phases = [
     {
       icon: Rocket,
-      phase: "Phase 1",
-      title: "Local Hub MVP",
-      status: "Current",
+      phase: "Mission 1",
+      title: "The Foundation",
+      status: "Live",
       features: [
-        "Hub creation wizard + setup script",
-        "Discussions, feed & messaging",
-        "File storage & exchange",
-        "Community atlas & member directory",
-        "Tailscale Funnel for public access"
+        "Hub creation wizard & setup script",
+        "Discussions, feed & threaded replies",
+        "Marketplace, files & community atlas",
+        "Member profiles & civic identity pages",
+        "Tailscale Funnel for public HTTPS access"
       ],
       color: "from-cyan-500 to-blue-500",
       statusColor: "bg-cyan-500"
     },
     {
       icon: Network,
-      phase: "Phase 2",
-      title: "Rich Features",
-      status: "Next",
+      phase: "Mission 2",
+      title: "Depth & Identity",
+      status: "Building",
       features: [
-        "Real-time messaging (Web Push)",
-        "Events & calendars",
-        "Advanced member permissions",
-        "Mobile PWA (offline support)",
-        "Hub registry & discovery"
+        "Spaces — sub-communities within a hub",
+        "Profile pages as personal civic landing pages",
+        "Hub-app ecosystem (open integration contract)",
+        "Early hub-to-hub content sharing",
+        "Hub registry & public discovery"
       ],
       color: "from-blue-500 to-purple-500",
       statusColor: "bg-blue-500"
     },
     {
       icon: Globe,
-      phase: "Phase 3",
-      title: "Federation",
+      phase: "Mission 3",
+      title: "Federation & Resilience",
       status: "Coming",
       features: [
-        "Hub-to-hub networking",
-        "Cross-community resources",
-        "Federated identity",
-        "Inter-hub messaging",
-        "Shared governance tools"
+        "Full federation protocol — hubs as peers",
+        "Portable identity across hubs",
+        "Local-first & offline-capable operation",
+        "Community search (no third-party index)",
+        "Optional local AI — private, on your hardware"
       ],
       color: "from-purple-500 to-emerald-500",
       statusColor: "bg-purple-500"
     },
     {
       icon: Sparkles,
-      phase: "Phase 4",
-      title: "Sovereign Ecosystem",
-      status: "Future",
+      phase: "The Endgame",
+      title: "The Citizens' Web",
+      status: "Vision",
       features: [
-        "Decentralized consensus",
-        "Community tokens",
-        "Advanced AI tools",
-        "Global resilience network",
-        "Full platform sovereignty"
+        "Community wireless co-ops (PtP/PtMP radio)",
+        "Multiple transport modes — internet to mesh",
+        "Graceful degradation down to LoRa/Meshtastic",
+        "True application-layer mesh between hub peers",
+        "Full stack — from software to antenna — community-owned"
       ],
       color: "from-emerald-500 to-cyan-500",
       statusColor: "bg-emerald-500"

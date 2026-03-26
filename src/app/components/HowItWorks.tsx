@@ -101,7 +101,7 @@ export function HowItWorks() {
             </div>
           </div>
 
-          {/* Coming soon: launcher teaser */}
+          {/* Wizard callout */}
           <div className="relative bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 border border-emerald-500/30 rounded-2xl p-6 overflow-hidden">
             <div className="relative z-10 flex items-center gap-4">
               <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
@@ -109,10 +109,10 @@ export function HowItWorks() {
               </div>
               <div>
                 <p className="text-white font-semibold text-sm mb-0.5">
-                  Not a sysadmin? No problem. <span className="text-emerald-400">Coming soon:</span> a one-click hub launcher.
+                  Not a sysadmin? <span className="text-emerald-400">No problem — the wizard handles it.</span>
                 </p>
                 <p className="text-slate-400 text-sm leading-relaxed">
-                  A simple desktop tool that installs Docker, pulls the Citinet hub stack, and configures your network automatically — no terminal required.
+                  The Hub Creation Wizard walks you through every step in your browser and generates a ready-to-run script for your OS. Open a terminal, paste one command, and you're done.
                 </p>
               </div>
             </div>

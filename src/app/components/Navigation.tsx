@@ -20,7 +20,8 @@ export function Navigation() {
     { id: 'spaces', label: 'Spaces' },
     { id: 'features', label: 'Features' },
     { id: 'how-it-works', label: 'How It Works' },
-    { id: 'roadmap', label: 'Roadmap' }
+    { id: 'roadmap', label: 'Roadmap' },
+    { id: 'citizens-web', label: "Citizens' Web" }
   ];
 
   useEffect(() => {

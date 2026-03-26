@@ -162,7 +162,35 @@ It is the **next step beyond** it.
 
 ---
 
-### 9. Call to Action
+### 9. Owning the Physical Layer
+
+Software sovereignty is the beginning — not the end.
+
+The deeper vision for Citinet is a network where communities own not just the software and data running on the internet, but the physical infrastructure that connects them to it.
+
+This is not new. Rural electric cooperatives brought power to communities that private utilities ignored — not by waiting for corporations to build for them, but by organizing, funding, and building it themselves. Community wireless ISPs are already doing the same with internet access in cities like Detroit, New York, and Baltimore.
+
+The model is proven and buildable today:
+
+- A cooperative gateway node: one site with a stable uplink and outdoor radios
+- Point-to-point backhaul links between rooftop relay sites across a neighborhood
+- Sector antennas serving dozens of nearby homes — connecting the same way any Wi-Fi does
+- Governed by the community it serves, funded by the members who use it
+
+Citinet hubs are designed to operate across multiple transport modes so no community is ever locked into a single path:
+
+- Over standard internet (the default starting point)
+- Over a community-run wireless cooperative
+- Over a local mesh with no internet required
+- Over LoRa or Meshtastic for emergency signals and presence beacons when everything else fails
+
+As connectivity improves, Citinet scales up. As connectivity degrades — storm, outage, infrastructure failure — it steps down gracefully. The community keeps functioning.
+
+**This is the endgame.** Not just software that is community-owned, but networks that are community-owned. The full stack — from application layer to antenna — belonging to the people who depend on it.
+
+---
+
+### 10. Call to Action
 
 If you believe:
 
