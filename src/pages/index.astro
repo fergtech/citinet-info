@@ -5,24 +5,20 @@ import { HeroSection } from '../app/components/HeroSection';
 import { MovementStatement } from '../app/components/MovementStatement';
 import { NetworkExplainer } from '../app/components/NetworkExplainer';
 import { SpacesShowcase } from '../app/components/SpacesShowcase';
-import { FeaturesGrid } from '../app/components/FeaturesGrid';
 import { HowItWorks } from '../app/components/HowItWorks';
-import { Roadmap } from '../app/components/Roadmap';
-import { CitizensWeb } from '../app/components/CitizensWeb';
+import { ManifestoQuotes } from '../app/components/ManifestoQuotes';
 import { FinalCTA } from '../app/components/FinalCTA';
 ---
 
-<Layout title="Citinet — Citizens' Internet Project">
+<Layout title="Citinet - Community-Owned Cloud">
   <div class="min-h-screen bg-slate-950 text-white overflow-x-hidden">
     <Navigation client:load />
     <div id="hero"><HeroSection client:only="react" /></div>
     <div id="movement"><MovementStatement client:only="react" /></div>
     <div id="network"><NetworkExplainer client:only="react" /></div>
     <div id="spaces"><SpacesShowcase client:only="react" /></div>
-    <div id="features"><FeaturesGrid client:only="react" /></div>
     <div id="how-it-works"><HowItWorks client:only="react" /></div>
-    <div id="roadmap"><Roadmap client:only="react" /></div>
-    <div id="citizens-web"><CitizensWeb client:only="react" /></div>
+    <div id="declaration"><ManifestoQuotes client:only="react" /></div>
     <div id="cta"><FinalCTA client:only="react" /></div>
   </div>
 </Layout>

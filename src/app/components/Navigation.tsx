@@ -14,14 +14,10 @@ export function Navigation() {
   );
 
   const navItems = [
-    { id: 'hero', label: 'Home' },
-    { id: 'movement', label: 'Movement' },
-    { id: 'network', label: 'Network' },
-    { id: 'spaces', label: 'Spaces' },
-    { id: 'features', label: 'Features' },
-    { id: 'how-it-works', label: 'How It Works' },
-    { id: 'roadmap', label: 'Roadmap' },
-    { id: 'citizens-web', label: "Citizens' Web" }
+    { id: 'hero',         label: 'Home' },
+    { id: 'phases',       label: 'How It Works' },
+    { id: 'how-it-works', label: 'Get Started' },
+    { id: 'cta',          label: 'Start a Hub' },
   ];
 
   useEffect(() => {
@@ -68,12 +64,15 @@ export function Navigation() {
           {/* Logo */}
           <motion.button
             onClick={() => scrollToSection('hero')}
-            className="flex items-center gap-2 group"
+            className="flex items-center gap-2.5 group"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-             
-            <span className="text-xl font-bold text-white">[citinet]</span>
+            <img src="/imgs/logo/logo.png" alt="Citinet" className="h-8 w-auto" />
+            <div className="flex flex-col leading-none items-start">
+              <span className="text-xl font-bold text-white tracking-tight">Citinet</span>
+              <span className="text-[10px] text-slate-400 font-medium tracking-wide">Citizens' Internet Project</span>
+            </div>
           </motion.button>
 
           {/* Desktop Navigation */}
@@ -84,7 +83,7 @@ export function Navigation() {
                 onClick={() => scrollToSection(item.id)}
                 className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                   activeSection === item.id
-                    ? 'text-cyan-400'
+                    ? 'text-violet-400'
                     : 'text-slate-300 hover:text-white'
                 }`}
               >
@@ -92,7 +91,7 @@ export function Navigation() {
                 {activeSection === item.id && (
                   <motion.div
                     layoutId="activeSection"
-                    className="absolute inset-0 bg-cyan-500/10 border border-cyan-500/30 rounded-lg -z-10"
+                    className="absolute inset-0 bg-violet-500/10 border border-violet-500/30 rounded-lg -z-10"
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -103,7 +102,7 @@ export function Navigation() {
           {/* CTA Button - Desktop */}
           <div className="hidden lg:flex items-center gap-3">
             <a
-              href="https://github.com/fergtech/citinet-client"
+              href="https://github.com/fergtech/citinet"
               target="_blank"
               rel="noopener noreferrer"
               className="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-all duration-200"
@@ -113,7 +112,7 @@ export function Navigation() {
             </a>
             <button
               onClick={() => scrollToSection('cta')}
-              className="px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 hover:scale-105"
+              className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-600/30 transition-all duration-300 hover:scale-105"
             >
               Start a Hub
             </button>
@@ -150,7 +149,7 @@ export function Navigation() {
                 onClick={() => scrollToSection(item.id)}
                 className={`block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
                   activeSection === item.id
-                    ? 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/30'
+                    ? 'text-violet-400 bg-violet-500/10 border border-violet-500/30'
                     : 'text-slate-300 hover:text-white hover:bg-white/5'
                 }`}
               >
@@ -159,7 +158,7 @@ export function Navigation() {
             ))}
             <button 
               onClick={() => scrollToSection('cta')}
-              className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300"
+              className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-600/30 transition-all duration-300"
             >
               Start a Hub
             </button>

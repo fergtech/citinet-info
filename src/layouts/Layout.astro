@@ -5,7 +5,11 @@ interface Props {
   title?: string;
 }
 
-const { title = 'Citinet — Citizens\' Internet Project' } = Astro.props;
+const { title = 'Citinet - Community-Owned Cloud' } = Astro.props;
+
+const SITE_URL = 'https://info.citinet.cloud';
+const OG_IMAGE  = `${SITE_URL}/imgs/logo/logo.png`;
+const DESCRIPTION = 'Store files. Connect with neighbors. No Amazon. No Google. No middleman. Start your own hub or find one already running in your community.';
 ---
 
 <!doctype html>
@@ -14,25 +18,28 @@ const { title = 'Citinet — Citizens\' Internet Project' } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <meta name="description" content={DESCRIPTION} />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/logo.png" />
-    <link rel="apple-touch-icon" href="/logo.png" />
+    <link rel="icon" type="image/png" href="/imgs/logo/logo.png" />
+    <link rel="apple-touch-icon" href="/imgs/logo/logo.png" />
 
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Citinet — Citizens' Internet Project" />
-    <meta property="og:description" content="A movement for digital sovereignty. Build, own, and connect your community's internet." />
-    <meta property="og:image" content="/logo.png" />
-    <meta property="og:image:alt" content="Citinet Logo" />
-    <meta property="og:url" content="https://citinet.cloud/" />
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:site_name"   content="Citinet" />
+    <meta property="og:title"       content={title} />
+    <meta property="og:description" content={DESCRIPTION} />
+    <meta property="og:image"       content={OG_IMAGE} />
+    <meta property="og:image:alt"   content="Citinet - Community-Owned Cloud" />
+    <meta property="og:url"         content={SITE_URL} />
+    <meta property="og:locale"      content="en_US" />
 
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Citinet — Citizens' Internet Project" />
-    <meta name="twitter:description" content="A movement for digital sovereignty. Build, own, and connect your community's internet." />
-    <meta name="twitter:image" content="/logo.png" />
-    <meta name="twitter:image:alt" content="Citinet Logo" />
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={title} />
+    <meta name="twitter:description" content={DESCRIPTION} />
+    <meta name="twitter:image"       content={OG_IMAGE} />
+    <meta name="twitter:image:alt"   content="Citinet - Community-Owned Cloud" />
   </head>
   <body>
     <slot />
