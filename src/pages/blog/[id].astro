@@ -24,7 +24,7 @@ let htmlContent = '';
 
 if (HUB_URL && id) {
   try {
-    const res = await fetch(`${HUB_URL}/api/public/notes/${id}`, { signal: AbortSignal.timeout(8000) });
+    const res = await fetch(`${HUB_URL}/api/public/notes/${id}`, { signal: AbortSignal.timeout(3000) });
     if (res.status === 404) return Astro.redirect('/blog');
     if (res.ok) {
       note = await res.json();

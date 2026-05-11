@@ -1,4 +1,4 @@
-import { e as createComponent, g as addAttribute, l as renderHead, n as renderSlot, r as renderTemplate, h as createAstro } from './astro/server_DIFig9Wl.mjs';
+import { e as createComponent, g as addAttribute, r as renderTemplate, l as renderHead, n as renderSlot, h as createAstro } from './astro/server_DIFig9Wl.mjs';
 import 'piccolore';
 import 'clsx';
 /* empty css                        */
@@ -11,11 +11,24 @@ const $$Astro = createAstro();
 const $$Layout = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$Layout;
-  const { title = "Citinet - Community-Owned Cloud" } = Astro2.props;
+  const {
+    title = "Citinet - Community-Owned Cloud",
+    description,
+    ogType = "website",
+    ogUrl,
+    ogImage,
+    canonical,
+    articlePublishedTime,
+    articleAuthor
+  } = Astro2.props;
   const SITE_URL = "https://info.citinet.cloud";
-  const OG_IMAGE = `${SITE_URL}/imgs/logo/logo.png`;
-  const DESCRIPTION = "Store files. Connect with neighbors. No Amazon. No Google. No middleman. Start your own hub or find one already running in your community.";
-  return renderTemplate`<html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${title}</title><meta name="description"${addAttribute(DESCRIPTION, "content")}><!-- Favicon --><link rel="icon" type="image/png" href="/imgs/logo/logo.png"><link rel="apple-touch-icon" href="/imgs/logo/logo.png"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:site_name" content="Citinet"><meta property="og:title"${addAttribute(title, "content")}><meta property="og:description"${addAttribute(DESCRIPTION, "content")}><meta property="og:image"${addAttribute(OG_IMAGE, "content")}><meta property="og:image:alt" content="Citinet - Community-Owned Cloud"><meta property="og:url"${addAttribute(SITE_URL, "content")}><meta property="og:locale" content="en_US"><!-- Twitter / X Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title"${addAttribute(title, "content")}><meta name="twitter:description"${addAttribute(DESCRIPTION, "content")}><meta name="twitter:image"${addAttribute(OG_IMAGE, "content")}><meta name="twitter:image:alt" content="Citinet - Community-Owned Cloud">${renderHead()}</head> <body> ${renderSlot($$result, $$slots["default"])} </body></html>`;
+  const LOGO = `${SITE_URL}/imgs/logo/logo.png`;
+  const DEFAULT_DESC = "Store files. Connect with neighbors. No Amazon. No Google. No middleman. Start your own hub or find one already running in your community.";
+  const metaDesc = description || DEFAULT_DESC;
+  const metaImage = ogImage || LOGO;
+  const metaUrl = ogUrl || SITE_URL;
+  const canonicalUrl = canonical || metaUrl;
+  return renderTemplate`<html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${title}</title><meta name="description"${addAttribute(metaDesc, "content")}><link rel="canonical"${addAttribute(canonicalUrl, "href")}><!-- Favicon --><link rel="icon" type="image/png" href="/imgs/logo/logo.png"><link rel="apple-touch-icon" href="/imgs/logo/logo.png"><!-- Open Graph --><meta property="og:type"${addAttribute(ogType, "content")}><meta property="og:site_name" content="Citinet"><meta property="og:title"${addAttribute(title, "content")}><meta property="og:description"${addAttribute(metaDesc, "content")}><meta property="og:image"${addAttribute(metaImage, "content")}><meta property="og:image:alt"${addAttribute(title, "content")}><meta property="og:url"${addAttribute(metaUrl, "content")}><meta property="og:locale" content="en_US">${articlePublishedTime && renderTemplate`<meta property="article:published_time"${addAttribute(articlePublishedTime, "content")}>`}${articleAuthor && renderTemplate`<meta property="article:author"${addAttribute(articleAuthor, "content")}>`}<!-- Twitter / X Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title"${addAttribute(title, "content")}><meta name="twitter:description"${addAttribute(metaDesc, "content")}><meta name="twitter:image"${addAttribute(metaImage, "content")}><meta name="twitter:image:alt"${addAttribute(title, "content")}>${renderHead()}</head> <body> ${renderSlot($$result, $$slots["default"])} </body></html>`;
 }, "H:/Apps/citinet-info/src/layouts/Layout.astro", void 0);
 
 function Navigation() {
