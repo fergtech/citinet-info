@@ -1,0 +1,24 @@
+.blog-prose { color: #cbd5e1; line-height: 1.75; }
+.blog-prose h1, .blog-prose h2, .blog-prose h3, .blog-prose h4 { color: #f1f5f9; font-weight: 700; line-height: 1.2; margin-top: 2.25rem; margin-bottom: 0.875rem; }
+.blog-prose h1 { font-size: 2rem; }
+.blog-prose h2 { font-size: 1.625rem; }
+.blog-prose h3 { font-size: 1.25rem; }
+.blog-prose p  { margin-bottom: 1.25rem; }
+.blog-prose a  { color: #a78bfa; text-decoration: underline; text-underline-offset: 3px; }
+.blog-prose a:hover { color: #c4b5fd; }
+.blog-prose strong { color: #f1f5f9; font-weight: 600; }
+.blog-prose em { font-style: italic; }
+.blog-prose u  { text-decoration: underline; text-underline-offset: 3px; }
+.blog-prose ul, .blog-prose ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+.blog-prose ul  { list-style-type: disc; }
+.blog-prose ol  { list-style-type: decimal; }
+.blog-prose li  { margin-bottom: 0.4rem; }
+.blog-prose ul.task-list { list-style: none; padding-left: 0; }
+.blog-prose li.task-item { display: flex; align-items: flex-start; gap: 0.5rem; }
+.blog-prose li.task-item input { margin-top: 0.25rem; accent-color: #7c3aed; }
+.blog-prose blockquote { border-left: 3px solid #7c3aed; padding: 0.25rem 0 0.25rem 1.25rem; margin: 1.5rem 0; color: #94a3b8; font-style: italic; }
+.blog-prose code { background: #1e293b; color: #a78bfa; padding: 0.125rem 0.375rem; border-radius: 0.3rem; font-size: 0.875em; font-family: ui-monospace, monospace; }
+.blog-prose pre { background: #0f172a; border: 1px solid #1e293b; border-radius: 0.75rem; padding: 1.25rem 1.5rem; margin: 1.5rem 0; overflow-x: auto; }
+.blog-prose pre code { background: none; padding: 0; color: #e2e8f0; font-size: 0.875rem; }
+.blog-prose img { max-width: 100%; border-radius: 0.75rem; margin: 1.5rem 0; border: 1px solid rgba(255,255,255,0.08); }
+.blog-prose hr { border: none; border-top: 1px solid #1e293b; margin: 2rem 0; }

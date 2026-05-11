@@ -16,7 +16,6 @@ type FeatureStatus = 'live' | 'building' | 'vision';
 interface SpaceExample {
   icon: React.ElementType;
   name: string;
-  slug: string;
   description: string;
   image: string;
   color: string;
@@ -36,7 +35,6 @@ const SPACES_EXAMPLES: SpaceExample[] = [
   {
     icon: BookOpen,
     name: 'Library',
-    slug: 'hub-name.citinet.cloud/library',
     description: 'Shared resources, digital archives, community knowledge',
     image: 'https://images.unsplash.com/photo-1768467040905-aa7081a2a8a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaWJyYXJ5JTIwYm9va3MlMjBjb21tdW5pdHklMjBzcGFjZXxlbnwxfHx8fDE3NzE2MTk1NjV8MA&ixlib=rb-4.1.0&q=80&w=400',
     color: 'from-blue-500 to-cyan-500',
@@ -44,7 +42,6 @@ const SPACES_EXAMPLES: SpaceExample[] = [
   {
     icon: Home,
     name: 'Commons',
-    slug: 'hub-name.citinet.cloud/commons',
     description: 'Town square for announcements and community decisions',
     image: 'https://images.unsplash.com/photo-1730342582682-1447653f62b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBnYXRoZXJpbmclMjBuZWlnaGJvcmhvb2QlMjBwZW9wbGUlMjBjb2xsYWJvcmF0aW5nfGVufDF8fHx8MTc3MTYxOTU2NXww&ixlib=rb-4.1.0&q=80&w=400',
     color: 'from-emerald-500 to-green-500',
@@ -52,7 +49,6 @@ const SPACES_EXAMPLES: SpaceExample[] = [
   {
     icon: Flower2,
     name: 'Garden Club',
-    slug: 'hub-name.citinet.cloud/garden',
     description: 'Coordinate plantings, share seeds, organize work parties',
     image: 'https://images.unsplash.com/photo-1763633923615-a2cdebba3bfd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBnYXJkZW4lMjB1cmJhbiUyMGZhcm1pbmd8ZW58MXx8fHwxNzcxNTczNjc0fDA&ixlib=rb-4.1.0&q=80&w=400',
     color: 'from-green-500 to-lime-500',
@@ -60,7 +56,6 @@ const SPACES_EXAMPLES: SpaceExample[] = [
   {
     icon: GraduationCap,
     name: 'School District',
-    slug: 'citinet.cloud/schools',
     description: 'Classrooms, assignments, parent communication',
     image: 'https://images.unsplash.com/photo-1574740637579-9ca0a610e491?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwZW9wbGUlMjBoYW5kcyUyMHRvZ2V0aGVyJTIwY29sbGFib3JhdGlvbnxlbnwxfHx8fDE3NzE2MTk1Njd8MA&ixlib=rb-4.1.0&q=80&w=400',
     color: 'from-purple-500 to-pink-500',
@@ -68,7 +63,6 @@ const SPACES_EXAMPLES: SpaceExample[] = [
   {
     icon: Building2,
     name: 'Neighborhood Assoc.',
-    slug: 'your-neighborhood.citinet.cloud',
     description: 'HOA documents, event planning, neighbor networking',
     image: 'https://images.unsplash.com/photo-1770938474403-a16353e18bf3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZWlnaGJvcmhvb2QlMjBzdHJlZXQlMjBhZXJpYWwlMjB2aWV3fGVufDF8fHx8MTc3MTYxOTU2Nnww&ixlib=rb-4.1.0&q=80&w=400',
     color: 'from-orange-500 to-red-500',
@@ -76,7 +70,6 @@ const SPACES_EXAMPLES: SpaceExample[] = [
   {
     icon: Users,
     name: 'Your Space',
-    slug: 'your-community.citinet.cloud',
     description: 'Create any space your community needs',
     image: 'https://images.unsplash.com/photo-1644088379091-d574269d422f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaWdpdGFsJTIwbmV0d29yayUyMGNvbm5lY3Rpb24lMjBhYnN0cmFjdHxlbnwxfHx8fDE3NzE2MTk1Njd8MA&ixlib=rb-4.1.0&q=80&w=400',
     color: 'from-violet-500 to-blue-500',

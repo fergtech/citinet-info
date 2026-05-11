@@ -39,10 +39,10 @@ export function FinalCTA() {
           transition={{ duration: 0.8 }}
           className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
         >
-          Own your corner
+          Own your slice
           <br />
           <span className="bg-gradient-to-r from-blue-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
-            of the internet.
+            of a new digital world.
           </span>
         </motion.h2>
 

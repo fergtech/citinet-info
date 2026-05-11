@@ -20,6 +20,8 @@ export function Navigation() {
     { id: 'cta',          label: 'Start a Hub' },
   ];
 
+  const isIndexPage = typeof window !== 'undefined' && window.location.pathname === '/';
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = navItems.map(item => ({
@@ -43,11 +45,13 @@ export function Navigation() {
   }, []);
 
   const scrollToSection = (id: string) => {
+    if (!isIndexPage) {
+      window.location.href = `/#${id}`;
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       setIsOpen(false);
-      // scrollIntoView is more reliable on mobile than window.scrollTo,
-      // especially when an ancestor has overflow-x: hidden.
       setTimeout(() => {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 10);
@@ -101,6 +105,12 @@ export function Navigation() {
 
           {/* CTA Button - Desktop */}
           <div className="hidden lg:flex items-center gap-3">
+            <a
+              href="/blog"
+              className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+            >
+              Blog
+            </a>
             <a
               href="https://github.com/fergtech/citinet"
               target="_blank"
@@ -156,7 +166,13 @@ export function Navigation() {
                 {item.label}
               </button>
             ))}
-            <button 
+            <a
+              href="/blog"
+              className="block w-full text-left px-4 py-3 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-300"
+            >
+              Blog
+            </a>
+            <button
               onClick={() => scrollToSection('cta')}
               className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-600/30 transition-all duration-300"
             >
