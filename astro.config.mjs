@@ -10,6 +10,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   integrations: [react()],
   output: 'server',
+  outDir: './build',
   adapter: vercel(),
   vite: {
     plugins: [tailwindcss()],
