@@ -3,7 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import { Navigation } from '../../app/components/Navigation';
 import { getExcerpt, readingTime, formatDate } from '../../lib/tiptap-renderer';
 
-const HUB_URL = import.meta.env.HUB_URL ?? '';
+const HUB_URL  = import.meta.env.HUB_URL ?? '';
+const SITE_URL = 'https://info.citinet.cloud';
 
 interface Note {
   id: string;
@@ -33,7 +34,12 @@ if (HUB_URL) {
 }
 ---
 
-<Layout title="Blog — Citinet">
+<Layout
+  title="Blog — Citinet"
+  description="Updates, ideas, and stories from the people building Citinet."
+  ogUrl={`${SITE_URL}/blog`}
+  canonical={`${SITE_URL}/blog`}
+>
   <div class="min-h-screen bg-slate-950 text-white">
     <Navigation client:load />
 

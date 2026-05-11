@@ -2,10 +2,11 @@
 import Layout from '../../layouts/Layout.astro';
 import { Navigation } from '../../app/components/Navigation';
 import { GiscusComments } from '../../app/components/GiscusComments';
-import { renderTipTap, readingTime, formatDate } from '../../lib/tiptap-renderer';
+import { renderTipTap, readingTime, formatDate, getExcerpt } from '../../lib/tiptap-renderer';
 
 const { id } = Astro.params;
-const HUB_URL = import.meta.env.HUB_URL ?? '';
+const HUB_URL   = import.meta.env.HUB_URL ?? '';
+const SITE_URL  = 'https://info.citinet.cloud';
 
 interface Note {
   id: string;
@@ -34,10 +35,20 @@ if (HUB_URL && id) {
   }
 }
 
-const pageTitle = note ? `${note.title} — Citinet Blog` : 'Citinet Blog';
+const pageTitle   = note ? `${note.title} — Citinet Blog` : 'Citinet Blog';
+const description = note ? getExcerpt(note.web_body_plain, 160) : undefined;
+const canonicalUrl = `${SITE_URL}/blog/${id}`;
 ---
 
-<Layout title={pageTitle}>
+<Layout
+  title={pageTitle}
+  description={description}
+  ogType="article"
+  ogUrl={canonicalUrl}
+  canonical={canonicalUrl}
+  articlePublishedTime={note?.created_at}
+  articleAuthor={note?.author}
+>
   <div class="min-h-screen bg-slate-950 text-white">
     <Navigation client:load />
 
