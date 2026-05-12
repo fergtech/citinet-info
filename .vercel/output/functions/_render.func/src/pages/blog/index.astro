@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Navigation } from '../../app/components/Navigation';
+import { getExcerpt, readingTime, formatDate } from '../../lib/tiptap-renderer';
+
+const HUB_URL  = import.meta.env.HUB_URL ?? '';
+const SITE_URL = 'https://info.citinet.cloud';
+
+interface Note {
+  id: string;
+  title: string;
+  web_body_plain: string;
+  author: string;
+  created_at: string;
+  updated_at: string;
+  color: string | null;
+}
+
+let notes: Note[] = [];
+let fetchError = false;
+
+if (HUB_URL) {
+  try {
+    const res = await fetch(`${HUB_URL}/api/public/notes`, { signal: AbortSignal.timeout(3000) });
+    if (res.ok) {
+      const data = await res.json();
+      notes = data.notes ?? [];
+    } else {
+      fetchError = true;
+    }
+  } catch {
+    fetchError = true;
+  }
+}
+---
+
+<Layout
+  title="Blog — Citinet"
+  description="Updates, ideas, and stories from the people building Citinet."
+  ogUrl={`${SITE_URL}/blog`}
+  canonical={`${SITE_URL}/blog`}
+>
+  <div class="min-h-screen bg-slate-950 text-white">
+    <Navigation client:load />
+
+    <div class="max-w-5xl mx-auto px-6 pt-32 pb-20">
+
+      <!-- Header -->
+      <div class="mb-16">
+        <p class="text-xs text-slate-500 font-semibold uppercase tracking-widest mb-3">The CITINET Blog</p>
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
+          From the <span class="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">community</span>
+        </h1>
+        <p class="text-xl text-slate-400 mb-3">Updates, ideas, and stories from the people building CITINET.</p>
+        <p class="text-xs text-slate-600">
+          Powered by a{' '}
+          <a href="https://citinet.cloud" class="text-violet-500 hover:text-violet-400 transition-colors">CITINET hub</a>
+        </p>
+      </div>
+
+      <!-- States -->
+      {!HUB_URL && (
+        <p class="text-slate-600 text-center py-20">HUB_URL environment variable not set.</p>
+      )}
+      {HUB_URL && fetchError && (
+        <p class="text-slate-500 text-center py-20">Could not reach the hub. Check back soon.</p>
+      )}
+      {HUB_URL && !fetchError && notes.length === 0 && (
+        <p class="text-slate-600 text-center py-20">No posts yet.</p>
+      )}
+
+      <!-- Post grid -->
+      {notes.length > 0 && (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {notes.map((note) => (
+            <a
+              href={`/blog/${note.id}`}
+              class="group block bg-slate-900 border border-white/10 rounded-2xl overflow-hidden hover:border-violet-500/40 transition-all duration-300 hover:bg-slate-800/60"
+            >
+              <div
+                class="h-1"
+                style={note.color ? `background:${note.color}` : 'background: linear-gradient(to right, #2563eb, #7c3aed)'}
+              />
+              <div class="p-6">
+                <h2 class="text-lg font-bold text-white group-hover:text-violet-300 transition-colors mb-3 leading-snug line-clamp-2">
+                  {note.title || 'Untitled'}
+                </h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-5 line-clamp-3">
+                  {getExcerpt(note.web_body_plain, 160)}
+                </p>
+                <div class="flex items-center justify-between text-xs text-slate-600">
+                  <span class="text-slate-500 font-medium">{note.author}</span>
+                  <div class="flex items-center gap-3">
+                    <span>{readingTime(note.web_body_plain)}</span>
+                    <span>{formatDate(note.updated_at)}</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <div class="border-t border-white/5 py-8 text-center text-slate-600 text-sm">
+      <a href="https://info.citinet.cloud" class="hover:text-violet-400 transition-colors">info.citinet.cloud</a>
+      {' · '}
+      <a href="https://citinet.cloud" class="hover:text-violet-400 transition-colors">citinet.cloud</a>
+    </div>
+  </div>
+</Layout>
