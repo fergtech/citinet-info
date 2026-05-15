@@ -6,7 +6,7 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const { scrollY } = useScroll();
-  
+
   const backgroundColor = useTransform(
     scrollY,
     [0, 100],
@@ -20,9 +20,17 @@ export function Navigation() {
     { id: 'cta',          label: 'Start a Hub' },
   ];
 
-  const isIndexPage = typeof window !== 'undefined' && window.location.pathname === '/';
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '/';
+  const isIndexPage = pathname === '/';
+  const isBlogPage = pathname.startsWith('/blog');
 
   useEffect(() => {
+    // On blog pages there are no scroll-tracked sections — highlight Blog instead.
+    if (isBlogPage) {
+      setActiveSection('blog');
+      return;
+    }
+
     const handleScroll = () => {
       const sections = navItems.map(item => ({
         id: item.id,
@@ -42,7 +50,7 @@ export function Navigation() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isBlogPage]);
 
   const scrollToSection = (id: string) => {
     if (!isIndexPage) {
@@ -107,9 +115,20 @@ export function Navigation() {
           <div className="hidden lg:flex items-center gap-3">
             <a
               href="/blog"
-              className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+              className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                activeSection === 'blog'
+                  ? 'text-violet-400'
+                  : 'text-slate-300 hover:text-white'
+              }`}
             >
               Blog
+              {activeSection === 'blog' && (
+                <motion.div
+                  layoutId="activeSection"
+                  className="absolute inset-0 bg-violet-500/10 border border-violet-500/30 rounded-lg -z-10"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
+              )}
             </a>
             <a
               href="https://github.com/fergtech/citinet"
@@ -168,7 +187,11 @@ export function Navigation() {
             ))}
             <a
               href="/blog"
-              className="block w-full text-left px-4 py-3 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-300"
+              className={`block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                activeSection === 'blog'
+                  ? 'text-violet-400 bg-violet-500/10 border border-violet-500/30'
+                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+              }`}
             >
               Blog
             </a>
