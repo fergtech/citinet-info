@@ -5,6 +5,9 @@ node_modules/
 dist/
 build/
 
+# Vercel build artifacts — never commit, Vercel builds fresh on its servers
+.vercel/
+
 # Astro
 .astro/
 
