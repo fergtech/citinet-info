@@ -13,15 +13,15 @@ export function GiscusComments() {
     // 2. Installing the Giscus GitHub App on that repo
     // 3. Visiting giscus.app and configuring it
     script.setAttribute('data-repo',              'fergtech/citinet');
-    script.setAttribute('data-repo-id',           'REPLACE_WITH_REPO_ID');
-    script.setAttribute('data-category',          'Blog Comments');
-    script.setAttribute('data-category-id',       'REPLACE_WITH_CATEGORY_ID');
+    script.setAttribute('data-repo-id',           'R_kgDOQxVGjg');
+    script.setAttribute('data-category',          'Blog comments');
+    script.setAttribute('data-category-id',       'DIC_kwDOQxVGjs4C9aw9');
     script.setAttribute('data-mapping',           'pathname');
     script.setAttribute('data-strict',            '0');
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata',     '0');
-    script.setAttribute('data-input-position',    'top');
-    script.setAttribute('data-theme',             'dark_dimmed');
+    script.setAttribute('data-input-position',    'bottom');
+    script.setAttribute('data-theme',             'preferred_color_scheme');
     script.setAttribute('data-lang',              'en');
     script.setAttribute('data-loading',           'lazy');
     script.crossOrigin = 'anonymous';
