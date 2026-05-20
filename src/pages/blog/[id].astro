@@ -23,17 +23,21 @@ let note: Note | null = null;
 let htmlContent = '';
 
 if (HUB_URL && id) {
-  try {
-    const res = await fetch(`${HUB_URL}/api/public/notes/${id}`, { signal: AbortSignal.timeout(3000) });
-    if (res.status === 404) return Astro.redirect('/blog');
-    if (res.ok) {
-      note = await res.json();
-      htmlContent = renderTipTap(note?.web_body_rich);
-    }
-  } catch {
-    // fall through to error state
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(`${HUB_URL}/api/public/notes/${id}`, { signal: AbortSignal.timeout(5000) });
+      if (res.status === 404) return Astro.redirect('/blog');
+      if (res.ok) {
+        note = await res.json();
+        htmlContent = renderTipTap(note?.web_body_rich);
+        break;
+      }
+    } catch { /* retry */ }
   }
 }
+
+// Cache individual posts for 5 minutes — content changes infrequently.
+Astro.response.headers.set('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
 
 const pageTitle   = note ? `${note.title} — Citinet Blog` : 'Citinet Blog';
 const description = note ? getExcerpt(note.web_body_plain, 160) : undefined;

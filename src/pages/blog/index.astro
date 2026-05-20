@@ -20,18 +20,24 @@ let notes: Note[] = [];
 let fetchError = false;
 
 if (HUB_URL) {
-  try {
-    const res = await fetch(`${HUB_URL}/api/public/notes`, { signal: AbortSignal.timeout(3000) });
-    if (res.ok) {
-      const data = await res.json();
-      notes = data.notes ?? [];
-    } else {
-      fetchError = true;
-    }
-  } catch {
-    fetchError = true;
+  let reached = false;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(`${HUB_URL}/api/public/notes`, { signal: AbortSignal.timeout(5000) });
+      if (res.ok) {
+        const data = await res.json();
+        notes = data.notes ?? [];
+        reached = true;
+        break;
+      }
+    } catch { /* retry */ }
   }
+  if (!reached) fetchError = true;
 }
+
+// Let Vercel's CDN cache the page so a brief hub outage doesn't break the blog
+// for every visitor. Stale content is served for up to 5 minutes while revalidating.
+Astro.response.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
 ---
 
 <Layout
