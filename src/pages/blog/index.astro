@@ -35,9 +35,11 @@ if (HUB_URL) {
   if (!reached) fetchError = true;
 }
 
-// Let Vercel's CDN cache the page so a brief hub outage doesn't break the blog
-// for every visitor. Stale content is served for up to 5 minutes while revalidating.
-Astro.response.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
+// Only cache when we have real posts — never cache empty or error states so a
+// newly-published post appears quickly and stale "No posts yet" isn't stuck in CDN.
+if (notes.length > 0) {
+  Astro.response.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
+}
 ---
 
 <Layout
