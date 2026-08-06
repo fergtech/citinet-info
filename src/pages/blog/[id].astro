@@ -36,10 +36,10 @@ if (HUB_URL && id) {
   }
 }
 
-// Cache individual posts for 5 minutes — content changes infrequently.
+// Cache individual posts for 5 minutes: content changes infrequently.
 Astro.response.headers.set('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
 
-const pageTitle   = note ? `${note.title} — Citinet Blog` : 'Citinet Blog';
+const pageTitle   = note ? `${note.title} | Citinet Blog` : 'Citinet Blog';
 const description = note ? getExcerpt(note.web_body_plain, 160) : undefined;
 const canonicalUrl = `${SITE_URL}/blog/${id}`;
 ---

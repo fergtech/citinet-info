@@ -1,19 +1,44 @@
+import { Fragment } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, ChevronDown, Smartphone, Laptop, Monitor, Tablet, Tv } from 'lucide-react';
+import { ArrowRight, ChevronDown, Smartphone, Laptop, Monitor, Tablet, Tv, User } from 'lucide-react';
 
 export function HeroSection() {
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-950 via-slate-900 to-purple-950">
 
-      {/* Dot grid matching portal background pattern */}
-      <div className="absolute inset-0 opacity-[0.12]">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      {/* Background video underlay (muted, looping, autoplay) */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <video
+          className="w-full h-full object-cover"
+          src="/video-background.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+        {/* Plain alpha tint to keep contrast on the footage */}
+        <div className="absolute inset-0 opacity-60" style={{ background: 'var(--cn-wallpaper)' }} />
+        <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern id="hero-dots" width="24" height="24" patternUnits="userSpaceOnUse">
+            <pattern id="hero-video-dots" width="24" height="24" patternUnits="userSpaceOnUse">
               <circle cx="12" cy="12" r="1" fill="rgba(168,85,247,1)" />
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill="url(#hero-dots)" />
+          <rect width="100%" height="100%" fill="url(#hero-video-dots)" opacity="0.18" />
+        </svg>
+        <div className="absolute inset-0 bg-black/20" />
+      </div>
+
+      {/* Gradient + dot overlay above the video, below content */}
+      <div className="absolute inset-0 z-[5] pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-950 via-slate-900 to-purple-950 opacity-80" />
+        <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="hero-dots-overlay" width="24" height="24" patternUnits="userSpaceOnUse">
+              <circle cx="12" cy="12" r="1" fill="rgba(168,85,247,1)" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hero-dots-overlay)" opacity="0.18" />
         </svg>
       </div>
 
@@ -30,7 +55,7 @@ export function HeroSection() {
               transition={{ duration: 0.8, ease: 'easeOut' }}
               className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.05] mb-6"
             >
-              Your neighborhood.
+              Your community.
               <br />
               <span className="bg-gradient-to-r from-blue-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
                 Your internet.
@@ -43,7 +68,7 @@ export function HeroSection() {
               transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
               className="text-lg md:text-xl text-slate-300 mb-3 leading-relaxed"
             >
-              Store files. Connect with neighbors. No Big Tech platforms. No middleman.
+              Store files. Connect with community members. No Big Tech platforms. No middleman.
             </motion.p>
 
             <motion.p
@@ -52,7 +77,7 @@ export function HeroSection() {
               transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
               className="text-base text-slate-500 mb-10"
             >
-              Start your own hub or connect to one already running in your community.
+              Start your own hub or connect to one already running.
             </motion.p>
 
             <motion.div
@@ -120,6 +145,15 @@ const R = 120;
 const CX = 140;
 const CY = 140;
 
+// One spoke (set via CLUSTER_INDEX) renders as a small self-contained network
+// instead of a single device: three equal nodes, fully interconnected with
+// each other, with only one of them bridging back to the center. Same
+// sub-network-within-the-network concept as the little cluster in the
+// Citinet logo -- a "connection" to your hub can itself be a whole
+// community, not just one device.
+const CLUSTER_INDEX = 4;
+const CLUSTER_NODE_R = 13;
+
 function HubDiagram() {
   return (
     <div className="relative w-72 h-72 mx-auto">
@@ -128,6 +162,38 @@ function HubDiagram() {
           const rad = (deg - 90) * (Math.PI / 180);
           const x2 = CX + R * Math.cos(rad);
           const y2 = CY + R * Math.sin(rad);
+
+          if (i === CLUSTER_INDEX) {
+            // A/B form the top edge of the triangle, C is the rightmost node --
+            // C is the one that bridges back to the hub (nearest it geometrically
+            // for this spoke's position), not A. All three stay fully meshed
+            // with each other regardless of which one carries the outside line.
+            const ax = x2, ay = y2;
+            const bx = x2 - 20, by = y2 + 26;
+            const cx = x2 + 20, cy = y2 + 26;
+            return (
+              <g key={i}>
+                <motion.line x1={CX} y1={CY} x2={cx} y2={cy}
+                  stroke="rgba(139,92,246,0.3)" strokeWidth="1.5" strokeDasharray="5 4"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }} />
+                <motion.line x1={ax} y1={ay} x2={bx} y2={by}
+                  stroke="rgba(139,92,246,0.28)" strokeWidth="1.4"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }} />
+                <motion.line x1={ax} y1={ay} x2={cx} y2={cy}
+                  stroke="rgba(139,92,246,0.28)" strokeWidth="1.4"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }} />
+                <motion.line x1={bx} y1={by} x2={cx} y2={cy}
+                  stroke="rgba(139,92,246,0.28)" strokeWidth="1.4"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.65 + i * 0.1 }} />
+                {[[ax, ay], [bx, by], [cx, cy]].map(([nx, ny], j) => (
+                  <motion.circle key={j} cx={nx} cy={ny} r={CLUSTER_NODE_R}
+                    fill="rgba(15,23,42,0.97)" stroke="rgba(139,92,246,0.35)" strokeWidth="1.5"
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.55 + i * 0.12 + j * 0.06 }} />
+                ))}
+              </g>
+            );
+          }
+
           return (
             <g key={i}>
               <motion.line
@@ -166,8 +232,39 @@ function HubDiagram() {
 
       {SPOKES.map(({ Icon, deg }, i) => {
         const rad = (deg - 90) * (Math.PI / 180);
-        const px = ((CX + R * Math.cos(rad)) / 280) * 100;
-        const py = ((CY + R * Math.sin(rad)) / 280) * 100;
+        const x2 = CX + R * Math.cos(rad);
+        const y2 = CY + R * Math.sin(rad);
+
+        if (i === CLUSTER_INDEX) {
+          const nodes: Array<[number, number]> = [
+            [x2, y2],
+            [x2 - 20, y2 + 26],
+            [x2 + 20, y2 + 26],
+          ];
+          return (
+            <Fragment key={i}>
+              {nodes.map(([nx, ny], j) => {
+                const npx = (nx / 280) * 100;
+                const npy = (ny / 280) * 100;
+                return (
+                  <motion.div
+                    key={j}
+                    className="absolute flex items-center justify-center pointer-events-none"
+                    style={{ left: `${npx}%`, top: `${npy}%`, transform: 'translate(-50%, -50%)', width: 26, height: 26 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3, delay: 0.8 + i * 0.12 + j * 0.06 }}
+                  >
+                    <User className="w-3.5 h-3.5 text-violet-400/75" />
+                  </motion.div>
+                );
+              })}
+            </Fragment>
+          );
+        }
+
+        const px = (x2 / 280) * 100;
+        const py = (y2 / 280) * 100;
         return (
           <motion.div
             key={i}

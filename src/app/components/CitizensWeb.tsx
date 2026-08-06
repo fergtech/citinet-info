@@ -16,7 +16,7 @@ const TRANSPORT_MODES = [
   {
     icon: Wifi,
     label: 'Community Wireless',
-    description: 'A co-op gateway node, rooftop relay sites, and sector antennas — neighborhood-owned backhaul, independent of any ISP.',
+    description: 'A co-op gateway node, rooftop relay sites, and sector antennas: neighborhood-owned backhaul, independent of any ISP.',
     status: 'Near-term path',
     color: 'from-blue-500 to-purple-500',
     textColor: 'text-blue-400',
@@ -80,7 +80,7 @@ export function CitizensWeb() {
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
             The endgame isn't just community-owned software running on corporate internet.
-            It's community-owned infrastructure — all the way down to the antenna.
+            It's community-owned infrastructure, all the way down to the antenna.
           </p>
         </motion.div>
 
@@ -96,7 +96,7 @@ export function CitizensWeb() {
               The Precedent
             </div>
             <p className="text-lg md:text-xl text-slate-200 leading-relaxed">
-              Rural electric cooperatives brought power to communities that private utilities ignored —
+              Rural electric cooperatives brought power to communities that private utilities ignored,
               not by waiting for corporations to act, but by organizing, pooling resources, and building
               it themselves. <strong className="text-white">Community wireless ISPs are doing the same thing
               with internet access right now</strong> in cities like Detroit, New York, and Baltimore.
@@ -158,8 +158,8 @@ export function CitizensWeb() {
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-slate-700" />
           </div>
           <p className="text-slate-300 text-lg leading-relaxed">
-            As connectivity improves, Citinet scales up. As it degrades — storm, outage,
-            infrastructure failure — it steps down gracefully through available modes.{' '}
+            As connectivity improves, Citinet scales up. As it degrades (storm, outage,
+            infrastructure failure), it steps down gracefully through available modes.{' '}
             <span className="text-white font-semibold">The community keeps functioning.</span>
           </p>
           <p className="text-slate-500 mt-4 text-sm">

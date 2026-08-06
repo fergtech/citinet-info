@@ -25,7 +25,7 @@ export function Navigation() {
   const isBlogPage = pathname.startsWith('/blog');
 
   useEffect(() => {
-    // On blog pages there are no scroll-tracked sections — highlight Blog instead.
+    // On blog pages there are no scroll-tracked sections. Highlight Blog instead.
     if (isBlogPage) {
       setActiveSection('blog');
       return;
@@ -131,6 +131,14 @@ export function Navigation() {
               )}
             </a>
             <a
+              href="https://docs.citinet.cloud"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white transition-all duration-300"
+            >
+              Docs
+            </a>
+            <a
               href="https://github.com/fergtech/citinet"
               target="_blank"
               rel="noopener noreferrer"
@@ -194,6 +202,14 @@ export function Navigation() {
               }`}
             >
               Blog
+            </a>
+            <a
+              href="https://docs.citinet.cloud"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full text-left px-4 py-3 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-300"
+            >
+              Docs
             </a>
             <button
               onClick={() => scrollToSection('cta')}

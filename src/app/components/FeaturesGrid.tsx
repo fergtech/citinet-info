@@ -11,31 +11,31 @@ export function FeaturesGrid() {
     {
       icon: HardDrive,
       title: "Local File Storage",
-      description: "Upload, organize, and share files within your community. Stored in MinIO on your machine — 100 MB per file, no cloud middleman.",
+      description: "Upload, organize, and share files within your community. Stored in MinIO on your machine: 100 MB per file, no cloud middleman.",
       gradient: "from-blue-500 to-cyan-500"
     },
     {
       icon: MessageCircle,
       title: "Discussions & Messaging",
-      description: "Threaded community posts, direct messages, and group chats — all private, all community-owned, all on your hardware.",
+      description: "Threaded community posts, direct messages, and group chats: all private, all community-owned, all on your hardware.",
       gradient: "from-purple-500 to-pink-500"
     },
     {
       icon: Radio,
       title: "Community Feed",
-      description: "Posts in four categories: announcements, discussions, projects, and requests. No algorithm, no ads — just your neighbors.",
+      description: "Posts in four categories: announcements, discussions, projects, and requests. No algorithm, no ads, just your neighbors.",
       gradient: "from-emerald-500 to-green-500"
     },
     {
       icon: Map,
       title: "Community Atlas",
-      description: "A shared map built on OpenStreetMap. Pin meetups, safety alerts, and points of interest — contributed by everyone, controlled by no one.",
+      description: "A shared map built on OpenStreetMap. Pin meetups, safety alerts, and points of interest, contributed by everyone, controlled by no one.",
       gradient: "from-orange-500 to-red-500"
     },
     {
       icon: ShoppingBag,
       title: "Local Exchange",
-      description: "A neighborhood marketplace for goods and services. List, browse, and trade — no platform fees, no algorithmic promotion.",
+      description: "A neighborhood marketplace for goods and services. List, browse, and trade: no platform fees, no algorithmic promotion.",
       gradient: "from-yellow-500 to-orange-500"
     },
     {
@@ -53,7 +53,7 @@ export function FeaturesGrid() {
     {
       icon: Lock,
       title: "Privacy by Default",
-      description: "No telemetry. No user profiling. No tracking. Your data is stored locally in PostgreSQL and MinIO — it never leaves your machine.",
+      description: "No telemetry. No user profiling. No tracking. Your data is stored locally in PostgreSQL and MinIO: it never leaves your machine.",
       gradient: "from-pink-500 to-rose-500"
     }
   ];
@@ -75,7 +75,7 @@ export function FeaturesGrid() {
             </span>
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            Everything your community needs to thrive digitally —
+            Everything your community needs to thrive digitally,
             without surrendering to Big Tech.
           </p>
         </motion.div>

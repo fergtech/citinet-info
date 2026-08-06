@@ -29,7 +29,7 @@ export function Roadmap() {
       title: "Depth & Identity",
       status: "Building",
       features: [
-        "Spaces — sub-communities within a hub",
+        "Spaces: sub-communities within a hub",
         "Profile pages as personal civic landing pages",
         "Hub-app ecosystem (open integration contract)",
         "Early hub-to-hub content sharing",
@@ -44,11 +44,11 @@ export function Roadmap() {
       title: "Federation & Resilience",
       status: "Coming",
       features: [
-        "Full federation protocol — hubs as peers",
+        "Full federation protocol: hubs as peers",
         "Portable identity across hubs",
         "Local-first & offline-capable operation",
         "Community search (no third-party index)",
-        "Optional local AI — private, on your hardware"
+        "Optional local AI: private, on your hardware"
       ],
       color: "from-purple-500 to-emerald-500",
       statusColor: "bg-purple-500"
@@ -60,10 +60,10 @@ export function Roadmap() {
       status: "Vision",
       features: [
         "Community wireless co-ops (PtP/PtMP radio)",
-        "Multiple transport modes — internet to mesh",
+        "Multiple transport modes: internet to mesh",
         "Graceful degradation down to LoRa/Meshtastic",
         "True application-layer mesh between hub peers",
-        "Full stack — from software to antenna — community-owned"
+        "Full stack, from software to antenna, community-owned"
       ],
       color: "from-emerald-500 to-cyan-500",
       statusColor: "bg-emerald-500"

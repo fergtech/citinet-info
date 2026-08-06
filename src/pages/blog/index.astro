@@ -35,7 +35,7 @@ if (HUB_URL) {
   if (!reached) fetchError = true;
 }
 
-// Only cache when we have real posts — never cache empty or error states so a
+// Only cache when we have real posts. Never cache empty or error states, so a
 // newly-published post appears quickly and stale "No posts yet" isn't stuck in CDN.
 if (notes.length > 0) {
   Astro.response.headers.set('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
@@ -43,7 +43,7 @@ if (notes.length > 0) {
 ---
 
 <Layout
-  title="Blog — Citinet"
+  title="Blog | Citinet"
   description="Updates, ideas, and stories from the people building Citinet."
   ogUrl={`${SITE_URL}/blog`}
   canonical={`${SITE_URL}/blog`}

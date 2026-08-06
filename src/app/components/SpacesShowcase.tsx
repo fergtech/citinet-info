@@ -77,7 +77,7 @@ const SPACES_EXAMPLES: SpaceExample[] = [
 ];
 
 const FEATURE_DETAILS: Record<string, FeatureDetail> = {
-  // Phase 1 — Live
+  // Phase 1: Live
   'File Storage': {
     Icon: HardDrive,
     status: 'live',
@@ -152,7 +152,7 @@ const FEATURE_DETAILS: Record<string, FeatureDetail> = {
     Icon: Cpu,
     status: 'live',
     gradient: 'from-violet-600 to-blue-700',
-    description: 'A private AI assistant built into your hub. Helps you draft posts, summarize discussions, and answer questions about your community. Runs on your hub and stays there.',
+    description: "An AI assistant built into your hub, not a third-party cloud. Helps you draft posts, summarize discussions, and answer questions about your community. Unlike your messages and notes, it isn't end-to-end encrypted. It has to read what you type to respond.",
     images: [
       '/imgs/AI-assistant/Screenshot 2026-05-08 195416.png',
       '/imgs/AI-assistant/Screenshot 2026-05-08 195426.png',
@@ -169,7 +169,7 @@ const FEATURE_DETAILS: Record<string, FeatureDetail> = {
     examples: SPACES_EXAMPLES,
     cta: { label: 'Try it on your hub', href: 'https://citinet.cloud' },
   },
-  // Phase 2 — Building
+  // Phase 2: Building
   'Hub-to-Hub Federation': {
     Icon: Network,
     status: 'building',
@@ -195,7 +195,7 @@ const FEATURE_DETAILS: Record<string, FeatureDetail> = {
     gradient: 'from-indigo-700 to-blue-800',
     description: 'In development. Third-party developers will be able to build integrations for Citinet hubs using an open contract. No platform permission needed. No revenue share.',
   },
-  // Phase 3 — Vision
+  // Phase 3: Vision
   'No ISP Needed': {
     Icon: WifiOff,
     status: 'vision',
@@ -235,7 +235,7 @@ const STATUS_CLASSES: Record<FeatureStatus, string> = {
 };
 
 // ---------------------------------------------------------------------------
-// Lightbox — full-screen image view, Escape closes only this layer
+// Lightbox: full-screen image view, Escape closes only this layer
 // ---------------------------------------------------------------------------
 
 function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
@@ -282,7 +282,7 @@ function Lightbox({ src, onClose }: { src: string; onClose: () => void }) {
 }
 
 // ---------------------------------------------------------------------------
-// Image gallery — swipeable, dot-indexed, click-to-enlarge
+// Image gallery: swipeable, dot-indexed, click-to-enlarge
 // ---------------------------------------------------------------------------
 
 function ImageGallery({ images, featureName }: { images: string[]; featureName: string }) {
@@ -382,7 +382,7 @@ function ImageGallery({ images, featureName }: { images: string[]; featureName: 
 }
 
 // ---------------------------------------------------------------------------
-// Feature panel — modal on desktop, bottom drawer on mobile
+// Feature panel: modal on desktop, bottom drawer on mobile
 // ---------------------------------------------------------------------------
 
 function PanelContent({ featureKey, detail, onClose }: {
@@ -395,7 +395,7 @@ function PanelContent({ featureKey, detail, onClose }: {
 
   return (
     <>
-      {/* Header — real screenshots or gradient fallback */}
+      {/* Header: real screenshots or gradient fallback */}
       {hasImages ? (
         <div className="relative shrink-0">
           <ImageGallery images={detail.images!} featureName={featureKey} />
@@ -516,7 +516,7 @@ function FeaturePanel({ featureKey, onClose }: { featureKey: string; onClose: ()
       />
 
       {isMobile ? (
-        /* Mobile — bottom drawer with drag-to-dismiss */
+        /* Mobile: bottom drawer with drag-to-dismiss */
         <motion.div
           className="fixed bottom-0 left-0 right-0 z-[60] flex flex-col bg-slate-900 border-t border-white/10 rounded-t-2xl max-h-[85vh] shadow-2xl shadow-black/60"
           initial={{ y: '100%' }}
@@ -530,7 +530,7 @@ function FeaturePanel({ featureKey, onClose }: { featureKey: string; onClose: ()
             if (info.offset.y > 80 || info.velocity.y > 400) onClose();
           }}
         >
-          {/* Drag handle — tap or drag down to close */}
+          {/* Drag handle: tap or drag down to close */}
           <div
             className="flex justify-center pt-3 pb-2 shrink-0 cursor-grab active:cursor-grabbing"
             onClick={onClose}
@@ -541,7 +541,7 @@ function FeaturePanel({ featureKey, onClose }: { featureKey: string; onClose: ()
           <PanelContent featureKey={featureKey} detail={detail} onClose={onClose} />
         </motion.div>
       ) : (
-        /* Desktop — centered modal */
+        /* Desktop: centered modal */
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-6" onClick={onClose}>
           <motion.div
             className="w-full max-w-md bg-slate-900 border border-white/10 rounded-2xl shadow-2xl shadow-black/60 overflow-hidden flex flex-col max-h-[85vh]"

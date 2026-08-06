@@ -19,7 +19,7 @@ const STEPS = [
   {
     Icon: Shield,
     title: 'Stay Independent',
-    body: 'Your data never leaves your machine. No company has access. Your community, your rules.',
+    body: 'What you keep private is encrypted end-to-end: not even your hub operator can read it. No ads, no data brokers. Your community, your rules.',
     accent: 'from-purple-500 to-pink-500',
   },
 ];

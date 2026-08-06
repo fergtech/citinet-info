@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from 'react';
 import { Server, Cpu, Monitor, X } from 'lucide-react';
 
 // ---------------------------------------------------------------------------
-// Hardware data — drop a photo URL into `image` to activate it
+// Hardware data: drop a photo URL into `image` to activate it
 // ---------------------------------------------------------------------------
 
 const HARDWARE = [
@@ -174,7 +174,7 @@ export function NetworkExplainer() {
 
           <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed">
             Anyone can run a hub. Spare PC, laptop, Raspberry Pi.
-            Neighbors connect through a browser and everything stays local.
+            Neighbors connect through a browser, and your community's data lives on hardware you control.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-16">
