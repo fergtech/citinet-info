@@ -5,8 +5,11 @@ import { GiscusComments } from '../../app/components/GiscusComments';
 import { renderTipTap, readingTime, formatDate, getExcerpt } from '../../lib/tiptap-renderer';
 
 const { id } = Astro.params;
-const HUB_URL   = import.meta.env.HUB_URL ?? '';
+const BLOG_HUB_SLUG = import.meta.env.BLOG_HUB_SLUG ?? '';
 const SITE_URL  = 'https://info.citinet.cloud';
+// See blog/index.astro — read from the hub's own outbound push, not fetched
+// from the hub directly.
+const BLOG_POSTS_URL = 'https://raw.githubusercontent.com/fergtech/citinet-registry/main/blog-posts.json';
 
 interface Note {
   id: string;
@@ -22,18 +25,17 @@ interface Note {
 let note: Note | null = null;
 let htmlContent = '';
 
-if (HUB_URL && id) {
-  for (let attempt = 0; attempt < 2; attempt++) {
-    try {
-      const res = await fetch(`${HUB_URL}/api/public/notes/${id}`, { signal: AbortSignal.timeout(5000) });
-      if (res.status === 404) return Astro.redirect('/blog');
-      if (res.ok) {
-        note = await res.json();
-        htmlContent = renderTipTap(note?.web_body_rich);
-        break;
-      }
-    } catch { /* retry */ }
-  }
+if (BLOG_HUB_SLUG && id) {
+  try {
+    const res = await fetch(BLOG_POSTS_URL, { signal: AbortSignal.timeout(5000) });
+    if (res.ok) {
+      const data = await res.json();
+      const notes: Note[] = data[BLOG_HUB_SLUG]?.notes ?? [];
+      note = notes.find(n => n.id === id) ?? null;
+      if (!note) return Astro.redirect('/blog');
+      htmlContent = renderTipTap(note.web_body_rich);
+    }
+  } catch { /* note stays null — "not found or unavailable" state below */ }
 }
 
 // Cache individual posts for 5 minutes: content changes infrequently.

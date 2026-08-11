@@ -3,8 +3,13 @@ import Layout from '../../layouts/Layout.astro';
 import { Navigation } from '../../app/components/Navigation';
 import { getExcerpt, readingTime, formatDate } from '../../lib/tiptap-renderer';
 
-const HUB_URL  = import.meta.env.HUB_URL ?? '';
+const BLOG_HUB_SLUG = import.meta.env.BLOG_HUB_SLUG ?? '';
 const SITE_URL = 'https://info.citinet.cloud';
+// Published via the hub's own outbound push (api/blog-sync.js on citinet-web),
+// not fetched from the hub directly — Vercel's serverless network can't
+// reliably reach into a residential/tailnet-hosted hub inbound. See
+// api/blogSyncHeartbeat.js in the citinet-web repo for the push side.
+const BLOG_POSTS_URL = 'https://raw.githubusercontent.com/fergtech/citinet-registry/main/blog-posts.json';
 
 interface Note {
   id: string;
@@ -19,20 +24,18 @@ interface Note {
 let notes: Note[] = [];
 let fetchError = false;
 
-if (HUB_URL) {
-  let reached = false;
-  for (let attempt = 0; attempt < 2; attempt++) {
-    try {
-      const res = await fetch(`${HUB_URL}/api/public/notes`, { signal: AbortSignal.timeout(5000) });
-      if (res.ok) {
-        const data = await res.json();
-        notes = data.notes ?? [];
-        reached = true;
-        break;
-      }
-    } catch { /* retry */ }
+if (BLOG_HUB_SLUG) {
+  try {
+    const res = await fetch(BLOG_POSTS_URL, { signal: AbortSignal.timeout(5000) });
+    if (res.ok) {
+      const data = await res.json();
+      notes = data[BLOG_HUB_SLUG]?.notes ?? [];
+    } else {
+      fetchError = true;
+    }
+  } catch {
+    fetchError = true;
   }
-  if (!reached) fetchError = true;
 }
 
 // Only cache when we have real posts. Never cache empty or error states, so a
@@ -67,13 +70,13 @@ if (notes.length > 0) {
       </div>
 
       <!-- States -->
-      {!HUB_URL && (
-        <p class="text-slate-600 text-center py-20">HUB_URL environment variable not set.</p>
+      {!BLOG_HUB_SLUG && (
+        <p class="text-slate-600 text-center py-20">BLOG_HUB_SLUG environment variable not set.</p>
       )}
-      {HUB_URL && fetchError && (
-        <p class="text-slate-500 text-center py-20">Could not reach the hub. Check back soon.</p>
+      {BLOG_HUB_SLUG && fetchError && (
+        <p class="text-slate-500 text-center py-20">Could not load posts. Check back soon.</p>
       )}
-      {HUB_URL && !fetchError && notes.length === 0 && (
+      {BLOG_HUB_SLUG && !fetchError && notes.length === 0 && (
         <p class="text-slate-600 text-center py-20">No posts yet.</p>
       )}
 

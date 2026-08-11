@@ -2,7 +2,7 @@ import { motion, AnimatePresence, useInView } from 'motion/react';
 import { useRef, useState, useEffect } from 'react';
 import {
   HardDrive, Radio, MessageCircle, ShoppingBag, Map, Users, Cpu, Layers,
-  Wifi, Search, Fingerprint, Puzzle,
+  Wifi, Search, Fingerprint, Puzzle, Vote,
   WifiOff, Antenna, Sparkles, ArrowRight, X, ChevronLeft, ChevronRight,
   Network, BookOpen, Home, Flower2, GraduationCap, Building2,
 } from 'lucide-react';
@@ -167,6 +167,13 @@ const FEATURE_DETAILS: Record<string, FeatureDetail> = {
     description: 'Sub-communities within your hub. A city hub could have a Space for your block, your gardening group, or your local association. Each Space has its own feed and members.',
     images: ['/imgs/spaces/Screenshot 2026-05-08 195550.png'],
     examples: SPACES_EXAMPLES,
+    cta: { label: 'Try it on your hub', href: 'https://citinet.cloud' },
+  },
+  'Decisions': {
+    Icon: Vote,
+    status: 'live',
+    gradient: 'from-teal-600 to-cyan-700',
+    description: 'Put it to a vote and keep a record everyone can see, not just the board. Every vote is timestamped and visible to the whole hub, so a decision can\'t quietly get buried or "not remembered" later.',
     cta: { label: 'Try it on your hub', href: 'https://citinet.cloud' },
   },
   // Phase 2: Building
@@ -691,6 +698,7 @@ export function SpacesShowcase() {
             features={[
               { Icon: HardDrive,     label: 'File Storage' },
               { Icon: Radio,         label: 'Community Feed' },
+              { Icon: Vote,          label: 'Decisions' },
               { Icon: MessageCircle, label: 'Messaging' },
               { Icon: ShoppingBag,   label: 'Local Marketplace' },
               { Icon: Map,           label: 'Community Atlas' },
