@@ -55,10 +55,10 @@ export function HeroSection() {
               transition={{ duration: 0.8, ease: 'easeOut' }}
               className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.05] mb-6"
             >
-              Your community.
+              The World-Wide-Web
               <br />
               <span className="bg-gradient-to-r from-blue-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
-                Your internet.
+                made local.
               </span>
             </motion.h1>
 
@@ -68,7 +68,7 @@ export function HeroSection() {
               transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
               className="text-lg md:text-xl text-slate-300 mb-3 leading-relaxed"
             >
-              Store files. Connect with community members. No Big Tech platforms. No middleman.
+              Store files. Chat. Connect with others on your locally-owned and operated network. No Big Tech platforms. No middleman.
             </motion.p>
 
             <motion.p

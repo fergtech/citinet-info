@@ -165,16 +165,16 @@ export function NetworkExplainer() {
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-            A community-run hub.
+            The web = global & irrelevant.
             <br />
             <span className="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">
-              On your hardware. In your neighborhood.
+              Citinet = local & relevant again.
             </span>
           </h2>
 
           <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed">
             Anyone can run a hub. Spare PC, laptop, Raspberry Pi.
-            Neighbors connect through a browser, and your community's data lives on hardware you control.
+            Neighbors connect through a browser, and your community's data lives on hardware you control. (or just keep it all to yourself ¯\_(ツ)_/¯ )
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-16">

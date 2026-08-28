@@ -1,6 +1,6 @@
 # The Citinet Manifesto
 
-## A Declaration for Sovereign Digital Infrastructures
+## A Declaration for Sovereign Digital Infrastructure
 
 **2026 Draft**
 
@@ -8,51 +8,65 @@
 
 ### 1. The Problem
 
-The modern internet has drifted far from its original promise.
+The internet succeeded beyond anyone's imagination.
 
-A handful of corporations now own the spaces where we socialize, organize, learn, share knowledge, and build our digital lives.
+It connected continents, cultures, industries, and billions of people across the globe.
 
-Our communities have become tenants—renting space inside platforms we do not control, governed by policies we did not create, and subjected to algorithms we cannot see.
+But in connecting the world, it often disconnected us from all of what matters most.
 
-Centralization has produced:
+Today, many people know more about distant events than the neighborhoods, towns, areas they live in. Local knowledge is fragmented. Community life is scattered across disconnected platforms. It's great to have that in some aspects, but we must determine how much content creation & consumption for entertainment & popularity's sake is enough. Meaningful local participation is harder to discover than randomized global entertainment and information.
 
-- Fragile digital infrastructure
-- Extractive data practices
-- Loss of local, physical community
-- Communities dependent on distant servers
-- Social spaces optimized for profit, not people
+At the same time, a handful of corporations increasingly mediate how communities communicate, organize, share information, and build relationships online.
 
-We reject this trajectory.
-We believe communities & individual technology users deserve sovereignty—not surveillance or explotation.
+The result is an internet that is larger than ever, yet often less connected to the physical people, places, things that give our lives meaning.
+
+We reject the idea that locality is obsolete.
+
+We believe locality (or hyper-locality) is the future.
+
+We believe communities deserve digital spaces rooted in real places, events and resources, governed by real people, and designed around human-life enrichment & connection rather than platform growth or capital gain.
 
 ---
 
-### 2. Our Premise: The Cloud Should Belong to the People
+### 2. Our Premise: The Internet Needs a New Local Layer
 
-Citinet begins with a simple truth:
+The World Wide Web gave humanity a shared global network and set of standards to support that.
 
-Every neighborhood, school, household, organization, and community deserves to own its digital space—just as naturally as it owns its buildings, gardens, libraries, and meeting halls.
+Citinet asks a different question:
 
-The internet should not be just something available *to* people.
+What would a web look like if it were truly local to you? Running on systems and filled with users entirely in your local areas within a 60-90mi radius?
 
-It should be something built with them, by them, and ultimately for them. Just like its origins. It's time to reset, while moving forward for the benefit of all people, not just *the few*.
+Every city, neighborhood, school, organization, family, and community of shared interests should have a digital space that authentically reflects its unique identity and needs.
+
+The future of the internet is not choosing between local and global.
+
+It is building systems that can be both.
+
+Connected to the world.
+
+Rooted in belonging.
 
 ---
 
 ### 3. Our Vision
 
-Citinet envisions a new kind of network:
+Citinet envisions a Community-Wide Web.
 
-A federation of community run micro clouds, each one sovereign, each one local-first, each one designed around human-scale connection.
+A network of locally operated hubs that strengthen real-world communities while remaining connected to a broader federation (a network of networks, or mesh of hubs).
 
-Every Citinet Hub is:
+Every Citinet Hub serves as a digital home for the people and places around it.
 
-- A community micro data center
-- A digital commons
-- A local cloud
-- A space for cooperation, not extraction
+A hub may support a neighborhood, a town, a university, a cooperative, a nonprofit, a family, or an entire city.
 
-And together, these hubs form a constellation of resilient, interconnected communities—a people's cloud network.
+Each hub is independent.
+
+Each community defines its own culture and governance.
+
+Together, they form a network where local communities remain local while still participating in something larger. If they choose to.
+
+The goal is not another platform.
+
+The goal is digital infrastructure for real places. Real people. 
 
 ---
 
@@ -92,20 +106,25 @@ The network grows from the bottom up—not from corporate scale.
 
 ### 5. What We Stand For
 
-We stand for digital self determination.
-People should be able to choose where their data lives, who can access it, and how it is used.
+We stand for local communities. The everyday citizen.
+
+Technology should strengthen the places where people actually live, work, learn, and gather.
+
+We stand for digital self-determination.
+
+Communities and individuals should decide how their digital spaces operate, who participates, and how their data is managed.
 
 We stand for community infrastructure.
-Digital infrastructure should resemble public libraries or community centers, not shopping malls.
 
-We stand for social technology that heals.
-Online spaces should strengthen real-world relationships, not replace or distort them.
+Digital infrastructure should resemble public spaces: libraries, community centers, cooperatives, parks, and town halls (or your living room.)
 
-We stand for transparent, inspectable, trustworthy systems.
-No black-box algorithms deciding what we see, believe, or value.
+We stand for technology that creates participation rather than passive consumption.
 
-We stand for the right to host your own cloud.
-A household, a church, a school, or a neighborhood should all be able to operate their own digital home.
+People should be empowered to contribute to their communities, not merely scroll through them.
+
+We stand for transparency, trust, and accountability.
+
+Communities deserve systems they can understand, inspect, and influence.
 
 ---
 
@@ -118,7 +137,7 @@ Citinet provides the tools to build sovereign clouds:
 - Local file storage and discussion boards
 - Events, microfeeds, internet browsing, search engines, and shared resources
 - Personal Nodes that sync your own copy of your data
-- Optional Cloudflare-backed access at `citinet-portal.vercel.app/node`, and eventually at `{node}.citinet.cloud`
+- Automatic, browser-trusted HTTPS for every hub at `{hub}.hub.citinet.cloud` — no domain to buy, no certificate to configure — plus Tailscale Funnel for access beyond your local network
 
 Each hub is independent.
 Each one is governed by the people it serves.

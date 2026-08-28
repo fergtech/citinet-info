@@ -10,7 +10,7 @@ function inlineParse(str: string): React.ReactNode {
     if (p.startsWith('*') && p.endsWith('*'))
       return <em key={i} className="italic text-slate-200">{p.slice(1, -1)}</em>;
     if (p.startsWith('`') && p.endsWith('`'))
-      return <code key={i} className="font-mono text-cyan-300 bg-slate-800 px-1 rounded text-xs">{p.slice(1, -1)}</code>;
+      return <code key={i} className="font-mono text-violet-300 bg-slate-800 px-1 rounded text-xs">{p.slice(1, -1)}</code>;
     return p;
   });
 }
@@ -28,7 +28,7 @@ function renderMarkdown(raw: string): React.ReactNode[] {
       <ul key={key++} className="my-3 space-y-1.5 pl-1">
         {listBuf.map((li, i) => (
           <li key={i} className="flex items-start gap-2 text-slate-300 text-sm leading-relaxed">
-            <span className="text-cyan-400 mt-0.5 shrink-0">•</span>
+            <span className="text-violet-400 mt-0.5 shrink-0">•</span>
             <span>{inlineParse(li)}</span>
           </li>
         ))}
@@ -46,7 +46,7 @@ function renderMarkdown(raw: string): React.ReactNode[] {
       out.push(<h2 key={key++} className="text-base font-bold text-slate-400 uppercase tracking-widest mb-1 mt-1">{inlineParse(line.slice(3))}</h2>);
     } else if (line.startsWith('### ')) {
       flushList();
-      out.push(<h3 key={key++} className="text-lg font-bold text-cyan-400 mb-2 mt-6">{inlineParse(line.slice(4))}</h3>);
+      out.push(<h3 key={key++} className="text-lg font-bold text-violet-400 mb-2 mt-6">{inlineParse(line.slice(4))}</h3>);
     } else if (line.startsWith('#### ')) {
       flushList();
       out.push(<h4 key={key++} className="text-sm font-semibold text-emerald-400 mb-1.5 mt-4">{inlineParse(line.slice(5))}</h4>);
@@ -54,7 +54,7 @@ function renderMarkdown(raw: string): React.ReactNode[] {
       listBuf.push(line.slice(2));
     } else if (line.trim() === '---') {
       flushList();
-      out.push(<hr key={key++} className="border-slate-700/60 my-5" />);
+      out.push(<hr key={key++} className="border-white/10 my-5" />);
     } else if (line.trim() === '') {
       flushList();
     } else {
@@ -98,12 +98,12 @@ export function ManifestoModal({ onClose }: { onClose: () => void }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 16 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
-        className="relative z-10 w-full max-w-2xl max-h-[85vh] bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl shadow-black/60 flex flex-col"
+        className="relative z-10 w-full max-w-2xl max-h-[85vh] bg-gradient-to-b from-slate-950 via-[#050b1f] to-blue-950 border border-white/10 rounded-2xl shadow-2xl shadow-black/60 flex flex-col"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-700 shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 shrink-0">
           <div className="flex items-center gap-3">
-            <BookOpen className="w-5 h-5 text-cyan-400 shrink-0" />
+            <BookOpen className="w-5 h-5 text-violet-400 shrink-0" />
             <h2 className="text-base font-bold text-white">The Citinet Manifesto</h2>
             <span className="text-xs text-slate-500 font-medium">2026 Draft</span>
           </div>
@@ -122,10 +122,10 @@ export function ManifestoModal({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-slate-700 shrink-0 flex items-center justify-end">
+        <div className="px-6 py-4 border-t border-white/10 shrink-0 flex items-center justify-end">
           <button
             onClick={handleDownload}
-            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-semibold rounded-lg shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all duration-200 hover:scale-105"
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-lg shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-300 hover:scale-105"
           >
             <Download className="w-4 h-4" />
             Download .md

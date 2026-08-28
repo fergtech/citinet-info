@@ -83,7 +83,7 @@ export function Navigation() {
             <img src="/imgs/logo/logo.png" alt="Citinet" className="h-8 w-auto" />
             <div className="flex flex-col leading-none items-start">
               <span className="text-xl font-bold text-white tracking-tight">Citinet</span>
-              <span className="text-[10px] text-slate-400 font-medium tracking-wide">Citizens' Internet Project</span>
+              <span className="text-[10px] text-slate-400 font-medium tracking-wide">Citizens' Network Project</span>
             </div>
           </motion.button>
 

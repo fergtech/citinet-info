@@ -1,12 +1,12 @@
 import { motion } from 'motion/react';
 import { useInView } from 'motion/react';
 import { useRef } from 'react';
-import { Cloud, MessageSquare, Users } from 'lucide-react';
+import { Cloud, PersonStanding, House } from 'lucide-react';
 
 const PROBLEMS = [
-  { Icon: Cloud,         text: "Your photos live on Amazon's servers." },
-  { Icon: MessageSquare, text: "Your messages are stored by Meta." },
-  { Icon: Users,         text: "Your community is a tenant on someone else's platform." },
+  { Icon: Cloud,         text: "Your photos live on a mega-corporation's servers." },
+  { Icon: PersonStanding, text: "Billions are connected online. Few are connected locally." },
+  { Icon: House,         text: "The internet has grown & improved. Many communities have not." },
 ];
 
 export function MovementStatement() {

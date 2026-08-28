@@ -4,9 +4,9 @@ import { useRef, useState } from 'react';
 import { ManifestoModal } from './ManifestoModal';
 
 const QUOTES = [
-  'The internet should belong to communities, not corporations.',
-  'Your data should live on your hardware, not in a data center.',
-  'Neighborhoods can own their digital infrastructure. The technology exists.',
+  'Your data should live on your hardware, not in a centrally-owned data center.',
+  'Common people, not corporations, control the data, rules, memberships, and governance of their digital spaces.',
+  'Communities deserve digital spaces designed around human-life enrichment & connection rather than platform growth or capital gain.',
 ];
 
 export function ManifestoQuotes() {
