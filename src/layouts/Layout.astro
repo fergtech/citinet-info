@@ -13,7 +13,7 @@ interface Props {
 }
 
 const {
-  title = 'Citinet - Community-Owned Cloud',
+  title = 'Citinet - A Home for Your Community Online',
   description,
   ogType = 'website',
   ogUrl,
@@ -25,7 +25,7 @@ const {
 
 const SITE_URL    = 'https://info.citinet.cloud';
 const LOGO        = `${SITE_URL}/imgs/logo/logo.png`;
-const DEFAULT_DESC = 'Store files. Connect with neighbors. No Amazon. No Google. No middleman. Start your own hub or find one already running in your community.';
+const DEFAULT_DESC = 'Announcements, files, messaging, polls and a shared map for HOAs, co-ops, tenant unions and neighborhood groups. One organizer runs the hub; members just open a browser. Open source and self-hosted.';
 
 const metaDesc    = description || DEFAULT_DESC;
 const metaImage   = ogImage || LOGO;
@@ -37,10 +37,25 @@ const canonicalUrl = canonical || metaUrl;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.classList.toggle('dark', dark);
+        } catch (e) {}
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
     <title>{title}</title>
     <meta name="description" content={metaDesc} />
     <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/imgs/logo/logo.png" />

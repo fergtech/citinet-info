@@ -1,105 +1,85 @@
 import { Fragment } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, ChevronDown, Smartphone, Laptop, Monitor, Tablet, Tv, User } from 'lucide-react';
+import { ArrowRight, Smartphone, Laptop, Monitor, Tablet, Tv, User } from 'lucide-react';
 
 export function HeroSection() {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-950 via-slate-900 to-purple-950">
+    <section id="hero" className="relative overflow-hidden bg-background">
+      {/* Faint blueprint grid, faded at the edges */}
+      <div
+        className="absolute inset-0 pointer-events-none text-border"
+        style={{
+          backgroundImage:
+            'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)',
+          backgroundSize: '48px 48px',
+          maskImage: 'radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 100%)',
+          opacity: 0.6,
+        }}
+      />
 
-      {/* Background video underlay (muted, looping, autoplay) */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <video
-          className="w-full h-full object-cover"
-          src="/video-background.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-        />
-        {/* Plain alpha tint to keep contrast on the footage */}
-        <div className="absolute inset-0 opacity-60" style={{ background: 'var(--cn-wallpaper)' }} />
-        <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="hero-video-dots" width="24" height="24" patternUnits="userSpaceOnUse">
-              <circle cx="12" cy="12" r="1" fill="rgba(168,85,247,1)" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hero-video-dots)" opacity="0.18" />
-        </svg>
-        <div className="absolute inset-0 bg-black/20" />
-      </div>
-
-      {/* Gradient + dot overlay above the video, below content */}
-      <div className="absolute inset-0 z-[5] pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-950 via-slate-900 to-purple-950 opacity-80" />
-        <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="hero-dots-overlay" width="24" height="24" patternUnits="userSpaceOnUse">
-              <circle cx="12" cy="12" r="1" fill="rgba(168,85,247,1)" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hero-dots-overlay)" opacity="0.18" />
-        </svg>
-      </div>
-
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/8 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/8 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-32">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-
+      <div className="relative z-10 max-w-[1248px] mx-auto px-6 pt-36 pb-24 lg:pt-44 lg:pb-32">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.05] mb-6"
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground border border-border rounded-md px-2.5 py-1 mb-6"
             >
-              The World-Wide-Web
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              Open source · Locally-hosted
+            </motion.p>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-foreground leading-[1.08] mb-6"
+            >
+              Your community&apos;s
               <br />
-              <span className="bg-gradient-to-r from-blue-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
-                made local.
-              </span>
+              <span className="text-muted-foreground">new digital home.</span>
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-              className="text-lg md:text-xl text-slate-300 mb-3 leading-relaxed"
+              transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
+              className="text-lg text-muted-foreground max-w-xl mb-3 leading-relaxed"
             >
-              Store files. Chat. Connect with others on your locally-owned and operated network. No Big Tech platforms. No middleman.
+              Announcements, files, messaging, polls, and a shared map in one place, for HOAs, tenant unions, co-ops, clubs, and neighborhood groups.
             </motion.p>
 
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
-              className="text-base text-slate-500 mb-10"
+              transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
+              className="text-sm text-muted-foreground/80 mb-8"
             >
-              Start your own hub or connect to one already running.
+              One organizer sets up the hub. Everyone else just opens a browser (or app). No ads, no hidden ranking, and your data stays on hardware you or your community controls.
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.45, ease: 'easeOut' }}
-              className="flex flex-col sm:flex-row gap-4"
+              transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
+              className="flex flex-col sm:flex-row gap-3"
             >
               <a
-                href="https://citinet.cloud"
+                href="https://citinet.cloud/create"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-300 hover:scale-105 flex items-center gap-2 justify-center"
+                className="group inline-flex items-center justify-center gap-2 h-10 px-5 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors"
               >
                 Start a Hub
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </a>
               <a
-                href="https://citinet.cloud"
+                href="https://citinet.cloud/join"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-8 py-4 bg-white/5 backdrop-blur-sm text-white border border-white/20 rounded-xl font-semibold hover:bg-white/10 transition-all duration-300 text-center"
+                className="inline-flex items-center justify-center h-10 px-5 bg-background text-foreground border border-border text-sm font-medium rounded-md hover:bg-muted transition-colors"
               >
                 Find a Hub
               </a>
@@ -107,29 +87,15 @@ export function HeroSection() {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="hidden lg:block"
           >
             <HubDiagram />
           </motion.div>
         </div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ChevronDown className="w-6 h-6 text-white/25" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }
@@ -174,20 +140,20 @@ function HubDiagram() {
             return (
               <g key={i}>
                 <motion.line x1={CX} y1={CY} x2={cx} y2={cy}
-                  stroke="rgba(139,92,246,0.3)" strokeWidth="1.5" strokeDasharray="5 4"
+                  stroke="var(--border)" strokeWidth="1.5" strokeDasharray="5 4"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }} />
                 <motion.line x1={ax} y1={ay} x2={bx} y2={by}
-                  stroke="rgba(139,92,246,0.28)" strokeWidth="1.4"
+                  stroke="var(--border)" strokeWidth="1.4"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }} />
                 <motion.line x1={ax} y1={ay} x2={cx} y2={cy}
-                  stroke="rgba(139,92,246,0.28)" strokeWidth="1.4"
+                  stroke="var(--border)" strokeWidth="1.4"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }} />
                 <motion.line x1={bx} y1={by} x2={cx} y2={cy}
-                  stroke="rgba(139,92,246,0.28)" strokeWidth="1.4"
+                  stroke="var(--border)" strokeWidth="1.4"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.65 + i * 0.1 }} />
                 {[[ax, ay], [bx, by], [cx, cy]].map(([nx, ny], j) => (
                   <motion.circle key={j} cx={nx} cy={ny} r={CLUSTER_NODE_R}
-                    fill="rgba(15,23,42,0.97)" stroke="rgba(139,92,246,0.35)" strokeWidth="1.5"
+                    fill="var(--background)" stroke="var(--border)" strokeWidth="1.5"
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.55 + i * 0.12 + j * 0.06 }} />
                 ))}
               </g>
@@ -198,7 +164,7 @@ function HubDiagram() {
             <g key={i}>
               <motion.line
                 x1={CX} y1={CY} x2={x2} y2={y2}
-                stroke="rgba(139,92,246,0.3)"
+                stroke="var(--border)"
                 strokeWidth="1.5"
                 strokeDasharray="5 4"
                 initial={{ opacity: 0 }}
@@ -207,8 +173,8 @@ function HubDiagram() {
               />
               <motion.circle
                 cx={x2} cy={y2} r={24}
-                fill="rgba(15,23,42,0.97)"
-                stroke="rgba(139,92,246,0.35)"
+                fill="var(--background)"
+                stroke="var(--border)"
                 strokeWidth="1.5"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -217,16 +183,16 @@ function HubDiagram() {
             </g>
           );
         })}
-        <motion.circle cx={CX} cy={CY} r={52} fill="none" stroke="rgba(99,102,241,0.12)" strokeWidth="1"
+        <motion.circle cx={CX} cy={CY} r={52} fill="none" stroke="var(--border)" strokeWidth="1" strokeDasharray="2 4"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} />
-        <motion.circle cx={CX} cy={CY} r={40} fill="rgba(99,102,241,0.07)" stroke="rgba(99,102,241,0.55)" strokeWidth="2"
+        <motion.circle cx={CX} cy={CY} r={40} fill="var(--muted)" stroke="var(--foreground)" strokeWidth="1.5"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }} />
       </svg>
 
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <motion.div className="text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-          <div className="text-violet-400 text-[9px] font-bold tracking-[0.2em] uppercase">Your</div>
-          <div className="text-white text-xl font-extrabold tracking-tight">Hub</div>
+          <div className="text-muted-foreground font-mono text-[9px] tracking-[0.2em] uppercase">Your</div>
+          <div className="text-foreground text-xl font-semibold tracking-tight">Hub</div>
         </motion.div>
       </div>
 
@@ -255,7 +221,7 @@ function HubDiagram() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.8 + i * 0.12 + j * 0.06 }}
                   >
-                    <User className="w-3.5 h-3.5 text-violet-400/75" />
+                    <User className="w-3.5 h-3.5 text-muted-foreground" />
                   </motion.div>
                 );
               })}
@@ -274,13 +240,13 @@ function HubDiagram() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3, delay: 0.75 + i * 0.12 }}
           >
-            <Icon className="w-5 h-5 text-violet-400/70" />
+            <Icon className="w-5 h-5 text-muted-foreground" />
           </motion.div>
         );
       })}
 
       <motion.div
-        className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-slate-900 border border-violet-500/30 rounded-full text-xs text-violet-400 font-semibold whitespace-nowrap"
+        className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-3 py-1 bg-background border border-border rounded-md font-mono text-xs text-muted-foreground whitespace-nowrap"
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1.5 }}

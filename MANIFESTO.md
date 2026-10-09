@@ -23,7 +23,7 @@ Centralization has produced:
 - Social spaces optimized for profit, not people
 
 We reject this trajectory.
-We believe communities & individual technology users deserve sovereignty—not surveillance or explotation.
+We believe communities & individual technology users deserve sovereignty—not surveillance or exploitation.
 
 ---
 
@@ -116,7 +116,7 @@ Citinet provides the tools to build sovereign clouds:
 - Hub Nodes that power community servers
 - Spaces for groups, clubs, committees, and projects
 - Local file storage and discussion boards
-- Events, microfeeds, internet browsing, search engines, and shared resources
+- Events, a community map, polls, and shared resources
 - Personal Nodes that sync your own copy of your data
 - A stable, globally accessible URL at `{name}.citinet.cloud` via whichever gateway your community chooses
 
@@ -143,7 +143,7 @@ We invite:
 - Small businesses
 - Families
 
-…anyone who believes that digital spaces should be community-owned, individual-owned, privacy-respecting, and built for humans. ps: we are not *totally* anti-AI, just incredibly more responsible than the greedy corporations (and government).
+…anyone who believes that digital spaces should be community-owned, individual-owned, privacy-respecting, and built for humans. P.S. We are not *totally* anti-AI, just incredibly more responsible than the greedy corporations (and government).
 
 ---
 

@@ -6,11 +6,11 @@ function inlineParse(str: string): React.ReactNode {
   const parts = str.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g);
   return parts.map((p, i) => {
     if (p.startsWith('**') && p.endsWith('**'))
-      return <strong key={i} className="text-white font-semibold">{p.slice(2, -2)}</strong>;
+      return <strong key={i} className="text-foreground font-semibold">{p.slice(2, -2)}</strong>;
     if (p.startsWith('*') && p.endsWith('*'))
-      return <em key={i} className="italic text-slate-200">{p.slice(1, -1)}</em>;
+      return <em key={i} className="italic">{p.slice(1, -1)}</em>;
     if (p.startsWith('`') && p.endsWith('`'))
-      return <code key={i} className="font-mono text-violet-300 bg-slate-800 px-1 rounded text-xs">{p.slice(1, -1)}</code>;
+      return <code key={i} className="font-mono text-foreground bg-muted border border-border px-1 rounded text-xs">{p.slice(1, -1)}</code>;
     return p;
   });
 }
@@ -27,8 +27,8 @@ function renderMarkdown(raw: string): React.ReactNode[] {
     out.push(
       <ul key={key++} className="my-3 space-y-1.5 pl-1">
         {listBuf.map((li, i) => (
-          <li key={i} className="flex items-start gap-2 text-slate-300 text-sm leading-relaxed">
-            <span className="text-violet-400 mt-0.5 shrink-0">•</span>
+          <li key={i} className="flex items-start gap-2 text-foreground/80 text-sm leading-relaxed">
+            <span className="text-muted-foreground mt-0.5 shrink-0">–</span>
             <span>{inlineParse(li)}</span>
           </li>
         ))}
@@ -40,26 +40,26 @@ function renderMarkdown(raw: string): React.ReactNode[] {
   for (const line of lines) {
     if (line.startsWith('# ')) {
       flushList();
-      out.push(<h1 key={key++} className="text-2xl font-bold text-white mb-3 mt-1">{inlineParse(line.slice(2))}</h1>);
+      out.push(<h1 key={key++} className="text-2xl font-semibold tracking-tight text-foreground mb-3 mt-1">{inlineParse(line.slice(2))}</h1>);
     } else if (line.startsWith('## ')) {
       flushList();
-      out.push(<h2 key={key++} className="text-base font-bold text-slate-400 uppercase tracking-widest mb-1 mt-1">{inlineParse(line.slice(3))}</h2>);
+      out.push(<h2 key={key++} className="font-mono text-xs text-muted-foreground uppercase tracking-wider mb-1 mt-1">{inlineParse(line.slice(3))}</h2>);
     } else if (line.startsWith('### ')) {
       flushList();
-      out.push(<h3 key={key++} className="text-lg font-bold text-violet-400 mb-2 mt-6">{inlineParse(line.slice(4))}</h3>);
+      out.push(<h3 key={key++} className="text-lg font-semibold text-foreground mb-2 mt-6">{inlineParse(line.slice(4))}</h3>);
     } else if (line.startsWith('#### ')) {
       flushList();
-      out.push(<h4 key={key++} className="text-sm font-semibold text-emerald-400 mb-1.5 mt-4">{inlineParse(line.slice(5))}</h4>);
+      out.push(<h4 key={key++} className="text-sm font-semibold text-foreground mb-1.5 mt-4">{inlineParse(line.slice(5))}</h4>);
     } else if (line.startsWith('- ')) {
       listBuf.push(line.slice(2));
     } else if (line.trim() === '---') {
       flushList();
-      out.push(<hr key={key++} className="border-white/10 my-5" />);
+      out.push(<hr key={key++} className="border-border my-5" />);
     } else if (line.trim() === '') {
       flushList();
     } else {
       flushList();
-      out.push(<p key={key++} className="text-slate-300 text-sm leading-relaxed mb-3">{inlineParse(line)}</p>);
+      out.push(<p key={key++} className="text-foreground/80 text-sm leading-relaxed mb-3">{inlineParse(line)}</p>);
     }
   }
   flushList();
@@ -88,28 +88,28 @@ export function ManifestoModal({ onClose }: { onClose: () => void }) {
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/50"
         onClick={onClose}
       />
 
       {/* Modal panel */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 16 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 16 }}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 8 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
-        className="relative z-10 w-full max-w-2xl max-h-[85vh] bg-gradient-to-b from-slate-950 via-[#050b1f] to-blue-950 border border-white/10 rounded-2xl shadow-2xl shadow-black/60 flex flex-col"
+        className="relative z-10 w-full max-w-2xl max-h-[85vh] bg-background border border-border rounded-lg shadow-xl flex flex-col"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border shrink-0">
           <div className="flex items-center gap-3">
-            <BookOpen className="w-5 h-5 text-violet-400 shrink-0" />
-            <h2 className="text-base font-bold text-white">The Citinet Manifesto</h2>
-            <span className="text-xs text-slate-500 font-medium">2026 Draft</span>
+            <BookOpen className="w-4 h-4 text-muted-foreground shrink-0" />
+            <h2 className="text-sm font-semibold text-foreground">The Citinet Manifesto</h2>
+            <span className="font-mono text-xs text-muted-foreground">2026 Draft</span>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
             aria-label="Close manifesto"
           >
             <X className="w-4 h-4" />
@@ -122,10 +122,10 @@ export function ManifestoModal({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-white/10 shrink-0 flex items-center justify-end">
+        <div className="px-6 py-4 border-t border-border shrink-0 flex items-center justify-end">
           <button
             onClick={handleDownload}
-            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-lg shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-300 hover:scale-105"
+            className="flex items-center gap-2 h-9 px-4 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors"
           >
             <Download className="w-4 h-4" />
             Download .md

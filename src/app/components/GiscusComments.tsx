@@ -21,7 +21,7 @@ export function GiscusComments() {
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata',     '0');
     script.setAttribute('data-input-position',    'bottom');
-    script.setAttribute('data-theme',             'preferred_color_scheme');
+    script.setAttribute('data-theme',             document.documentElement.classList.contains('dark') ? 'dark' : 'light');
     script.setAttribute('data-lang',              'en');
     script.setAttribute('data-loading',           'lazy');
     script.crossOrigin = 'anonymous';
@@ -30,14 +30,14 @@ export function GiscusComments() {
   }, []);
 
   return (
-    <div className="mt-16 pt-8 border-t border-white/10">
-      <p className="text-xs text-slate-600 mb-5">
+    <div className="mt-16 pt-8 border-t border-border">
+      <p className="font-mono text-xs text-muted-foreground mb-5">
         Comments via{' '}
         <a
           href="https://giscus.app"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-violet-400 hover:text-violet-300 transition-colors"
+          className="text-foreground underline underline-offset-2 hover:text-muted-foreground transition-colors"
         >
           Giscus
         </a>

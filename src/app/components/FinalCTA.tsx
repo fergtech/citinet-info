@@ -8,101 +8,74 @@ export function FinalCTA() {
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <section id="cta" ref={ref} className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-purple-950">
-
-      <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1770938474403-a16353e18bf3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZWlnaGJvcmhvb2QlMjBzdHJlZXQlMjBhZXJpYWwlMjB2aWV3fGVufDF8fHx8MTc3MTYxOTU2Nnww&ixlib=rb-4.1.0&q=80&w=1080"
-          alt="Neighborhood aerial view"
-          className="w-full h-full object-cover opacity-10"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-blue-950/90 to-purple-950/90" />
-      </div>
-
-      {/* Dot grid */}
-      <div className="absolute inset-0 opacity-[0.07]">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="cta-dots" width="24" height="24" patternUnits="userSpaceOnUse">
-              <circle cx="12" cy="12" r="1" fill="rgba(168,85,247,1)" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#cta-dots)" />
-        </svg>
-      </div>
-
-      <div className="relative z-10 max-w-4xl mx-auto px-6 py-28 text-center">
-
+    <section id="cta" ref={ref} className="relative bg-muted/40 border-t border-border">
+      <div className="max-w-[1248px] mx-auto px-6 pt-24 pb-10">
         <motion.h2
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
+          transition={{ duration: 0.5 }}
+          className="text-4xl md:text-5xl font-semibold tracking-tight text-foreground mb-4 leading-[1.1]"
         >
-          Own your slice
+          Give your community
           <br />
-          <span className="bg-gradient-to-r from-blue-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
-            of a new digital world.
-          </span>
+          <span className="text-muted-foreground">a home of its own.</span>
         </motion.h2>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-xl text-slate-300 max-w-xl mx-auto mb-12 leading-relaxed"
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="text-lg text-muted-foreground max-w-xl mb-8 leading-relaxed"
         >
-          Start a hub or find one near you. Either way, the network is yours.
+          Set up a hub for your group, or find one that&apos;s already running near you.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.35 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex flex-col sm:flex-row gap-3"
         >
           <a
-            href="https://citinet.cloud"
+            href="https://citinet.cloud/create"
             target="_blank"
             rel="noopener noreferrer"
-            className="group px-10 py-5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-lg rounded-xl font-bold shadow-2xl shadow-blue-600/30 hover:shadow-blue-600/50 transition-all duration-300 hover:scale-105 flex items-center gap-3 justify-center"
+            className="group inline-flex items-center justify-center gap-2 h-10 px-5 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors"
           >
             Start a Hub
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </a>
           <a
             href="https://github.com/fergtech/citinet"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-10 py-5 bg-white/5 border border-white/15 text-slate-300 hover:text-white hover:border-white/30 hover:bg-white/10 rounded-xl font-bold text-lg transition-all duration-300 text-center"
+            className="inline-flex items-center justify-center h-10 px-5 bg-background text-foreground border border-border text-sm font-medium rounded-md hover:bg-muted transition-colors"
           >
             View on GitHub
           </a>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.55 }}
-          className="mt-20 grid grid-cols-3 gap-8 max-w-sm mx-auto"
+        <motion.dl
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.35 }}
+          className="mt-16 grid grid-cols-3 max-w-xl border border-border rounded-lg divide-x divide-border bg-card"
         >
           {[
-            { value: '0',    label: 'Data Centers' },
-            { value: '100%', label: 'Community Owned' },
-            { value: '∞',    label: 'Your Control' },
+            { value: 'Nightly', label: 'Backups' },
+            { value: 'E2E',     label: 'Encrypted DMs, notes, files' },
+            { value: 'Export',  label: 'Leave anytime' },
           ].map(({ value, label }) => (
-            <div key={label} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent mb-1">
-                {value}
-              </div>
-              <div className="text-slate-500 text-xs font-semibold uppercase tracking-wide">{label}</div>
+            <div key={label} className="p-4">
+              <dd className="text-xl font-semibold tracking-tight text-foreground mb-0.5">{value}</dd>
+              <dt className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">{label}</dt>
             </div>
           ))}
-        </motion.div>
+        </motion.dl>
       </div>
 
-      <div className="absolute bottom-8 left-0 right-0 text-center text-slate-600 text-sm">
-        Citinet © 2026 · info.citinet.cloud · citinet.cloud
+      <div className="max-w-[1248px] mx-auto px-6 py-6 border-t border-border font-mono text-xs text-muted-foreground">
+        Citinet, the Citizens&apos; Internet Project © 2026 · info.citinet.cloud · citinet.cloud
       </div>
     </section>
   );

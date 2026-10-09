@@ -51,56 +51,53 @@ if (notes.length > 0) {
   ogUrl={`${SITE_URL}/blog`}
   canonical={`${SITE_URL}/blog`}
 >
-  <div class="min-h-screen bg-slate-950 text-white">
+  <div class="min-h-screen bg-background text-foreground">
     <Navigation client:load />
 
-    <div class="max-w-5xl mx-auto px-6 pt-32 pb-20">
+    <div class="max-w-[1248px] mx-auto px-6 pt-32 pb-20">
 
       <!-- Header -->
-      <div class="mb-16">
-        <p class="text-xs text-slate-500 font-semibold uppercase tracking-widest mb-3">The CITINET Blog</p>
-        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
-          From the <span class="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">community</span>
+      <div class="mb-12">
+        <p class="font-mono text-xs uppercase tracking-wider text-muted-foreground mb-4">The Citinet Blog</p>
+        <h1 class="text-3xl md:text-4xl font-semibold tracking-tight text-foreground mb-3 leading-tight">
+          From the <span class="text-muted-foreground">community</span>
         </h1>
-        <p class="text-xl text-slate-400 mb-3">Updates, ideas, and stories from the people building CITINET.</p>
-        <p class="text-xs text-slate-600">
+        <p class="text-lg text-muted-foreground mb-3">Updates, ideas, and stories from the people building Citinet.</p>
+        <p class="font-mono text-xs text-muted-foreground">
           Powered by a{' '}
-          <a href="https://citinet.cloud" class="text-violet-500 hover:text-violet-400 transition-colors">CITINET hub</a>
+          <a href="https://citinet.cloud" class="text-foreground underline underline-offset-2 hover:text-muted-foreground transition-colors">Citinet hub</a>
         </p>
       </div>
 
       <!-- States -->
       {!BLOG_HUB_SLUG && (
-        <p class="text-slate-600 text-center py-20">BLOG_HUB_SLUG environment variable not set.</p>
+        <p class="text-muted-foreground text-center py-20">BLOG_HUB_SLUG environment variable not set.</p>
       )}
       {BLOG_HUB_SLUG && fetchError && (
-        <p class="text-slate-500 text-center py-20">Could not load posts. Check back soon.</p>
+        <p class="text-muted-foreground text-center py-20">Could not load posts. Check back soon.</p>
       )}
       {BLOG_HUB_SLUG && !fetchError && notes.length === 0 && (
-        <p class="text-slate-600 text-center py-20">No posts yet.</p>
+        <p class="text-muted-foreground text-center py-20">No posts yet.</p>
       )}
 
       <!-- Post grid -->
       {notes.length > 0 && (
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {notes.map((note) => (
             <a
               href={`/blog/${note.id}`}
-              class="group block bg-slate-900 border border-white/10 rounded-2xl overflow-hidden hover:border-violet-500/40 transition-all duration-300 hover:bg-slate-800/60"
+              class="group block bg-card border border-border rounded-lg overflow-hidden hover:bg-muted/60 transition-colors"
             >
-              <div
-                class="h-1"
-                style={note.color ? `background:${note.color}` : 'background: linear-gradient(to right, #2563eb, #7c3aed)'}
-              />
+              <div class="h-0.5" style={note.color ? `background:${note.color}` : 'background: var(--border)'} />
               <div class="p-6">
-                <h2 class="text-lg font-bold text-white group-hover:text-violet-300 transition-colors mb-3 leading-snug line-clamp-2">
+                <h2 class="text-base font-semibold text-foreground mb-2 leading-snug line-clamp-2">
                   {note.title || 'Untitled'}
                 </h2>
-                <p class="text-slate-400 text-sm leading-relaxed mb-5 line-clamp-3">
+                <p class="text-muted-foreground text-sm leading-relaxed mb-5 line-clamp-3">
                   {getExcerpt(note.web_body_plain, 160)}
                 </p>
-                <div class="flex items-center justify-between text-xs text-slate-600">
-                  <span class="text-slate-500 font-medium">{note.author}</span>
+                <div class="flex items-center justify-between font-mono text-xs text-muted-foreground">
+                  <span>{note.author}</span>
                   <div class="flex items-center gap-3">
                     <span>{readingTime(note.web_body_plain)}</span>
                     <span>{formatDate(note.updated_at)}</span>
@@ -113,10 +110,10 @@ if (notes.length > 0) {
       )}
     </div>
 
-    <div class="border-t border-white/5 py-8 text-center text-slate-600 text-sm">
-      <a href="https://info.citinet.cloud" class="hover:text-violet-400 transition-colors">info.citinet.cloud</a>
+    <div class="border-t border-border py-8 text-center font-mono text-muted-foreground text-xs">
+      <a href="https://info.citinet.cloud" class="hover:text-foreground transition-colors">info.citinet.cloud</a>
       {' · '}
-      <a href="https://citinet.cloud" class="hover:text-violet-400 transition-colors">citinet.cloud</a>
+      <a href="https://citinet.cloud" class="hover:text-foreground transition-colors">citinet.cloud</a>
     </div>
   </div>
 </Layout>

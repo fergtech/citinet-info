@@ -7,31 +7,27 @@ This document describes the full infrastructure landscape for the Citinet projec
 ## Components
 
 ### 1. Info Site — this repo (`fergtech/citinet-info`)
-- **Framework:** Astro 4 + React 19 + Tailwind CSS v4
-- **Hosting:** Vercel (auto-deploys on `git push` to `master`)
-- **Domains:** `citinet.cloud`, `www.citinet.cloud`
-- **Purpose:** Public-facing landing/marketing site. No backend, no auth.
+- **Framework:** Astro 5 + React 18 + Tailwind CSS v4
+- **Hosting:** Vercel (auto-deploys on `git push`)
+- **Domain:** `info.citinet.cloud`
+- **Purpose:** Public-facing landing/marketing site and blog. No auth. The blog reads posts published by a hub from the registry repo's `blog-posts.json`.
 
-### 2. Web Portal (`fergtech/citinet`)
-- **Framework:** React 18 + Vite SPA + PWA (vite-plugin-pwa)
-- **Hosting:** Vercel (primary, auto-deploys on `git push`)
+### 2. Web Portal and Hub Stack (`fergtech/citinet`)
+- **Web portal:** React 18 + Vite SPA + PWA, hosted on Vercel. It is the primary way members use a hub; no installation required.
+- **Hub stack:** Docker Compose project the operator runs on their own machine: `citinet-api` (Node/Express), PostgreSQL, MinIO, Caddy (automatic HTTPS), `citinet-backup`, and the internal `citinet-admin` sidecar (watchdog, backup verification, alerts). Optional: Ollama (local AI assistant) and LiveKit (calls and broadcasts).
 - **Domains:**
-  - `start.citinet.cloud` — onboarding mode (join or create a hub)
-  - `*.citinet.cloud` — hub mode (e.g. `riverdale.citinet.cloud` serves the hub interface)
-- **Purpose:** Browser-based interface for all hub interactions. The primary way community members access their hub — no installation required.
+  - `citinet.cloud` (redirects to `www.citinet.cloud`) — onboarding (`/create` and `/join`)
+  - `<slug>.citinet.cloud` — hub mode for the web portal
+  - `<slug>.hub.citinet.cloud` — each hub's own browser-trusted HTTPS address, issued automatically by a central cert broker
+- **Purpose:** Browser-based interface for all hub interactions, and the generator for the hub's OS-specific setup script.
 
 ### 3. Hub Registry (`fergtech/citinet-registry`)
-- **Runtime:** Cloudflare Worker + Workers KV
-- **Domain:** `registry.citinet.cloud`
-- **Deploy:** `npx wrangler deploy` (manual, requires CF API token with Workers Scripts: Edit)
-- **Purpose:** Central directory of all active hubs. Stores hub metadata (slug, name, tunnel URL, online status). Hubs auto-register their URL on every tunnel start.
+- **Runtime:** GitHub-backed JSON (`registry.json`, `blog-posts.json`), updated through a Vercel serverless function in the web portal repo.
+- **Purpose:** Public directory of active hubs (slug, name, URL, online status) and the feed of hub-published blog posts. Hubs self-register when they go public.
 
-### 4. Hub Management App (`fergtech/citinet-client`)
-- **Framework:** Tauri 2 + React 19 desktop app
-- **Platform:** Windows (.msi installer via WiX)
-- **Distribution:** GitHub Releases — `https://github.com/fergtech/citinet-client/releases`
-- **Purpose:** Runs on the hub operator's machine. Manages Docker containers (the hub stack), configures public access tunnels (Tailscale Funnel, Cloudflare, or custom), exposes a local API on port 9090, and registers the hub with the registry. This is a management/admin tool — community members access hubs through the web portal above.
-- **Coming soon:** A simplified one-click launcher (Python/Tkinter) for non-technical hub operators.
+### 4. Hub Setup and Management
+- **Setup:** the hub creation wizard in the web portal generates a setup script for Windows, macOS, or Linux. The script installs Docker, writes the hub's `.env`, and starts the stack.
+- **Day-to-day:** Hub Management in the web portal (including the **System** tab for service status/restarts, alerts, and off-site backup), plus the `citinet` helper on the hub machine.
 
 ---
 
@@ -39,13 +35,12 @@ This document describes the full infrastructure landscape for the Citinet projec
 
 | Record | Type | Target | CF Proxy | Purpose |
 |--------|------|--------|----------|---------|
-| `citinet.cloud` | CNAME | `cname.vercel-dns.com` | OFF | Info site (this repo) |
-| `www` | CNAME | `cname.vercel-dns.com` | OFF | Info site www |
-| `start` | CNAME | `cname.vercel-dns.com` | OFF | Web portal onboarding |
+| `citinet.cloud` | CNAME | `cname.vercel-dns.com` | OFF | Web portal onboarding (redirects to `www`) |
+| `www` | CNAME | `cname.vercel-dns.com` | OFF | Web portal onboarding |
+| `info` | CNAME | `cname.vercel-dns.com` | OFF | Info site (this repo) |
 | `*` | CNAME | `citinet-web.tdyfrvr.workers.dev` | ON | Hub subdomains (web portal via CF Worker) |
-| `registry` | Worker route | `citinet-registry` Worker | ON | Hub registry API |
 
-> `registry.citinet.cloud` and `*.citinet.cloud` must stay on Cloudflare — CF Workers require the orange cloud proxy.
+> `*.citinet.cloud` must stay on Cloudflare: CF Workers require the orange cloud proxy.
 
 ---
 
@@ -53,19 +48,18 @@ This document describes the full infrastructure landscape for the Citinet projec
 
 ```
 Hub operator sets up their machine:
-    → Docker Compose starts the hub stack (storage, API, messaging)
-    → Hub API starts on port 9090
-    → Operator configures public access via their chosen gateway:
-        - Tailscale Funnel → stable https://name.tailXXXX.ts.net URL (recommended)
-        - Cloudflare Tunnel → custom domain at {name}.citinet.cloud
-        - Reverse proxy / local-only → operator's choice
-    → Tunnel URL auto-registered with registry.citinet.cloud
+    → Wizard generates a setup script; running it installs Docker and starts the hub stack
+    → Caddy serves the hub over HTTPS at https://<slug>.hub.citinet.cloud
+      (certificate issued automatically; works for anyone on the same LAN)
+    → Access beyond the LAN, operator's choice:
+        - Tailscale (Funnel or tailnet) → https://<machine>.<tailnet>.ts.net
+        - Cloudflare Tunnel, reverse proxy, or local-only
+    → Hub registers its URL in the public registry
 
-Community member visits start.citinet.cloud
-    → discovers hub in directory (fetches registry)
-    → joins hub → navigates to riverdale.citinet.cloud
-    → web portal fetches registry to get current tunnel URL
-    → connects directly to hub API
+Community member visits citinet.cloud
+    → discovers hub in the directory (or enters its address)
+    → requests an account; the hub admin approves it
+    → web portal connects directly to the hub API
 ```
 
 ---
@@ -73,7 +67,6 @@ Community member visits start.citinet.cloud
 ## Known Limitations
 
 - **Wildcard on CF Workers:** `*.citinet.cloud` must stay on Cloudflare Workers because Vercel Free does not support wildcard custom domains.
-- **Registry is CF-only:** `registry.citinet.cloud` cannot move off Cloudflare without migrating the KV store.
 - **Registrar transfer lock:** citinet.cloud is subject to a 60-day ICANN transfer lock from registration (~April 2026 to transfer if desired).
 - **Local-only hubs:** Hubs without a public tunnel can still operate on a local network but won't appear in the registry or be accessible from outside.
 
@@ -85,5 +78,3 @@ Community member visits start.citinet.cloud
 |-----------|---------------|
 | Info site (this repo) | `git push` → Vercel auto-deploys |
 | Web portal | `git push` → Vercel + CF Workers auto-deploy |
-| Registry | `npx wrangler deploy` (manual) |
-| Hub management app | `npm run tauri build` with signing key env var set, upload artifacts to GitHub release |

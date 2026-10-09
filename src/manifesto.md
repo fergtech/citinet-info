@@ -135,9 +135,9 @@ Citinet provides the tools to build sovereign clouds:
 - Hub Nodes that power community servers
 - Spaces for groups, clubs, committees, and projects
 - Local file storage and discussion boards
-- Events, microfeeds, internet browsing, search engines, and shared resources
+- Events, a community map, polls, and shared resources
 - Personal Nodes that sync your own copy of your data
-- Automatic, browser-trusted HTTPS for every hub at `{hub}.hub.citinet.cloud` — no domain to buy, no certificate to configure — plus Tailscale Funnel for access beyond your local network
+- Automatic, browser-trusted HTTPS for every hub at `{hub}.hub.citinet.cloud` — no domain to buy, no certificate to configure — plus Tailscale for access beyond your local network
 
 Each hub is independent.
 Each one is governed by the people it serves.
@@ -162,7 +162,7 @@ We invite:
 - Small businesses
 - Families
 
-…anyone who believes that digital spaces should be community-owned, individual-owned, privacy-respecting, and built for humans. ps: we are not *totally* anti-AI, just incredibly more responsible than the greedy corporations (and government).
+…anyone who believes that digital spaces should be community-owned, individual-owned, privacy-respecting, and built for humans. P.S. We are not *totally* anti-AI, just incredibly more responsible than the greedy corporations (and government).
 
 ---
 

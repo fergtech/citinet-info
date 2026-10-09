@@ -1,23 +1,30 @@
-import { motion, useScroll, useTransform } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useState, useEffect } from 'react';
-import { Menu, X, Zap, Github } from 'lucide-react';
+import { Menu, X, Github, Sun, Moon } from 'lucide-react';
 
+// Two separate floating pieces, like the site this was modelled on: the brand sits in the top-left
+// corner on its own, and the links live in a pill in the top-right corner. Nothing spans the page.
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  const { scrollY } = useScroll();
+  const [isDark, setIsDark] = useState(false);
 
-  const backgroundColor = useTransform(
-    scrollY,
-    [0, 100],
-    ['rgba(2, 6, 23, 0)', 'rgba(2, 6, 23, 0.8)']
-  );
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains('dark'));
+  }, []);
+
+  const toggleTheme = () => {
+    const next = !isDark;
+    document.documentElement.classList.toggle('dark', next);
+    try { localStorage.setItem('theme', next ? 'dark' : 'light'); } catch {}
+    setIsDark(next);
+  };
 
   const navItems = [
     { id: 'hero',         label: 'Home' },
-    { id: 'phases',       label: 'How It Works' },
+    { id: 'phases',       label: 'Features' },
+    { id: 'trust',        label: 'Reliability' },
     { id: 'how-it-works', label: 'Get Started' },
-    { id: 'cta',          label: 'Start a Hub' },
   ];
 
   const pathname = typeof window !== 'undefined' ? window.location.pathname : '/';
@@ -52,174 +59,117 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isBlogPage]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setIsOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen]);
+
   const scrollToSection = (id: string) => {
+    setIsOpen(false);
     if (!isIndexPage) {
       window.location.href = `/#${id}`;
       return;
     }
     const element = document.getElementById(id);
     if (element) {
-      setIsOpen(false);
       setTimeout(() => {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 10);
     }
   };
 
+  // Shared look for both pills: translucent, blurred, hairline border, soft shadow.
+  const pill = 'pointer-events-auto flex h-12 items-center rounded-full border border-foreground/10 bg-background/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_32px_-12px_rgba(0,0,0,0.4)] backdrop-blur-xl backdrop-saturate-150';
+  const linkClass = (active: boolean) =>
+    `rounded-full px-4 py-2 text-[15px] tracking-[0.04em] transition-colors ${
+      active ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground'
+    }`;
+  const mobileLinkClass = (active: boolean) =>
+    `block w-full rounded-xl px-4 py-3 text-left text-base transition-colors ${
+      active ? 'bg-muted text-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+    }`;
+  const iconBtn = 'flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground';
+
   return (
-    <motion.nav
-      style={{ backgroundColor }}
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b border-white/10"
-    >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <motion.button
-            onClick={() => scrollToSection('hero')}
-            className="flex items-center gap-2.5 group"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <img src="/imgs/logo/logo.png" alt="Citinet" className="h-8 w-auto" />
-            <div className="flex flex-col leading-none items-start">
-              <span className="text-xl font-bold text-white tracking-tight">Citinet</span>
-              <span className="text-[10px] text-slate-400 font-medium tracking-wide">Citizens' Internet Project</span>
-            </div>
-          </motion.button>
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex items-start justify-between px-4 pt-4 sm:px-8 xl:px-[52px] xl:pt-6">
+      {/* Brand: logo and name (just the logo on small screens) */}
+      <button
+        onClick={() => scrollToSection('hero')}
+        aria-label="Citinet, back to the top"
+        className={`${pill} min-w-12 justify-center gap-2.5 sm:justify-start sm:pl-3.5 sm:pr-5`}
+      >
+        <img src="/imgs/logo/logo.png" alt="" className="h-6 w-auto invert dark:invert-0" />
+        <span className="hidden text-[15px] font-semibold tracking-tight text-foreground sm:inline">Citinet</span>
+        <span className="hidden border-l border-border pl-2.5 font-mono text-[11px] text-muted-foreground xl:inline">
+          Citizens' Internet Project
+        </span>
+      </button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                  activeSection === item.id
-                    ? 'text-violet-400'
-                    : 'text-slate-300 hover:text-white'
-                }`}
-              >
-                {item.label}
-                {activeSection === item.id && (
-                  <motion.div
-                    layoutId="activeSection"
-                    className="absolute inset-0 bg-violet-500/10 border border-violet-500/30 rounded-lg -z-10"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* CTA Button - Desktop */}
-          <div className="hidden lg:flex items-center gap-3">
-            <a
-              href="/blog"
-              className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                activeSection === 'blog'
-                  ? 'text-violet-400'
-                  : 'text-slate-300 hover:text-white'
-              }`}
-            >
-              Blog
-              {activeSection === 'blog' && (
-                <motion.div
-                  layoutId="activeSection"
-                  className="absolute inset-0 bg-violet-500/10 border border-violet-500/30 rounded-lg -z-10"
-                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                />
-              )}
-            </a>
-            <a
-              href="https://docs.citinet.cloud"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white transition-all duration-300"
-            >
-              Docs
-            </a>
-            <a
-              href="https://github.com/fergtech/citinet"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-all duration-200"
-              aria-label="View on GitHub"
-            >
-              <Github className="w-5 h-5" />
-            </a>
-            <button
-              onClick={() => scrollToSection('cta')}
-              className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-600/30 transition-all duration-300 hover:scale-105"
-            >
-              Start a Hub
+      {/* Links and actions */}
+      <nav aria-label="Primary" className="relative">
+        {/* Desktop */}
+        <div className={`${pill} hidden gap-0.5 pl-2 pr-1.5 lg:flex`}>
+          {navItems.map((item) => (
+            <button key={item.id} onClick={() => scrollToSection(item.id)} className={linkClass(activeSection === item.id)}>
+              {item.label}
             </button>
-          </div>
-
-          {/* Mobile Menu Button */}
+          ))}
+          <a href="/blog" className={linkClass(activeSection === 'blog')}>Blog</a>
+          <a href="https://docs.citinet.cloud" target="_blank" rel="noopener noreferrer" className={linkClass(false)}>Docs</a>
+          <span className="mx-1.5 h-5 w-px bg-border" aria-hidden />
+          <a href="https://github.com/fergtech/citinet" target="_blank" rel="noopener noreferrer" className={iconBtn} aria-label="View on GitHub">
+            <Github className="h-4 w-4" />
+          </a>
+          <button onClick={toggleTheme} className={iconBtn} aria-label="Toggle theme">
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+            onClick={() => scrollToSection('cta')}
+            className="ml-1 h-9 rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            {isOpen ? (
-              <X className="w-6 h-6 text-white" />
-            ) : (
-              <Menu className="w-6 h-6 text-white" />
-            )}
+            Start a Hub
           </button>
         </div>
 
-        {/* Mobile Menu */}
-        <motion.div
-          initial={false}
-          animate={{
-            height: isOpen ? 'auto' : 0,
-            opacity: isOpen ? 1 : 0
-          }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
-          style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
-          className="lg:hidden overflow-hidden"
-        >
-          <div className="py-4 space-y-1">
-            {navItems.map((item) => (
+        {/* Mobile */}
+        <div className={`${pill} gap-0.5 px-1.5 lg:hidden`}>
+          <button onClick={toggleTheme} className={iconBtn} aria-label="Toggle theme">
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+          <button onClick={() => setIsOpen(!isOpen)} className={iconBtn} aria-label="Menu" aria-expanded={isOpen}>
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.15, ease: 'easeOut' }}
+              className="pointer-events-auto absolute right-0 top-14 w-[min(20rem,calc(100vw-2rem))] rounded-3xl border border-foreground/10 bg-background/70 p-2 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_16px_48px_-16px_rgba(0,0,0,0.5)] backdrop-blur-xl backdrop-saturate-150 lg:hidden"
+            >
+              {navItems.map((item) => (
+                <button key={item.id} onClick={() => scrollToSection(item.id)} className={mobileLinkClass(activeSection === item.id)}>
+                  {item.label}
+                </button>
+              ))}
+              <a href="/blog" className={mobileLinkClass(activeSection === 'blog')}>Blog</a>
+              <a href="https://docs.citinet.cloud" target="_blank" rel="noopener noreferrer" className={mobileLinkClass(false)}>Docs</a>
+              <a href="https://github.com/fergtech/citinet" target="_blank" rel="noopener noreferrer" className={mobileLinkClass(false)}>GitHub</a>
               <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
-                  activeSection === item.id
-                    ? 'text-violet-400 bg-violet-500/10 border border-violet-500/30'
-                    : 'text-slate-300 hover:text-white hover:bg-white/5'
-                }`}
+                onClick={() => scrollToSection('cta')}
+                className="mt-2 h-11 w-full rounded-full bg-primary text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
-                {item.label}
+                Start a Hub
               </button>
-            ))}
-            <a
-              href="/blog"
-              className={`block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
-                activeSection === 'blog'
-                  ? 'text-violet-400 bg-violet-500/10 border border-violet-500/30'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              Blog
-            </a>
-            <a
-              href="https://docs.citinet.cloud"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-full text-left px-4 py-3 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-300"
-            >
-              Docs
-            </a>
-            <button
-              onClick={() => scrollToSection('cta')}
-              className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-600/30 transition-all duration-300"
-            >
-              Start a Hub
-            </button>
-          </div>
-        </motion.div>
-      </div>
-    </motion.nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </header>
   );
 }
