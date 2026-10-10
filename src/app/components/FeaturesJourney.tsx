@@ -135,6 +135,8 @@ const BLUE = '#2563eb';
 const StillCtx = createContext(false);
 // Camera zoom, so labels can be drawn larger when the world is far away and stay readable on screen.
 const ZoomCtx = createContext(1);
+// Phones draw the world at roughly 0.6 of its desktop size, so small labels are drawn larger there.
+const CompactCtx = createContext(false);
 
 // A dot that travels from one point to another, forever.
 function Packet({ from, to, delay = 0, duration = 1.7, r = 5, fill = BLUE, shape = 'dot' }: {
@@ -163,7 +165,8 @@ function Packet({ from, to, delay = 0, duration = 1.7, r = 5, fill = BLUE, shape
 }
 
 function Tag({ x, y, text, delay = 0, tone = 'blue' }: { x: number; y: number; text: string; delay?: number; tone?: 'blue' | 'muted' }) {
-  const k = Math.max(1, 0.8 / useContext(ZoomCtx));
+  const zoom = useContext(ZoomCtx);
+  const k = Math.max(1, (useContext(CompactCtx) ? 1.5 : 0.8) / zoom);
   const w = (text.length * 6.4 + 20) * k;
   return (
     <motion.g initial={{ opacity: 0, y: 6 * k }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay }}>
@@ -184,10 +187,11 @@ function Pulse({ x, y, r, delay = 0, color = BLUE }: { x: number; y: number; r: 
 }
 
 function Node({ x, y, r = 22, label, on, show = true, dash }: { x: number; y: number; r?: number; label?: string; on?: boolean; show?: boolean; dash?: boolean }) {
+  const compact = useContext(CompactCtx);
   return (
     <motion.g initial={false} animate={{ opacity: show ? 1 : 0, scale: show ? 1 : 0.6 }} transition={{ duration: 0.45 }} style={{ originX: x / VW, originY: y / VH, transformBox: 'view-box' }}>
       <circle cx={x} cy={y} r={r} fill="var(--background)" stroke={on ? BLUE : 'var(--muted-foreground)'} strokeOpacity={on ? 1 : 0.6} strokeWidth={on ? 2.25 : 1.75} strokeDasharray={dash ? '4 4' : undefined} />
-      {label && <text x={x} y={y + r + 15} textAnchor="middle" fontSize={11} className="font-mono" fill="var(--muted-foreground)">{label}</text>}
+      {label && <text x={x} y={y + r + 15} textAnchor="middle" fontSize={compact ? 14 : 11} className="font-mono" fill="var(--muted-foreground)">{label}</text>}
     </motion.g>
   );
 }
@@ -304,7 +308,10 @@ function Antenna({ x, y, r, on }: { x: number; y: number; r: number; on: boolean
 function Stage({ step, phase, beat }: { step: Step; phase: 1 | 2 | 3; beat: 0 | 1 | 2 }) {
   const still = useContext(StillCtx);
   const scene = step.scene;
-  const cam = CAMERA[phase];
+  const compactView = useContext(CompactCtx);
+  // Phase 1 is one hub and its members, so on a phone the camera can come in closer and use the pinned space.
+  const base = CAMERA[phase];
+  const cam = compactView && phase === 1 ? { ...base, s: base.s * 1.3 } : base;
   // The group scales about the viewBox centre, so putting the focus point under the centre is a pure translate.
   const camX = -cam.s * (cam.fx - VW / 2);
   const camY = -cam.s * (cam.fy - VH / 2);
@@ -653,6 +660,17 @@ export function FeaturesJourney({ onOpenFeature }: { onOpenFeature: (key: string
   const [beat, setBeat] = useState<0 | 1 | 2>(0);
   const reduce = useReducedMotion();
 
+  // Phones and tablets get their own layout: the visual is pinned on top and one caption per scroll step sits
+  // beneath it, instead of the desktop's two columns.
+  const [compact, setCompact] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 1023.98px)');
+    const sync = () => setCompact(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+
   // Parallax: the pinned stage never moves, so the grid drifts upward at a fraction of the scroll speed and the
   // page seems to pass beneath it. Spring-smoothed so wheel notches don't stutter; gentler for reduced motion.
   const gridRaw = useTransform(scrollYProgress, (v) => {
@@ -698,8 +716,96 @@ export function FeaturesJourney({ onOpenFeature }: { onOpenFeature: (key: string
 
   return (
     <StillCtx.Provider value={!!reduce}>
+    <CompactCtx.Provider value={compact}>
     <div ref={ref} style={{ height: `${TOTAL_VH + 100}vh` }} className="relative">
-      <div className="sticky top-0 flex h-screen items-center">
+      <div className="sticky top-0 flex h-screen items-center" style={compact ? { height: '100svh' } : undefined}>
+        {compact && (
+          <div className="flex h-full w-full flex-col pt-[4.25rem]">
+            {/* the world: pinned, never shrunk to a thumbnail */}
+            <div className="relative min-h-0 flex-1">
+              <motion.div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 text-border"
+                style={{
+                  backgroundImage: 'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)',
+                  backgroundSize: '24px 24px',
+                  backgroundPositionY: gridPosY,
+                  opacity: 0.4,
+                  maskImage: CANVAS_MASK,
+                  WebkitMaskImage: CANVAS_MASK,
+                }}
+              />
+              <div className="relative h-full w-full px-3">
+                <Stage step={step} phase={phase} beat={beat} />
+              </div>
+            </div>
+
+            {/* the story: where we are, then one idea at a time */}
+            <div className="flex min-h-[19rem] shrink-0 flex-col px-5 pb-6 pt-3">
+              <div className="mb-3 flex items-center gap-3" aria-label="Roadmap progress">
+                <div className="flex flex-1 gap-1.5">
+                  {PHASES.map((ph) => {
+                    const fill = ph.n < phase ? 1 : ph.n === phase ? within : 0;
+                    return (
+                      <div key={ph.n} className="h-1 flex-1 overflow-hidden rounded-full bg-border">
+                        <div className="h-full rounded-full bg-foreground transition-[width] duration-200" style={{ width: `${fill * 100}%` }} />
+                      </div>
+                    );
+                  })}
+                </div>
+                <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
+                  {String(index + 1).padStart(2, '0')} / {STEPS.length}
+                </span>
+              </div>
+
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={step.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.22 }}
+                  className="min-h-0 flex-1"
+                >
+                  <p className="mb-2 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                    Phase 0{phase} · {meta.name} · <span className={meta.tone}>{meta.status}</span>
+                  </p>
+                  <h3 className="text-[1.65rem] font-light leading-[1.06] tracking-[-0.03em] text-foreground">{step.title}</h3>
+                  <p className="mt-3 text-[15px] leading-[1.5] text-muted-foreground">{step.text}</p>
+                  <div className="mt-4 flex flex-wrap items-center gap-2.5">
+                    {step.feature && (step.phase === 1 || SEE_IT_LATER.has(step.id)) && (
+                      <button
+                        onClick={() => onOpenFeature(step.feature!)}
+                        className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border px-4 text-sm text-foreground"
+                      >
+                        See it <ChevronRight className="h-4 w-4" />
+                      </button>
+                    )}
+                    {step.also && (
+                      <button
+                        onClick={() => onOpenFeature(step.also!)}
+                        className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border px-4 text-sm text-foreground"
+                      >
+                        Portability <ChevronRight className="h-4 w-4" />
+                      </button>
+                    )}
+                    {step.id === 'p1' && (
+                      <a
+                        href="https://citinet.cloud/create"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex h-9 items-center gap-2 rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground"
+                      >
+                        Start a Hub <ArrowRight className="h-4 w-4" />
+                      </a>
+                    )}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+        )}
+        {!compact && (
         <div className="mx-auto grid w-full max-w-[1248px] grid-cols-[minmax(0,440px)_minmax(0,1fr)] items-center gap-12 px-6 pt-20">
           {/* left: where we are, and what this beat says */}
           <div>
@@ -818,8 +924,10 @@ export function FeaturesJourney({ onOpenFeature }: { onOpenFeature: (key: string
             </div>
           </div>
         </div>
+        )}
       </div>
     </div>
+    </CompactCtx.Provider>
     </StillCtx.Provider>
   );
 }

@@ -603,16 +603,11 @@ export function SpacesShowcase() {
   const headerInView = useInView(headerRef, { once: true, amount: 0.3 });
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
 
-  // Wide screens get the scroll-driven journey (reduced-motion visitors get it without the looping motion);
-  // phones keep the plain list.
+  // Every screen gets the scroll-driven journey once it loads: wide screens get the two-column version, phones
+  // get a pinned visual with one caption per scroll step (see FeaturesJourney). The plain list below is what
+  // renders on the server and before scripts run.
   const [journey, setJourney] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia('(min-width: 1024px)');
-    const sync = () => setJourney(mq.matches);
-    sync();
-    mq.addEventListener('change', sync);
-    return () => mq.removeEventListener('change', sync);
-  }, []);
+  useEffect(() => setJourney(true), []);
 
   const precedentNote = (
     <div className="grid items-start gap-10 border-t border-border pt-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:gap-20">
