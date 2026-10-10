@@ -1,0 +1,35 @@
+---
+// Renders a section's blocks in the order they appear in MANIFESTO.md (paragraphs and lists interleaved).
+import type { Block } from '../lib/statement';
+import { inline } from '../lib/statement';
+
+interface Props {
+  blocks: Block[];
+  /** 'rules' = hairline-divided rows, 'dash' = short dash bullets */
+  list?: 'rules' | 'dash';
+}
+const { blocks, list = 'rules' } = Astro.props;
+---
+
+<div class="space-y-5">
+  {blocks.map((b) =>
+    b.type === 'p' ? (
+      <p class="text-[18px] leading-[1.6] text-muted-foreground" set:html={b.lines.map(inline).join('<br />')} />
+    ) : list === 'dash' ? (
+      <ul class="space-y-2.5">
+        {b.items.map((item) => (
+          <li class="flex gap-3 text-[16px] text-foreground">
+            <span class="mt-[0.6em] h-px w-4 shrink-0 bg-muted-foreground" aria-hidden="true" />
+            <span set:html={inline(item)} />
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <ul class="divide-y divide-border border-y border-border">
+        {b.items.map((item) => (
+          <li class="py-3 text-[16px] text-foreground" set:html={inline(item)} />
+        ))}
+      </ul>
+    ),
+  )}
+</div>

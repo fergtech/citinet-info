@@ -1,0 +1,366 @@
+---
+export const prerender = true;
+import Layout from '../layouts/Layout.astro';
+import { Navigation } from '../app/components/Navigation';
+import StatementBlocks from '../components/StatementBlocks.astro';
+import StatementImage from '../components/StatementImage.astro';
+import StatementContents from '../components/StatementContents.astro';
+import { ImagineYourArea } from '../app/components/ImagineYourArea';
+import raw from '../../MANIFESTO.md?raw';
+import { parseStatement, inline, sentenceCase } from '../lib/statement';
+import { getCollaborators } from '../lib/collaborators';
+import type { Block, Section } from '../lib/statement';
+
+const SITE_URL = 'https://info.citinet.cloud';
+const doc = parseStatement(raw);
+// Real, non-bot contributors from the repo's own commit history (see src/lib/collaborators.ts).
+const collaborators = await getCollaborators();
+const sec = (n: number): Section | undefined => doc.sections.find((s) => s.n === n);
+
+const problem = sec(1);
+const premise = sec(2);
+const vision = sec(3);
+const principles = sec(4);
+const stand = sec(5);
+const offers = sec(6);
+const movement = sec(7);
+const future = sec(8);
+const action = sec(9);
+
+// The headline is the premise's own title: "The Premise: The Cloud Should Belong to the People".
+const headline = premise ? sentenceCase(premise.title.replace(/^(Our |The )?Premise:\s*/i, '')) + '.' : doc.title;
+
+const paragraphs = (blocks: Block[] = []) => blocks.filter((b): b is Extract<Block, { type: 'p' }> => b.type === 'p');
+const lists = (blocks: Block[] = []) => blocks.filter((b): b is Extract<Block, { type: 'ul' }> => b.type === 'ul');
+
+// "I stand for digital self determination." + the lines under it -> { title, text }
+const standRows = paragraphs(stand?.blocks).map((p) => ({
+  title: sentenceCase(p.lines[0].replace(/^(We|I) stand for\s+/i, '').replace(/\.$/, '')),
+  text: p.lines.slice(1).join(' '),
+}));
+---
+
+<Layout
+  title="Statement | Citinet"
+  description="The Citinet statement: a declaration for sovereign digital infrastructures. The cloud should belong to the people."
+  ogUrl={`${SITE_URL}/statement`}
+  canonical={`${SITE_URL}/statement`}
+>
+  <div class="min-h-screen bg-background text-foreground">
+    <Navigation client:load />
+
+    <main class="mx-auto max-w-[1248px] px-6 pb-28 pt-36">
+
+      <!-- Header -->
+      <header>
+        <p class="eyebrow">Statement</p>
+        <h1 class="font-display mt-5 max-w-[23ch] text-[clamp(2.6rem,5.4vw,4.5rem)] font-normal leading-[1.08] tracking-[-0.012em] text-foreground">
+          {headline}
+        </h1>
+        <p class="font-display mt-7 max-w-[34rem] text-[clamp(1.1rem,1.5vw,1.3rem)] leading-[1.5] text-muted-foreground">
+          {doc.subtitle}. <span class="whitespace-nowrap">{doc.edition}.</span>
+        </p>
+        {doc.byline && <p class="mt-4 text-[15px] text-muted-foreground" set:html={inline(doc.byline)} />}
+      </header>
+
+      <!-- On this page: sticky section pills -->
+      <StatementContents />
+
+      {problem && (
+        <section id="problem" data-sec class="row mt-28">
+          <StatementImage
+            src="/imgs/statement/the-problem.jpg"
+            alt="California governor Gavin Newsom meeting with tech industry leaders in 2026"
+            ratio="4 / 3"
+            tilt={-2}
+            caption="Office of the Governor of California, 2026 · via Wikimedia Commons"
+            href="https://commons.wikimedia.org/wiki/File:California_governor_Newsom_meeting_with_tech_industry_leaders_(2026).jpg"
+          />
+          <div class="max-w-[38rem]">
+            <p class="eyebrow">The problem</p>
+            <div class="mt-5"><StatementBlocks blocks={problem.blocks} list="rules" /></div>
+          </div>
+        </section>
+      )}
+
+      <!-- Premise and vision, as set pieces -->
+      {premise && (
+        <section id="premise" data-sec class="mt-28 max-w-[44rem]">
+          <p class="eyebrow">The premise</p>
+          <div class="mt-6 space-y-6">
+            {paragraphs(premise.blocks).map((p, i) => (
+              <p
+                class={i === 0 ? 'text-[18px] leading-[1.6] text-muted-foreground' : 'font-display text-[clamp(1.3rem,2vw,1.7rem)] leading-[1.4] text-foreground'}
+                set:html={p.lines.map(inline).join('<br />')}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {vision && (
+        <section id="vision" data-sec class="vision mt-28">
+          <div>
+            <p class="eyebrow">The vision</p>
+            <div class="mt-5 max-w-[34rem]"><StatementBlocks blocks={vision.blocks} list="dash" /></div>
+          </div>
+          <div>
+            <ImagineYourArea client:visible />
+          </div>
+        </section>
+      )}
+
+      <!-- Principles: numbered, like the About page's focus areas -->
+      {principles && (
+        <section id="principles" data-sec class="mt-28">
+          <p class="eyebrow">Principles</p>
+          <h2 class="font-display mt-4 text-[clamp(1.6rem,2.6vw,2.2rem)] font-normal leading-tight tracking-[-0.01em] text-foreground">What I hold to</h2>
+          <ol class="mt-10 grid gap-x-16 gap-y-10 sm:grid-cols-2">
+            {principles.subs.map((s, i) => (
+              <li class="border-t border-border pt-5">
+                <span class="font-mono text-xs text-muted-foreground">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="font-display mt-2 text-[21px] font-semibold leading-snug text-foreground">{s.title}</h3>
+                <div class="mt-2 space-y-1 text-[16px] leading-[1.6] text-muted-foreground">
+                  {paragraphs(s.blocks).map((p) => (
+                    <p set:html={p.lines.map(inline).join(' ')} />
+                  ))}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      <!-- What we stand for: label column + statement, like the About page's experience rows -->
+      {stand && (
+        <section id="stand" data-sec class="mt-28">
+          <p class="eyebrow">What I stand for</p>
+          <div class="mt-8 border-t border-border">
+            {standRows.map((r) => (
+              <div class="grid gap-3 border-b border-border py-8 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-10">
+                <p class="text-[15px] text-muted-foreground">I stand for</p>
+                <div>
+                  <h3 class="font-display text-[clamp(1.4rem,2vw,1.65rem)] font-semibold leading-tight tracking-[-0.01em] text-foreground">{r.title}</h3>
+                  <p class="mt-3 max-w-[36rem] text-[17px] leading-[1.6] text-muted-foreground">{r.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- What Citinet offers -->
+      {offers && (
+        <section id="offers" data-sec class="row-label mt-28">
+          <div>
+            <p class="eyebrow">What Citinet offers</p>
+          </div>
+          <div class="max-w-[40rem]">
+            {paragraphs(offers.blocks)[0] && (
+              <p class="text-[18px] leading-[1.6] text-muted-foreground" set:html={paragraphs(offers.blocks)[0].lines.map(inline).join('<br />')} />
+            )}
+            {lists(offers.blocks).map((l) => (
+              <ul class="mt-6 divide-y divide-border border-y border-border">
+                {l.items.map((item) => (
+                  <li class="py-3 text-[16px] text-foreground" set:html={inline(item)} />
+                ))}
+              </ul>
+            ))}
+            {paragraphs(offers.blocks).slice(1).map((p) => (
+              <p class="font-display mt-8 text-[clamp(1.2rem,1.7vw,1.4rem)] leading-[1.45] text-foreground" set:html={p.lines.map(inline).join('<br />')} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Movement -->
+      {movement && (
+        <section id="who" data-sec class="row-label mt-28">
+          <div>
+            <p class="eyebrow">Who is behind this</p>
+          </div>
+          <div class="max-w-[40rem] space-y-6">
+            {movement.blocks.map((b) => {
+              if (b.type === 'ul') {
+                return (
+                  <ul class="flex flex-wrap gap-2">
+                    {b.items.map((item) => (
+                      <li class="rounded-full border border-border px-3.5 py-1.5 text-[15px] text-foreground" set:html={inline(item)} />
+                    ))}
+                  </ul>
+                );
+              }
+              const text = b.lines.join(' ');
+              if (text.trim() === '{{collaborators}}') {
+                if (collaborators.length === 0) return null;
+                return (
+                  <p class="flex flex-wrap items-center gap-x-2 gap-y-2 text-[18px] leading-[1.6] text-muted-foreground">
+                    {collaborators.map((c) => (
+                      <a
+                        href={c.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center gap-2 rounded-full border border-border py-1 pl-1 pr-3 text-[15px] text-foreground transition-colors hover:bg-muted"
+                      >
+                        <img src={c.avatar} width="24" height="24" alt="" loading="lazy" class="h-6 w-6 rounded-full bg-muted" />
+                        <span>@{c.login}</span>
+                      </a>
+                    ))}
+                    <span>{collaborators.length === 1 ? 'works' : 'work'} on it with me, actively.</span>
+                  </p>
+                );
+              }
+              const small = /^…/.test(text);
+              return (
+                <p
+                  class={small ? 'text-[16px] leading-[1.6] text-muted-foreground' : 'text-[18px] leading-[1.6] text-muted-foreground'}
+                  set:html={inline(text)}
+                />
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      <!-- The future being built toward -->
+      {future && (
+        <section id="future" data-sec class="mt-28">
+          <p class="eyebrow">The future I am building toward</p>
+          <div class="mt-8 grid gap-10 md:grid-cols-2">
+            <div>
+              {paragraphs(future.blocks)[0] && (
+                <p class="text-[18px] leading-[1.6] text-muted-foreground" set:html={inline(paragraphs(future.blocks)[0].lines.join(' '))} />
+              )}
+              {lists(future.blocks).map((l) => (
+                <ul class="mt-6 divide-y divide-border border-y border-border">
+                  {l.items.map((item) => (
+                    <li class="py-3 text-[16px] text-foreground" set:html={inline(item)} />
+                  ))}
+                </ul>
+              ))}
+            </div>
+            <div class="flex items-end">
+              {paragraphs(future.blocks).slice(1).map((p) => (
+                <p class="font-display text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.25] tracking-[-0.01em] text-foreground" set:html={p.lines.map(inline).join('<br />')} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <!-- Call to action, in the style of the About page's contact block -->
+      {action && (
+        <section id="action" data-sec class="mt-28 border-t border-border pt-16">
+          <p class="eyebrow">Call to action</p>
+          <h2 class="font-display mt-5 max-w-[22ch] text-[clamp(2rem,4vw,3.2rem)] font-normal leading-[1.1] tracking-[-0.012em] text-foreground">
+            {(paragraphs(action.blocks).at(-1)?.lines ?? []).join(' ')}
+          </h2>
+          <div class="mt-8 grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]">
+            <div class="max-w-[36rem]">
+              {paragraphs(action.blocks)[0] && (
+                <p class="text-[18px] leading-[1.6] text-muted-foreground" set:html={inline(paragraphs(action.blocks)[0].lines.join(' '))} />
+              )}
+              {lists(action.blocks).map((l) => (
+                <ul class="mt-5 space-y-2 text-[16px] text-foreground">
+                  {l.items.map((item) => (
+                    <li class="flex gap-3">
+                      <span class="mt-[0.6em] h-px w-4 shrink-0 bg-muted-foreground" aria-hidden="true"></span>
+                      <span set:html={inline(item)} />
+                    </li>
+                  ))}
+                </ul>
+              ))}
+              {paragraphs(action.blocks).length > 2 && (
+                <p class="font-display mt-6 text-[clamp(1.2rem,1.7vw,1.4rem)] text-foreground" set:html={inline(paragraphs(action.blocks)[1].lines.join(' '))} />
+              )}
+            </div>
+            <ul class="divide-y divide-border border-y border-border">
+              {[
+                ['Start a hub', 'https://citinet.cloud/create', '→'],
+                ['Find a hub', 'https://citinet.cloud/join', '→'],
+                ['Read the docs', 'https://docs.citinet.cloud', '↗'],
+                ['GitHub', 'https://github.com/fergtech/citinet', '↗'],
+              ].map(([label, href, arrow]) => (
+                <li>
+                  <a href={href} target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between py-4 text-[17px] text-foreground transition-colors hover:text-muted-foreground">
+                    <span>{label}</span>
+                    <span class="font-mono text-muted-foreground transition-transform group-hover:translate-x-0.5">{arrow}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+    </main>
+
+    <footer class="border-t border-border">
+      <p class="mx-auto max-w-[1248px] px-6 py-6 font-mono text-xs text-muted-foreground">
+        Citinet, the Citizens' Internet Project © 2026 · info.citinet.cloud · citinet.cloud
+      </p>
+    </footer>
+  </div>
+</Layout>
+
+<script>
+  let timer: number | undefined;
+  const close = () => {
+    clearTimeout(timer);
+    document.querySelectorAll<HTMLElement>('[data-soon][aria-expanded="true"]').forEach((b) => b.setAttribute('aria-expanded', 'false'));
+  };
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-soon]');
+    const wasOpen = btn?.getAttribute('aria-expanded') === 'true';
+    close();
+    if (btn && !wasOpen) {
+      btn.setAttribute('aria-expanded', 'true');
+      timer = window.setTimeout(close, 4000);
+    }
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+</script>
+
+<style is:global>
+  .font-display { font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif; }
+  /* "coming soon" popover for [text](soon) in the statement text */
+  .stmt-soon {
+    position: relative; display: inline; padding: 0; border: 0; background: none; font: inherit;
+    color: var(--muted-foreground); cursor: pointer;
+    text-decoration: underline dotted; text-underline-offset: 4px; transition: color 0.2s;
+  }
+  .stmt-soon:hover, .stmt-soon[aria-expanded='true'] { color: var(--foreground); }
+  .stmt-soon:focus-visible { outline: 2px solid var(--foreground); outline-offset: 3px; border-radius: 4px; }
+  .stmt-soon__pop {
+    position: absolute; left: 50%; bottom: calc(100% + 10px); z-index: 40;
+    transform: translate(-50%, 4px);
+    padding: 0.4rem 0.7rem; border-radius: 0.6rem;
+    background: var(--foreground); color: var(--background);
+    font-size: 0.8125rem; line-height: 1.2; font-style: normal; white-space: nowrap; text-decoration: none;
+    pointer-events: none; opacity: 0; visibility: hidden;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    box-shadow: 0 10px 24px -12px rgb(0 0 0 / 0.55);
+  }
+  .stmt-soon__pop::after {
+    content: ''; position: absolute; left: 50%; top: 100%; margin-left: -5px;
+    border: 5px solid transparent; border-top-color: var(--foreground);
+  }
+  .stmt-soon[aria-expanded='true'] .stmt-soon__pop { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+
+  [data-sec] { scroll-margin-top: 10.5rem; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+  /* image on the left (like the About page), text on the right */
+  .row, .row-label, .vision { display: grid; gap: 2.5rem; }
+  @media (min-width: 900px) {
+    .row { grid-template-columns: minmax(0, 22rem) minmax(0, 1fr); column-gap: 4.5rem; align-items: start; }
+    .row-label { grid-template-columns: 16rem minmax(0, 1fr); column-gap: 4.5rem; align-items: start; }
+    .vision { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); column-gap: 4rem; align-items: start; }
+  }
+</style>

@@ -1,0 +1,150 @@
+---
+// "On this page" bar for /statement: a row of pills that sticks under the site navigation, jumps to a
+// section when pressed, and highlights the section being read. Plain HTML + a few lines of script, so it
+// works before anything hydrates and degrades to ordinary in-page links without JavaScript.
+// Each id must match a <section id="..."> on the page; entries whose section is missing are dropped.
+const items = [
+  { id: 'problem', label: 'The problem' },
+  { id: 'premise', label: 'Premise' },
+  { id: 'vision', label: 'Vision' },
+  { id: 'principles', label: 'Principles' },
+  { id: 'stand', label: 'What I stand for' },
+  { id: 'offers', label: 'What it offers' },
+  { id: 'who', label: 'Who is behind it' },
+  { id: 'future', label: 'The future' },
+  { id: 'action', label: 'Get involved' },
+];
+---
+
+<nav class="stmt-toc" aria-label="On this page">
+  <div class="stmt-toc__bar">
+    <ul class="stmt-toc__list">
+      {items.map((it) => (
+        <li>
+          <a href={`#${it.id}`} data-toc={it.id} class="stmt-toc__pill">{it.label}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('.stmt-toc');
+  if (nav) {
+    const pills = Array.from(nav.querySelectorAll<HTMLAnchorElement>('[data-toc]'));
+    const entries: Array<{ pill: HTMLAnchorElement; section: HTMLElement }> = [];
+    for (const pill of pills) {
+      const section = document.getElementById(pill.dataset.toc!);
+      if (section) entries.push({ pill, section });
+      else pill.parentElement?.remove();
+    }
+
+    const list = nav.querySelector<HTMLElement>('.stmt-toc__list')!;
+    let current = '';
+    const setCurrent = (id: string) => {
+      if (id === current) return;
+      current = id;
+      for (const { pill } of entries) {
+        const on = pill.dataset.toc === id;
+        pill.classList.toggle('is-active', on);
+        if (on) pill.setAttribute('aria-current', 'location');
+        else pill.removeAttribute('aria-current');
+        // keep the active pill in view when the row scrolls sideways (phones)
+        if (on && list.scrollWidth > list.clientWidth) {
+          const target = pill.offsetLeft - (list.clientWidth - pill.offsetWidth) / 2;
+          list.scrollTo({ left: target, behavior: 'smooth' });
+        }
+      }
+    };
+
+    // the active section is the last one whose top has passed a line a little below the sticky bar
+    const update = () => {
+      const line = 190;
+      let active = '';
+      for (const { section } of entries) {
+        if (section.getBoundingClientRect().top <= line) active = section.id;
+      }
+      // at the very end of the page the short last section should win
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4 && entries.length) {
+        active = entries[entries.length - 1].section.id;
+      }
+      setCurrent(active);
+    };
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        update();
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+
+    // pressing a pill: smooth scroll (the page's CSS honours reduced motion) and keep the URL shareable
+    for (const { pill, section } of entries) {
+      pill.addEventListener('click', (e) => {
+        e.preventDefault();
+        section.scrollIntoView({ block: 'start' });
+        history.replaceState(null, '', `#${section.id}`);
+        setCurrent(section.id);
+      });
+    }
+  }
+</script>
+
+<style is:global>
+  .stmt-toc {
+    position: sticky;
+    top: 5.75rem;
+    display: flex;
+    justify-content: center;
+    z-index: 30;
+    margin-top: 3rem;
+    pointer-events: none; /* only the bar itself takes clicks, so it never blocks the page behind it */
+  }
+  .stmt-toc__bar {
+    pointer-events: auto;
+    display: inline-block;
+    max-width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--background) 72%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+    box-shadow: 0 8px 28px -18px rgb(0 0 0 / 0.5);
+  }
+  .stmt-toc__list {
+    display: flex;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0.3rem;
+    list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .stmt-toc__list::-webkit-scrollbar { display: none; }
+  .stmt-toc__pill {
+    display: block;
+    white-space: nowrap;
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+    color: var(--muted-foreground);
+    text-decoration: none;
+    transition: color 0.2s, background-color 0.2s;
+  }
+  .stmt-toc__pill:hover { color: var(--foreground); }
+  .stmt-toc__pill.is-active {
+    background: var(--foreground);
+    color: var(--background);
+  }
+  .stmt-toc__pill:focus-visible {
+    outline: 2px solid var(--foreground);
+    outline-offset: 2px;
+  }
+</style>

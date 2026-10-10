@@ -18,7 +18,7 @@ export function FinalCTA() {
         >
           Give your community
           <br />
-          <span className="text-muted-foreground">a home of its own.</span>
+          <span className="text-muted-foreground">its very own digital ecosystem.</span>
         </motion.h2>
 
         <motion.p
@@ -27,7 +27,7 @@ export function FinalCTA() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-lg text-muted-foreground max-w-xl mb-8 leading-relaxed"
         >
-          Set up a hub for your group, or find one that&apos;s already running near you.
+          Set up a hub for yourself or a group, or find a hub that&apos;s already running near you. (hubs are still coming online, so check back soon if you don&apos;t see one yet or create the first in your area!)
         </motion.p>
 
         <motion.div

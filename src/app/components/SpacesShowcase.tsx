@@ -1,11 +1,12 @@
 import { motion, AnimatePresence, useInView } from 'motion/react';
+import { FeaturesJourney } from './FeaturesJourney';
 import { useRef, useState, useEffect } from 'react';
 import {
   HardDrive, Radio, MessageCircle, ShoppingBag, Map, Users, Cpu, Layers,
-  Wifi, Search, Fingerprint, Puzzle, Vote,
+  Wifi, Search, Fingerprint, Puzzle,
   WifiOff, Antenna, Sparkles, ArrowRight, X, ChevronLeft, ChevronRight,
   Network, BookOpen, Home, Flower2, Building2,
-  Target, PackageOpen, Smartphone,
+  Target, PackageOpen, Smartphone, NotebookPen, ArrowUpRight,
 } from 'lucide-react';
 
 // ---------------------------------------------------------------------------
@@ -66,10 +67,10 @@ const FEATURE_DETAILS: Record<string, FeatureDetail> = {
     images: ['/imgs/files/Screenshot 2026-05-08 194515.png'],
     cta: { label: 'Try it on your hub', href: 'https://citinet.cloud/create' },
   },
-  'Community Feed': {
+  'Community Engagement': {
     Icon: Radio,
     status: 'live',
-    description: 'A shared space for announcements, discussions, proposals, and requests. Posts you haven\'t read come first, then newest, or switch to plain newest-first. No engagement-maximising algorithm, no ads.',
+    description: 'Everything a community does together. The feed carries announcements, discussions, proposals and requests: posts you haven\'t read come first, then newest, or switch to plain newest-first, with no engagement-maximising algorithm and no ads. Events have dates, places and RSVPs. Decisions are polls with a record everyone can see, plus roles and a moderation log so a decision can\'t quietly get buried. Resources is a shared directory of open-source, privacy-respecting tools that residents add. Local news appears only if your admin adds it and you switch it on.',
     images: [
       '/imgs/discussion-feed/Screenshot 2026-05-08 194537.png',
       '/imgs/discussion-feed/Screenshot 2026-05-08 194554.png',
@@ -78,15 +79,21 @@ const FEATURE_DETAILS: Record<string, FeatureDetail> = {
     ],
     cta: { label: 'See it in action', href: 'https://citinet.cloud/create' },
   },
-  'Messaging': {
+  'Communications': {
     Icon: MessageCircle,
     status: 'live',
-    description: 'Direct messages and group conversations with full-history search and file attachments. Messages are end-to-end encrypted in your browser, so the hub stores only ciphertext. Voice and video calls and group broadcasts are available when your admin enables them.',
+    description: 'Direct and group messages with full-history search and file attachments, end-to-end encrypted in your browser so the hub stores only ciphertext. Add one-to-one voice and video calls and live broadcasts to the whole hub. Calls and broadcasts run on LiveKit, an open-source media server on your own hardware, and are an opt-in when a hub is created because they open extra media ports. Group calls are not built yet.',
     images: [
       '/imgs/messages/Screenshot 2026-05-08 194710.png',
       '/imgs/messages/Screenshot 2026-05-08 194731.png',
       '/imgs/messages/Screenshot 2026-05-08 194753.png',
     ],
+    cta: { label: 'Try it on your hub', href: 'https://citinet.cloud/create' },
+  },
+  'Notes': {
+    Icon: NotebookPen,
+    status: 'live',
+    description: 'A rich-text notebook for each member. Keep a note private (end-to-end encrypted in your browser), share it with your hub, or publish it to the web and the community blog. Edits to a published note update the public copy automatically.',
     cta: { label: 'Try it on your hub', href: 'https://citinet.cloud/create' },
   },
   'Local Marketplace': {
@@ -140,12 +147,6 @@ const FEATURE_DETAILS: Record<string, FeatureDetail> = {
     description: 'Sub-communities within your hub. A city hub could have a Space for your block, your gardening group, or your local association. Each Space has its own feed and members.',
     images: ['/imgs/spaces/Screenshot 2026-05-08 195550.png'],
     examples: SPACES_EXAMPLES,
-    cta: { label: 'Try it on your hub', href: 'https://citinet.cloud/create' },
-  },
-  'Decisions': {
-    Icon: Vote,
-    status: 'live',
-    description: 'Run community polls and keep a record everyone can see, not just the board. Roles (admin, moderator, member) and a moderation log show who did what, so a decision can\'t quietly get buried or "not remembered" later.',
     cta: { label: 'Try it on your hub', href: 'https://citinet.cloud/create' },
   },
   'Projects': {
@@ -602,6 +603,56 @@ export function SpacesShowcase() {
   const headerInView = useInView(headerRef, { once: true, amount: 0.3 });
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
 
+  // Wide screens get the scroll-driven journey (reduced-motion visitors get it without the looping motion);
+  // phones keep the plain list.
+  const [journey, setJourney] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const sync = () => setJourney(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+
+  const precedentNote = (
+    <div className="grid items-start gap-10 border-t border-border pt-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:gap-20">
+      <div>
+        <p className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">The precedent</p>
+        <h3 className="text-[length:clamp(1.75rem,2.4vw,2.25rem)] font-light leading-[1.1] tracking-[-0.03em] text-foreground">
+          This has been done before.
+        </h3>
+        <p className="mt-5 max-w-xl text-[17px] leading-[1.45] tracking-[-0.012em] text-muted-foreground">
+          Rural electric co-ops brought power to communities that private utilities ignored. They organized, pooled resources, and built it themselves. Community wireless networks are doing the same for internet access today.
+        </p>
+      </div>
+      <div>
+        <p className="mb-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">Further reading</p>
+        <ul className="divide-y divide-border border-y border-border">
+          {[
+            ['https://www.electric.coop/our-organization/history', 'NRECA: Rural Co-op History', 'electric.coop'],
+            ['https://www.nycmesh.net', 'NYC Mesh', 'nycmesh.net'],
+            ['https://detroitcommunitytech.org', 'Detroit Community Technology Project', 'detroitcommunitytech.org'],
+          ].map(([href, title, host]) => (
+            <li key={href}>
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-between gap-4 py-4 transition-colors"
+              >
+                <span className="min-w-0">
+                  <span className="block text-[15px] text-foreground">{title}</span>
+                  <span className="block font-mono text-xs text-muted-foreground">{host}</span>
+                </span>
+                <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+
   return (
     <section id="phases" className="relative py-20 bg-background border-t border-border">
       <div className="max-w-[1248px] mx-auto px-6">
@@ -621,6 +672,7 @@ export function SpacesShowcase() {
           </p>
         </motion.div>
 
+        {!journey && (
         <div className="divide-y divide-border">
 
           <PhaseSection
@@ -632,15 +684,15 @@ export function SpacesShowcase() {
             body="One organizer runs the hub on any computer. Members open a browser and sign up, no app required. Everything is stored on your group's hardware, not in a data center."
             features={[
               { Icon: HardDrive,     label: 'File Storage' },
-              { Icon: Radio,         label: 'Community Feed' },
-              { Icon: Vote,          label: 'Decisions' },
+              { Icon: Radio,         label: 'Community Engagement' },
               { Icon: Target,        label: 'Projects' },
-              { Icon: MessageCircle, label: 'Messaging' },
+              { Icon: MessageCircle, label: 'Communications' },
               { Icon: ShoppingBag,   label: 'Local Marketplace' },
               { Icon: Map,           label: 'Community Atlas' },
               { Icon: Users,         label: 'Member Profiles' },
               { Icon: Cpu,           label: 'AI Assistant' },
               { Icon: Layers,        label: 'Spaces' },
+              { Icon: NotebookPen,   label: 'Notes' },
               { Icon: PackageOpen,   label: 'Export & Portability' },
             ]}
             callout="Outside content is optional: local news and public posts your admin chooses, shown only if you switch it on. No sponsored content, no ads, and anything highlighted says why."
@@ -689,29 +741,18 @@ export function SpacesShowcase() {
               { Icon: Sparkles, label: 'Graceful Degradation' },
             ]}
             onPillClick={setSelectedFeature}
-            note={
-              <div className="bg-muted/50 border border-border rounded-lg p-5 max-w-2xl">
-                <p className="text-foreground font-medium mb-1.5 text-sm">The precedent already exists.</p>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                  Rural electric co-ops brought power to communities that private utilities ignored. They organized, pooled resources, and built it themselves. Community wireless networks are doing the same for internet access today.
-                </p>
-                <div className="flex flex-wrap gap-x-5 gap-y-1.5">
-                  {[
-                    ['https://www.electric.coop/our-organization/history', 'NRECA: Rural Co-op History'],
-                    ['https://www.nycmesh.net', 'NYC Mesh'],
-                    ['https://detroitcommunitytech.org', 'Detroit Community Technology Project'],
-                  ].map(([href, text]) => (
-                    <a key={href} href={href} target="_blank" rel="noopener noreferrer"
-                      className="text-xs text-foreground underline decoration-muted-foreground underline-offset-2 hover:decoration-foreground transition-colors">
-                      {text} ↗
-                    </a>
-                  ))}
-                </div>
-              </div>
-            }
+            note={precedentNote}
           />
         </div>
+        )}
       </div>
+
+      {journey && (
+        <>
+          <FeaturesJourney onOpenFeature={setSelectedFeature} />
+          <div className="relative z-10 mx-auto -mt-[16vh] max-w-[1248px] px-6">{precedentNote}</div>
+        </>
+      )}
 
       <AnimatePresence>
         {selectedFeature && (

@@ -1,8 +1,10 @@
-# The Citinet Manifesto
+# The Citinet Statement
 
 ## A Declaration for Sovereign Digital Infrastructures
 
 **2026 Draft**
+
+By [@zee](https://citinet.cloud/u/hub1/zee?src=https%3A%2F%2Fhub1.tail42ec5e.ts.net), an independent project
 
 ---
 
@@ -10,9 +12,9 @@
 
 The modern internet has drifted far from its original promise.
 
-A handful of corporations now own the spaces where we socialize, organize, learn, share knowledge, and build our digital lives.
+A handful of corporations now own the spaces where people socialize, organize, learn, share knowledge, and build their digital lives.
 
-Our communities have become tenants—renting space inside platforms we do not control, governed by policies we did not create, and subjected to algorithms we cannot see.
+Communities have become tenants: renting space inside platforms they do not control, governed by policies they did not create, and subjected to algorithms they cannot see.
 
 Centralization has produced:
 
@@ -22,45 +24,45 @@ Centralization has produced:
 - Communities dependent on distant servers
 - Social spaces optimized for profit, not people
 
-We reject this trajectory.
-We believe communities & individual technology users deserve sovereignty—not surveillance or exploitation.
+I reject this trajectory.
+I believe communities and individual technology users deserve sovereignty, not surveillance or exploitation.
 
 ---
 
-### 2. Our Premise: The Cloud Should Belong to the People
+### 2. The Premise: The Cloud Should Belong to the People
 
 Citinet begins with a simple truth:
 
-Every neighborhood, school, household, organization, and community deserves to own its digital space—just as naturally as it owns its buildings, gardens, libraries, and meeting halls.
+Every neighborhood, school, household, organization, and community deserves to own its digital space, just as naturally as it owns its buildings, gardens, libraries, and meeting halls.
 
 The internet should not be just something available *to* people.
 
-It should be something built with them, by them, and ultimately for them. Just like its origins. It's time to reset, while moving forward for the benefit of all people, not just *the few*.
+It should be something built with them, by them, and ultimately for them, like its origins. It is time to reset, for the benefit of all people, not just *the few*.
 
 ---
 
-### 3. Our Vision
+### 3. The Vision
 
-Citinet envisions a new kind of network:
+Citinet is my attempt at a new kind of network:
 
-A federation of community run micro clouds, each one sovereign, each one local-first, each one designed around human-scale connection.
+A federation of community-run micro clouds, each one sovereign, each one local-first, each one designed around human-scale connection.
 
-Every Citinet Hub is:
+Every Citinet hub is meant to be:
 
 - A community micro data center
 - A digital commons
 - A local cloud
 - A space for cooperation, not extraction
 
-And together, these hubs form a constellation of resilient, interconnected communities—a people’s cloud network.
+Together, hubs could form a constellation of resilient, interconnected communities: a people's cloud network. Today a hub is one community's own server, and hubs sharing content with each other is still being built.
 
 ---
 
-### 4. Our Principles
+### 4. The Principles
 
 #### 4.1 Sovereignty
 
-Communities—not corporations—control the data, rules, memberships, and governance of their digital spaces.
+Communities, not corporations, control the data, rules, memberships, and governance of their digital spaces.
 
 #### 4.2 Local First
 
@@ -69,96 +71,103 @@ Citinet prioritizes locality, resilience, and independence over unnecessary clou
 
 #### 4.3 Human Scale Technology
 
-We reject megaplatform centralization.
-Citinet is structured around communities, groups, and Spaces—not engagement metrics, not surveillance, not advertising systems.
+I reject megaplatform centralization.
+Citinet is structured around communities, groups, and Spaces: not engagement metrics, not surveillance, not advertising systems.
 
 #### 4.4 Privacy by Default
 
 Your data is your data.
-Citinet does not track, profile, monetize, or manipulate.
+A Citinet hub does not track, profile, monetize, or manipulate.
+This website has no analytics. Its blog comments run through GitHub, and the "imagine it near you" demo sends your search to OpenStreetMap-based lookup services.
 
 #### 4.5 Resilience
 
 If the wider internet goes dark, the community should not.
-A Citinet Hub continues to function locally—online or offline.
+A Citinet hub keeps working on the local network even when the wider internet is down.
 
 #### 4.6 Open Participation
 
 Every community can run a hub.
-Every person can run a personal node.
-The network grows from the bottom up—not from corporate scale.
+The network grows from the bottom up, not from corporate scale.
 
 ---
 
-### 5. What We Stand For
+### 5. What I Stand For
 
-We stand for digital self determination.
+I stand for digital self determination.
 People should be able to choose where their data lives, who can access it, and how it is used.
 
-We stand for community infrastructure.
+I stand for community infrastructure.
 Digital infrastructure should resemble public libraries or community centers, not shopping malls.
 
-We stand for social technology that heals.
+I stand for social technology that heals.
 Online spaces should strengthen real-world relationships, not replace or distort them.
 
-We stand for transparent, inspectable, trustworthy systems.
-No black-box algorithms deciding what we see, believe, or value.
+I stand for transparent, inspectable, trustworthy systems.
+No black-box algorithms deciding what people see, believe, or value.
 
-We stand for the right to host your own cloud.
+I stand for the right to host your own cloud.
 A household, a church, a school, or a neighborhood should all be able to operate their own digital home.
 
 ---
 
 ### 6. What Citinet Offers
 
-Citinet provides the tools to build sovereign clouds:
+Today, Citinet gives a community the tools to run its own cloud (or corner of the web):
 
-- Hub Nodes that power community servers
+- A hub that powers a community server
 - Spaces for groups, clubs, committees, and projects
-- Local file storage and discussion boards
+- Local file storage and discussion
 - Events, a community map, polls, and shared resources
-- Personal Nodes that sync your own copy of your data
-- A stable, globally accessible URL at `{name}.citinet.cloud` via whichever gateway your community chooses
+- Account export, and moving an account between hubs
+- A browser-trusted HTTPS address at `{name}.hub.citinet.cloud` for anyone on the hub's network, plus Tailscale for reaching it from elsewhere
+
+Still being built: hubs that share content with each other, and personal nodes that sync your own copy of your data.
 
 Each hub is independent.
 Each one is governed by the people it serves.
-Together, they form the foundation of a **future federated internet**.
 
 ---
 
-### 7. Our Movement
+### 7. Who Is Behind This
 
-Citinet is not just a technology.
-It is a movement toward digital dignity, and control *by* the people not control *of* the people.
-A movement that feels more necessary today than ever before.
+Citinet is a personal project. I'm [@zee](https://citinet.cloud/u/hub1/zee?src=https%3A%2F%2Fhub1.tail42ec5e.ts.net), and I design and build it.
 
-We invite:
+{{collaborators}}
+
+A few friends advise informally from their own professions: a lawyer on legal and governance questions, a friend in finance, and a mathematician on questions of complexity. They offer perspective, not endorsement.
+
+Citinet is not an organization with members. That is the whole team.
+
+I would like to hear from:
 
 - Community organizers
 - Educators
 - Technologists
 - Librarians
 - Students
-- Neighborhoods
+- Neighborhood groups
 - Small businesses
 - Families
 
-…anyone who believes that digital spaces should be community-owned, individual-owned, privacy-respecting, and built for humans. P.S. We are not *totally* anti-AI, just incredibly more responsible than the greedy corporations (and government).
+…anyone who believes digital spaces should be community-owned, privacy-respecting, and built for humans.
+
+I'm not anti-AI. I want it used responsibly: on hardware you control, with your data staying yours.
 
 ---
 
-### 8. The Future We Choose
+### 8. The Future I Am Building Toward
 
-We are building toward:
+I am building toward:
 
-- A federated social web built from local hubs
-- Community identity independent of Big Tech
-- Resilient, neighborhood-scale networks
-- A digital world where trust is local
+- A more participatory web built from hubs local and relevant to the user
+- Community/user agency independent of Big Tech
+- Resilient, neighborhood-scale networks [(city-wide-web™)](soon)
+- A digital world where trust is local and apparent
 - A cloud where communities own the means of connection
 
-Citinet is not the alternative to the modern internet.
-It is the **next step beyond** it.
+Citinet is not meant to replace the modern internet.
+It is meant to be a **step beyond** it, one community at a time.
 
 ---
 
@@ -167,9 +176,9 @@ It is the **next step beyond** it.
 If you believe:
 
 - The cloud (modern internet) should empower, not extract
-- Communities and individuals should control their digital lives (thus, reality itself)
+- Communities and individuals should control their digital lives
 - The internet belongs to the people
 
-…then Citinet is yours.
+…then Citinet is built for you.
 
-Run a hub. Start a space. Build a community. Join the movement.
+Run a hub. Start a space. Build a community. Tell me what breaks.

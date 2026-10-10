@@ -1,0 +1,7 @@
+{
+  "_readme": "Controls the 'Who is behind this' collaborator list on /statement. since = only people who committed after this date; owners are named on the page already so they are skipped; allow forces a GitHub handle in; deny forces one out (use deny for any AI agent that commits as a normal user).",
+  "since": "2026-07-04T00:00:00Z",
+  "owners": ["fergtech"],
+  "allow": [],
+  "deny": []
+}

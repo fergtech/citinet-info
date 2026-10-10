@@ -1,0 +1,136 @@
+---
+// The one place imagery on the /statement page gets its look. Every image goes through this component and
+// receives the same stack, whatever its source:
+//
+//   1. black & white, with a little contrast
+//   2. "lift"   - blacks land on --img-shadow, not true black
+//   3. "cap"    - whites land on --img-highlight, not true white
+//   4. tint     - an optional colour wash (off by default)
+//   5. light    - a soft key light from the top-left
+//   6. grain    - fine film-like noise
+//   7. vignette - a gentle falloff at the edges
+//
+// To change the look of ALL statement imagery, change the variables in the style block below (or override
+// them on a single image through the `style` prop). Adding another effect means adding one layer here.
+interface Props {
+  src: string;
+  alt: string;
+  /** CSS aspect-ratio, e.g. "4 / 3" */
+  ratio?: string;
+  /** degrees; a slight tilt gives the framed, "object on a table" feel */
+  tilt?: number;
+  caption?: string;
+  /** where the caption links to, e.g. the image's source or licence page */
+  href?: string;
+}
+const { src, alt, ratio = '4 / 3', tilt = 0, caption, href } = Astro.props;
+---
+
+<figure class="stmt-figure" style={`--tilt:${tilt}deg;`}>
+  <div class="stmt-img" style={`--ratio:${ratio};`}>
+    <img src={src} alt={alt} loading="lazy" decoding="async" />
+    <span class="stmt-img__layer stmt-img__lift" aria-hidden="true"></span>
+    <span class="stmt-img__layer stmt-img__cap" aria-hidden="true"></span>
+    <span class="stmt-img__layer stmt-img__tint" aria-hidden="true"></span>
+    <span class="stmt-img__layer stmt-img__light" aria-hidden="true"></span>
+    <span class="stmt-img__layer stmt-img__grain" aria-hidden="true"></span>
+    <span class="stmt-img__layer stmt-img__vignette" aria-hidden="true"></span>
+  </div>
+  {caption && (
+    <figcaption class="stmt-caption">
+      {href ? <a href={href} target="_blank" rel="noopener noreferrer">{caption}</a> : caption}
+    </figcaption>
+  )}
+</figure>
+
+<style is:global>
+  .stmt-figure {
+    margin: 0;
+    width: min(100%, 22rem);
+    transform: rotate(var(--tilt, 0deg));
+    transition: transform 0.4s ease;
+  }
+
+  .stmt-img {
+    /* ── the whole look lives in these variables ── */
+    --img-shadow: #1f1e22;       /* where black ends up: lifted, never true black */
+    --img-highlight: #e8e4dc;    /* where white ends up: a warm near-white */
+    --img-contrast: 1.1;
+    --img-brightness: 1;
+    --img-tint: transparent;     /* e.g. rgb(60 90 140 / .12) for a cool wash */
+    --img-light: 0.07;           /* strength of the soft top-left key light */
+    --img-grain: 0.5;            /* 0 = none */
+    --img-grain-size: 150px;     /* bigger = coarser grain */
+    --img-vignette: 0.4;
+
+    position: relative;
+    isolation: isolate; /* keeps the blend modes inside the frame */
+    overflow: hidden;
+    aspect-ratio: var(--ratio, 4 / 3);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    background: var(--img-shadow);
+    box-shadow: 0 20px 44px -26px rgb(0 0 0 / 0.55);
+  }
+
+  /* a bright near-white photo would glare on the dark theme, so highlights sit a little lower there */
+  .dark .stmt-img {
+    --img-shadow: #19181c;
+    --img-highlight: #cdc8bf;
+  }
+
+  .stmt-img > img {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(1) contrast(var(--img-contrast)) brightness(var(--img-brightness));
+  }
+
+  .stmt-img__layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* screen with the shadow colour raises black to that colour and leaves white alone */
+  .stmt-img__lift { z-index: 1; background: var(--img-shadow); mix-blend-mode: screen; }
+
+  /* multiply with the highlight colour brings white down to that colour */
+  .stmt-img__cap { z-index: 2; background: var(--img-highlight); mix-blend-mode: multiply; }
+
+  .stmt-img__tint { z-index: 3; background: var(--img-tint); mix-blend-mode: soft-light; }
+
+  .stmt-img__light {
+    z-index: 4;
+    background: linear-gradient(135deg, rgb(255 255 255 / var(--img-light)), transparent 45%);
+    mix-blend-mode: soft-light;
+  }
+
+  .stmt-img__grain {
+    z-index: 5;
+    opacity: var(--img-grain);
+    mix-blend-mode: overlay;
+    background-size: var(--img-grain-size) var(--img-grain-size);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150'><filter id='n' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0 0 0 0 1'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .stmt-img__vignette {
+    z-index: 6;
+    background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgb(0 0 0 / var(--img-vignette)) 100%);
+  }
+
+  .stmt-caption {
+    margin-top: 0.75rem;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    color: var(--muted-foreground);
+  }
+  .stmt-caption a { color: inherit; text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 3px; transition: color 0.2s; }
+  .stmt-caption a:hover { color: var(--foreground); }
+</style>
