@@ -421,7 +421,7 @@ export function HubPlayground() {
           className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 font-mono text-[11px] text-muted-foreground transition-colors hover:text-foreground disabled:opacity-60"
         >
           <Power className="h-3 w-3" />
-          {offline ? 'Restarting…' : 'Pull the plug'}
+          {offline ? 'Restarting…' : 'Shut it down'}
         </button>
         <span className="ml-auto font-mono text-[11px] text-muted-foreground/70">
           {hubMembers.a} here · {hubMembers.b} there
